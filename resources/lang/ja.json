@@ -1,11 +1,7 @@
 {
-    "About demo registration": "デモ登録について",
-    "Account registration is possible, but the email address is unauthorized user.": "アカウント登録は可能ですが、メールアドレス未承認ユーザーとなります。",
     "Already have a account? Sign in!": "アカウントをお持ちの方はログイン",
     "Back to sign in page.": "ログインページへ戻る",
-    "Because of the demo, reset mail will not be sent.": "※デモのため、リセットメールは送信されません。",
     "Create Account": "アカウント登録",
-    "Demo account information is here": "デモアカウント情報はこちら",
     "Do not have a account? Sign Up!": "アカウントをお持ちでない方は新規登録！",
     "Do you want to log out?": "ログアウトしますか？",
     "E-Mail": "メールアドレス",

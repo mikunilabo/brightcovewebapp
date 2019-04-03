@@ -36,12 +36,5 @@ final class BladeServiceProvider extends ServiceProvider
         Blade::if('env', function ($env) {
             return app()->environment($env);
         });
-
-        /**
-         * @return string
-         */
-        Blade::directive('csrf', function () {
-            return csrf_field();
-        });
     }
 }
