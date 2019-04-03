@@ -6,14 +6,18 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "doctrine/dbal": "^2.9",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-ide-helper": "^2.6",
         "filp/whoops": "~2.0",
-        "fzaninotto/faker": "~1.4",
+        "fzaninotto/faker": "^1.8",
         "mockery/mockery": "~1.0",
+        "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "~6.0",
         "symfony/thanks": "^1.0"
     },
@@ -34,6 +38,12 @@
     "extra": {
         "laravel": {
             "dont-discover": [
+                "barryvdh/laravel-debugbar",
+                "barryvdh/laravel-ide-helper",
+                "beyondcode/laravel-dump-server",
+                "laravel/dusk",
+                "laravel/telescope",
+                "nunomaduro/collision"
             ]
         }
     },
@@ -53,5 +63,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
