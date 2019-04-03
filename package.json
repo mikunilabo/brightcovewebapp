@@ -7,20 +7,32 @@
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "heroku-postbuild": "npm run prod"
   },
   "devDependencies": {
+    "@coreui/coreui": "^2.1.4",
+    "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.2.0",
+    "@coreui/icons": "^0.3.0",
     "axios": "^0.18",
     "bootstrap": "^4.0.0",
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "^2.0.1",
+    "chart.js": "^2.7.3",
     "cross-env": "^5.1",
+    "flag-icon-css": "^3.2.1",
+    "font-awesome": "^4.7.0",
     "jquery": "^3.2",
-    "laravel-mix": "^4.0.7",
+    "laravel-mix": "^2.0",
     "lodash": "^4.17.5",
+    "pace-progress": "^1.0.2",
+    "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.12",
-    "resolve-url-loader": "^2.3.1",
-    "sass": "^1.15.2",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.5.17",
-    "vue-template-compiler": "^2.6.10"
+    "simple-line-icons": "^2.4.1",
+    "vue": "^2.5.7"
+  },
+  "dependencies": {
+    "laravel-echo": "^1.5.0",
+    "pusher-js": "^4.3.1"
   }
 }
