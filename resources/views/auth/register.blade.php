@@ -1,8 +1,8 @@
-@extends('layouts.skeleton')
+@extends ('layouts.skeleton')
 
-@section('title', __('Create Account'))
+@section ('title', __('Create Account'))
 
-@section('content')
+@section ('content')
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">

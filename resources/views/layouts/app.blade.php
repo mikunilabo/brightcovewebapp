@@ -1,34 +1,34 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    @section('head')
+    @section ('head')
         @include ('layouts.head')
     @show
 
     @include ('layouts.analytics')
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
-    @section('header')
+    @section ('header')
         @include ('layouts.header')
     @show
 
     <div class="app-body">
-        @section('sidebar')
+        @section ('sidebar')
             @include ('layouts.sidebar')
         @show
 
-        @yield('content')
+        @yield ('content')
 
-        @section('aside')
+        @section ('aside')
             @include ('layouts.aside')
         @show
     </div>
 
-    @section('footer')
+    @section ('footer')
         @include ('layouts.footer')
     @show
 
-    @section('scripts')
+    @section ('scripts')
         @include ('layouts.scripts')
     @show
 </body>
