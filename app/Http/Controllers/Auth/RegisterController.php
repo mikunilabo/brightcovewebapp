@@ -72,8 +72,6 @@ final class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        // ここでユーザ登録メール送信が良いか
-
         return redirect($this->redirectPath())->with('alerts.success', [__('User temporary registration is completed.')]);
     }
 

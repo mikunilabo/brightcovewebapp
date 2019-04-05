@@ -62,6 +62,8 @@ final class ResetPasswordController extends Controller
      */
     protected function sendResetResponse($response)
     {
+        $this->guard()->logout();
+
         return redirect($this->redirectPath())->with('alerts.success', [__($response)]);
     }
 
@@ -70,7 +72,7 @@ final class ResetPasswordController extends Controller
      */
     protected function redirectTo()
     {
-        return route('home');
+        return route('login');
     }
 
 }

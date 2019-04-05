@@ -5,7 +5,7 @@
 @section ('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <div class="clearfix">
                     <h2>
                         <i class="fa fa-send fa-fw"></i>
@@ -13,6 +13,8 @@
                     </h2>
                     <p class="text-muted">@lang ('Please enter your registered e-mail address.')</p>
                 </div>
+
+                @component ('components.messages.alerts') @endcomponent
 
                 <form action="{{ route('password.email') }}" method="POST">
                     {{ csrf_field() }}
@@ -26,7 +28,7 @@
                         @include ('components.messages.invalid', ['name' => 'email'])
                     </div>
 
-                    <div class="input-prepend input-group mt-1">
+                    <div class="input-prepend input-group">
                         <button class="btn btn-block btn-outline-warning mt-2" type="{{ empty($demo) ? 'submit' : 'button' }}">
                             @lang ('Submit')
                         </button>

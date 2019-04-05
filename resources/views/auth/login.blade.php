@@ -14,6 +14,8 @@
                     <p class="text-muted">@lang ('Please enter your registered e-mail address and password.')</p>
                 </div>
 
+                @component ('components.messages.alerts') @endcomponent
+
                 <form action="{{ route('login') }}" method="POST">
                     {{ csrf_field() }}
 
