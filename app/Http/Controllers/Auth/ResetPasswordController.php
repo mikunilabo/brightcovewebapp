@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-final class ResetController extends Controller
+final class ResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
