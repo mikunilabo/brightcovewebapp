@@ -61,6 +61,6 @@ final class ResendRequest extends FormRequest
      */
     protected function withValidator(Validator $validator): void
     {
-        $this->errorBag = snake_case(studly_case(strtr(str_after(__CLASS__, 'App\\Http\\Requests\\'), '\\', '_')));
+//         $this->errorBag = snake_case(studly_case(strtr(str_after(__CLASS__, 'App\\Http\\Requests\\'), '\\', '_')));
     }
 }
