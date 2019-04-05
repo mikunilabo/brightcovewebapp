@@ -15,6 +15,7 @@
     "password": "パスワード",
     "Password": "パスワード",
     "Please enter the email address of the account you want to reset and the new password.": "リセットするアカウントのメールアドレスと新しいパスワードを入力してください。",
+    "Please enter your name, e-mail address, and password.": "あなたの名前、メールアドレス、パスワードを入力してください。",
     "Please enter your registered e-mail address.": "登録済みのメールアドレスを入力してください。",
     "Please enter your registered e-mail address and password.": "登録済みのメールアドレスとパスワードを入力してください。",
     "Sign In": "ログイン",
