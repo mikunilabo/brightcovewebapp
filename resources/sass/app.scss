@@ -1,0 +1,22 @@
+// Fonts
+@import '~@coreui/icons/scss/coreui-icons';
+@import '~flag-icon-css/sass/flag-icon';
+@import '~font-awesome/scss/font-awesome';
+@import '~simple-line-icons/scss/simple-line-icons';
+
+// Variables
+@import '~@coreui/coreui/scss/variables';
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/mixins';
+
+// Import styles
+@import '~@coreui/coreui/scss/coreui';
+
+// Vendor
+@import 'vendor/pace-progress/pace';
+
+// If you want to add something do it here
+@import 'custom';

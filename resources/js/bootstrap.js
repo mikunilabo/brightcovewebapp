@@ -1,5 +1,6 @@
 
 window._ = require('lodash');
+window.Popper = require('popper.js').default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -10,7 +11,11 @@ window._ = require('lodash');
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap-sass');
+    require('bootstrap');
+    require('pace-progress');
+    require('perfect-scrollbar');
+    require('@coreui/coreui');
+    require('chart.js');
 } catch (e) {}
 
 /**
@@ -43,13 +48,26 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+//import Echo from 'laravel-echo'
+//
+//window.Pusher = require('pusher-js');
+//
+//window.Echo = new Echo({
+//    broadcaster: 'pusher',
+//    key: process.env.MIX_PUSHER_APP_KEY,
+//    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+//    encrypted: true
+//});
 
-// window.Pusher = require('pusher-js');
+/**
+ * We will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+//window.Vue = require('vue');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key',
-//     cluster: 'mt1',
-//     encrypted: true
-// });
+//Vue.component('example-component', require('./components/ExampleComponent.vue'));
+
+//const app = new Vue({
+//    el: '#app'
+//});
