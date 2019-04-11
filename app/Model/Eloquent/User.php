@@ -3,28 +3,38 @@ declare(strict_types=1);
 
 namespace App\Model\Eloquent;
 
+use App\Traits\Eloquent\Observers\UserObservable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 final class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, UserObservable;
 
     /**
-     * The attributes that are mass assignable.
-     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
     ];
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 }
