@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Eloquent;
 
 use App\Traits\Eloquent\Observers\UserObservable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -37,4 +38,12 @@ final class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function loginHistories(): HasMany
+    {
+        return $this->hasMany(LoginHistory::class, 'user_id', 'id');
+    }
 }

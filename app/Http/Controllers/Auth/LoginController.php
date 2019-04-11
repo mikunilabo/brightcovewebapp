@@ -24,10 +24,14 @@ final class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $maxAttempts = 5;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $decayMinutes = 30;
 
     /**
