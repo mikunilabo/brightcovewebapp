@@ -8,8 +8,6 @@ use Illuminate\Support\ServiceProvider;
 final class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
-     *
      * @return void
      */
     public function boot()
@@ -18,8 +16,6 @@ final class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register any application services.
-     *
      * @return void
      */
     public function register()

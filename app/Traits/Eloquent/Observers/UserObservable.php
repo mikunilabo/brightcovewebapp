@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace App\Traits\Eloquent\Observers;
 
-use App\Listeners\Eloquent\UserObserver;
+use App\Listeners\Eloquent\Observers\UserObserver;
 
 trait UserObservable
 {
-    public static function bootUserObservable()
+    /**
+     * @return void
+     */
+    public static function bootUserObservable(): void
     {
         self::observe(UserObserver::class);
     }

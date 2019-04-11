@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Listeners\Eloquent;
+namespace App\Listeners\Eloquent\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
@@ -14,7 +14,6 @@ final class UserObserver
      */
     public function creating(Model $model)
     {
-
         do {
             $uuid = Uuid::uuid4()->toString();
         } while ($model->find($uuid));
