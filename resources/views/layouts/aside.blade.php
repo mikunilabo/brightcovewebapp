@@ -1,25 +1,23 @@
 <aside class="aside-menu">
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#timeline" role="tab">
-                <i class="icon-list"></i>
+            <a class="nav-link active" data-toggle="tab" href="#information" role="tab">
+                <i class="icon-info"></i>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#messages" role="tab">
-                <i class="icon-speech"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
-                <i class="icon-settings"></i>
-            </a>
-        </li>
+
+        @if (false)
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#settings" role="tab">
+                    <i class="icon-settings"></i>
+                </a>
+            </li>
+        @endif
     </ul>
 
     <!-- Tab panes-->
     <div class="tab-content">
-        <div class="tab-pane active" id="timeline" role="tabpanel">
+        <div class="tab-pane active" id="information" role="tabpanel">
             <div class="list-group list-group-accent">
                 <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
                     Today
@@ -38,7 +36,7 @@
                         <i class="icon-location-pin"></i> Palo Alto, CA
                     </small>
                 </div>
-                <div class="list-group-item list-group-item-accent-info">
+                <div class="list-group-item list-group-item-accent-info list-group-item-divider">
                     <div class="avatar float-right">
                         @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
                     </div>
@@ -52,161 +50,10 @@
                         <i class="icon-social-skype"></i> On-line
                     </small>
                 </div>
-                <div
-                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">Tomorrow</div>
-                <div
-                    class="list-group-item list-group-item-accent-danger list-group-item-divider">
-                    <div>
-                        New UI Project - <strong>deadline</strong>
-                    </div>
-                    <small class="text-muted mr-3"> <i class="icon-calendar"></i>  10 -
-                        11pm
-                    </small> <small class="text-muted"> <i class="icon-home"></i> 
-                        creativeLabs HQ
-                    </small>
-                    <div class="avatars-stack mt-2">
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item list-group-item-accent-success list-group-item-divider">
-                    <div>
-                        <strong>#10 Startups.Garden</strong> Meetup
-                    </div>
-                    <small class="text-muted mr-3">
-                        <i class="icon-calendar"></i>  1 - 3pm
-                    </small>
-                    <small class="text-muted">
-                        <i class="icon-location-pin"></i> Palo Alto, CA
-                    </small>
-                </div>
-                <div class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                    <div>
-                        <strong>Team meeting</strong>
-                    </div>
-                    <small class="text-muted mr-3">
-                        <i class="icon-calendar"></i>  4 - 6pm
-                    </small>
-                    <small class="text-muted">
-                        <i class="icon-home"></i> creativeLabs HQ
-                    </small>
-                    <div class="avatars-stack mt-2">
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                        <div class="avatar avatar-xs">
-                            @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div class="tab-pane p-3" id="messages" role="tabpanel">
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-            <hr>
-            <div class="message">
-                <div class="py-3 pb-5 mr-3 float-left">
-                    <div class="avatar">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                        <span class="avatar-status badge-success"></span>
-                    </div>
-                </div>
-                <div>
-                    <small class="text-muted">Lukasz Holeczek</small>
-                    <small class="text-muted float-right mt-1">1:52 PM</small>
-                </div>
-                <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
-                <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
-            </div>
-        </div>
-
+@if (false)
         <div class="tab-pane p-3" id="settings" role="tabpanel">
             <h6>Settings</h6>
             <div class="aside-options">
@@ -299,4 +146,5 @@
             <small class="text-muted">25GB/256GB</small>
         </div>
     </div>
+@endif
 </aside>
