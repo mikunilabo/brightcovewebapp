@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Eloquent;
 
-use App\Traits\Eloquent\Observers\UserObservable;
+use App\Traits\Database\Eloquent\Observers\UserObservable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -45,5 +46,13 @@ final class User extends Authenticatable
     public function loginHistories(): HasMany
     {
         return $this->hasMany(LoginHistory::class, 'user_id', 'id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
     }
 }
