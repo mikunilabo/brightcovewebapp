@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-final class CreateLoginHistoriesTable extends Migration
+final class CreatePermissionsTable extends Migration
 {
     /**
      * @var string
      */
-    private $table = 'login_histories';
+    private $table = 'permissions';
 
     /**
      * @return void
@@ -20,18 +20,9 @@ final class CreateLoginHistoriesTable extends Migration
         try {
             Schema::create($this->table, function (Blueprint $table) {
                 $table->increments('id');
-                $table->uuid('user_id');
-                $table->ipAddress('ip');
-                $table->string('host', 64);
-                $table->string('user_agent');
-                $table->mediumInteger('remote_port');
-                $table->mediumInteger('access_port');
-                $table->timestamp('created_at'->nullable());
-
-                $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->timestamps();
             });
         } catch (\Exception $e) {
             report($e);

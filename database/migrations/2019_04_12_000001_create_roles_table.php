@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-final class CreateUsersTable extends Migration
+final class CreateRolesTable extends Migration
 {
     /**
      * @var string
      */
-    private $table = 'users';
+    private $table = 'roles';
 
     /**
      * @return void
@@ -19,11 +19,9 @@ final class CreateUsersTable extends Migration
     {
         try {
             Schema::create($this->table, function (Blueprint $table) {
-                $table->uuid('id')->primary();
+                $table->increments('id');
                 $table->string('name');
-                $table->string('email')->unique();
-                $table->string('password');
-                $table->rememberToken();
+                $table->string('slug')->unique();
                 $table->timestamps();
             });
         } catch (\Exception $e) {
