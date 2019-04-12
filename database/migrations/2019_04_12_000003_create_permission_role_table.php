@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-final class CreateRolePermissionTable extends Migration
+final class CreatePermissionRoleTable extends Migration
 {
     /**
      * @var string
      */
-    private $table = 'role_permission';
+    private $table = 'permission_role';
 
     /**
      * @return void

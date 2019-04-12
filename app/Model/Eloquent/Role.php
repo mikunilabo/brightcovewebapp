@@ -18,18 +18,11 @@ final class Role extends Model
     ];
 
     /**
-     * @var array
-     */
-    protected $touches = [
-        'permissions',
-    ];
-
-    /**
      * @return BelongsToMany
      */
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(Permission::class, 'role_permission')->withTimestamps();
+        return $this->belongsToMany(Permission::class)->withTimestamps();
     }
 
     /**
