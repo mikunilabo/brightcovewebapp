@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Listeners\Eloquent\Observers;
+namespace App\Listeners\Database\Eloquent\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
