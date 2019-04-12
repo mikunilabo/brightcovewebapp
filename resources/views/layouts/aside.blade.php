@@ -17,38 +17,16 @@
 
     <!-- Tab panes-->
     <div class="tab-content">
-        <div class="tab-pane active" id="information" role="tabpanel">
-            <div class="list-group list-group-accent">
-                <div class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-                    Today
-                </div>
-                <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                    <div class="avatar float-right">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                    </div>
-                    <div>
-                        Meeting with <strong>Lucas</strong>
-                    </div>
-                    <small class="text-muted mr-3">
-                        <i class="icon-calendar"></i>  1 - 3pm
-                    </small>
-                    <small class="text-muted">
-                        <i class="icon-location-pin"></i> Palo Alto, CA
+        <div class="tab-pane active p-3" id="information" role="tabpanel">
+            <h6>@lang ('Information')</h6>
+            <div class="aside-options">
+                <div class="clearfix mt-3">
+                    <small>
+                        <b>@lang ('Previous login')</b>
                     </small>
                 </div>
-                <div class="list-group-item list-group-item-accent-info list-group-item-divider">
-                    <div class="avatar float-right">
-                        @if (false)<img class="img-avatar" src="{{ asset('img/avatars/1.jpg') }}" alt="">@endif
-                    </div>
-                    <div>
-                        Skype with <strong>Megan</strong>
-                    </div>
-                    <small class="text-muted mr-3">
-                        <i class="icon-calendar"></i>  4 - 5pm
-                    </small>
-                    <small class="text-muted">
-                        <i class="icon-social-skype"></i> On-line
-                    </small>
+                <div>
+                    <small class="text-muted">{{ Auth::user()->loginHistories()->latest()->skip(1)->limit(1)->first()->created_at }}</small>
                 </div>
             </div>
         </div>
