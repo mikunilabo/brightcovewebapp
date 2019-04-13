@@ -21,22 +21,22 @@ class PermissionsSeeder extends Seeder
             [
                 'id'   => 1,
                 'name' => 'アカウント閲覧',
-                'slug' => 'account-select',
+                'slug' => 'user-select',
             ],
             [
                 'id'   => 2,
                 'name' => 'アカウント作成',
-                'slug' => 'account-create',
+                'slug' => 'user-create',
             ],
             [
                 'id'   => 3,
                 'name' => 'アカウント更新',
-                'slug' => 'account-update',
+                'slug' => 'user-update',
             ],
             [
                 'id'   => 4,
                 'name' => 'アカウント削除',
-                'slug' => 'account-delete',
+                'slug' => 'user-delete',
             ],
             [
                 'id'   => 5,

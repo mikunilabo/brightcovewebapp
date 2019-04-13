@@ -33,11 +33,10 @@ final class ForgotController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  ResendRequest $validator
+     * @param  ResendRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function sendResetLinkEmail(Request $request, ResendRequest $validator)
+    public function sendResetLinkEmail(ResendRequest $request)
     {
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
@@ -46,9 +45,9 @@ final class ForgotController extends Controller
             $request->only('email')
         );
 
-        /**
-         * メールアドレスの探索目的回避のため、登録アドレスが無くても正常送信したように見せかける
-         */
+        // In order to avoid the search purpose of the e-mail address,
+        // even if there is no registered address it appears as if it was sent normally
+        // @author kwada
         return $response == Password::RESET_LINK_SENT || $response === Password::INVALID_USER
             ? $this->sendResetLinkResponse($response)
             : $this->sendResetLinkFailedResponse($request, $response);

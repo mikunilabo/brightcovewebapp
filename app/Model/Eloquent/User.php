@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace App\Model\Eloquent;
 
+use App\Contracts\Domain\ModelContract;
 use App\Traits\Database\Eloquent\Observers\UserObservable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-final class User extends Authenticatable
+final class User extends Authenticatable implements ModelContract
 {
     use Notifiable, UserObservable;
 

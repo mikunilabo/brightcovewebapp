@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Eloquent;
 
+use App\Contracts\Domain\ModelContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-final class LoginHistory extends Model
+final class LoginHistory extends Model implements ModelContract
 {
     /**
      * @var bool

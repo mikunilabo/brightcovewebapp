@@ -28,7 +28,7 @@ class PermissionRoleSeeder extends Seeder
                 foreach (Role::all() as $role) {
                     foreach (Permission::all() as $permission) {
                         if ($role->slug === 'admin') {
-                            if (starts_with($permission->slug, 'account-')) {
+                            if (starts_with($permission->slug, 'user-')) {
                                 $role->permissions()->toggle([$permission->id]);
                             }
                         } elseif ($role->slug === 'user') {

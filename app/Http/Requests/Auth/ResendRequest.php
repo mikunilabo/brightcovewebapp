@@ -31,7 +31,7 @@ final class ResendRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|email|max:191',
+            'email' => 'required|string|email|max:255',
         ];
     }
 

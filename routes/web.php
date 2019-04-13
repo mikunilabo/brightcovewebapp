@@ -20,13 +20,13 @@ Route::prefix('/')->group(function () {
      * Accounts
      */
     Route::prefix($prefix = 'accounts')->name(sprintf('%s.', $prefix))->group(function () {
-//         Route::get('/', )->name('index');
+        Route::get('/', \App\Http\Controllers\Users\IndexController::class)->name('index');
 //         Route::get($name = 'create', )->name($name);
 //         Route::post($name, );
 //         Route::get($name = 'profile', )->name($name);
 //         Route::post($name, );
 
-        Route::prefix('{accountId}')->group(function () {
+        Route::prefix('{userId}')->group(function () {
 //             Route::get($name = 'update', )->name($name);
 //             Route::post($name, );
 //             Route::post($name = 'delete', )->name($name);

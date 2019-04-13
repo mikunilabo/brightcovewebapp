@@ -34,13 +34,12 @@ final class RegisterController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  RegisterRequest $validator
+     * @param  RegisterRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request, RegisterRequest $validator)
+    public function register(RegisterRequest $request)
     {
-        $user = $this->create($request->all());
+        $user = $this->create($request->validated());
 
         event(new Registered($user));
 

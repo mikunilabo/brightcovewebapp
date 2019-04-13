@@ -101,7 +101,7 @@ return [
      |
      */
 
-    'user' => env('APP_USER', 'user@example.com'),
+    'user' => env('APP_ACCOUNT', 'user@example.com'),
 
     'password' => env('APP_PASSWORD', 'password'),
 

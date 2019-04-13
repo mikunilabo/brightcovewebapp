@@ -26,7 +26,7 @@
                     </small>
                 </div>
                 <div>
-                    <small class="text-muted">{{ Auth::user()->loginHistories()->latest()->skip(1)->limit(1)->first()->created_at }}</small>
+                    <small class="text-muted">{{ optional(Auth::user()->loginHistories()->latest()->skip(1)->limit(1)->first())->created_at }}</small>
                 </div>
             </div>
         </div>

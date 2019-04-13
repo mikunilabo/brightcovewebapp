@@ -35,22 +35,22 @@
                 </li>
             @endcan
 
-            @can ('authorize', ['account-select', 'account-create'])
+            @can ('authorize', ['user-select', 'user-create'])
                 <!-- Accounts -->
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
                         <i class="nav-icon icon-people"></i>@lang ('Accounts')
                     </a>
                     <ul class="nav-dropdown-items">
-                        @can ('authorize', ['account-select'])
+                        @can ('authorize', ['user-select'])
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('accounts.index') }}">
                                     <i class="nav-icon icon-list"></i>@lang ('Accounts list')
                                 </a>
                             </li>
                         @endcan
 
-                        @can ('authorize', ['account-create'])
+                        @can ('authorize', ['user-create'])
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <i class="nav-icon icon-user-follow"></i>@lang ('Create account')
