@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Password;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetRequest;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-final class ResetPasswordController extends Controller
+final class ResetController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
