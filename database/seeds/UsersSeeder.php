@@ -37,6 +37,8 @@ class UsersSeeder extends Seeder
                 collect($this->items)->each(function ($item) {
                     User::create($item);
                 });
+
+                factory(User::class, 100)->create();
             });
         } catch (\Exception $e) {
             report($e);
