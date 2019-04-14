@@ -6,8 +6,8 @@ namespace App\Contracts\Domain;
 interface UseCaseContract
 {
     /**
-     * @param mixed $args
+     * @param array $args
      * @return mixed
      */
-    public function excute(...$args);
+    public function excute($args);
 }

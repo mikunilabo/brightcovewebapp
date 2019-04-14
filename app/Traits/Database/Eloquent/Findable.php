@@ -3,35 +3,43 @@ declare(strict_types=1);
 
 namespace App\Traits\Database\Eloquent;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use App\Contracts\Domain\ModelContract;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 trait Findable
 {
     /**
      * @param mixed $id
-     * @return Model|null
+     * @return ModelContract|null
      */
-    public function find($id): ?Model
+    public function findById($id): ?ModelContract
     {
-        return $this->repo->find($id);
+        return $this->eloquent->find($id);
     }
 
     /**
      * @param array $ids
      * @return Collection
      */
-    public function findMany(array $ids = []): Collection
+    public function findByIds(array $ids = []): Collection
     {
-        return $this->repo->findMany($ids);
+        return $this->eloquent->findMany($ids);
     }
 
     /**
      * @param array $args
-     * @return Collection
+     * @param bool $paginate
+     * @return Collection|LengthAwarePaginator
      */
-    public function findAll(array $args = []): Collection
+    public function findAll(array $args = [], $paginate = false)
     {
-        return $this->repo->findAll($args);
+        $builder = $this->eloquent->query();
+
+        if (method_exists($this, 'build')) {
+            $builder = $this->build($builder);
+        }
+
+        return $builder->{$paginate ? 'paginate' : 'get'}();
     }
 }

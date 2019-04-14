@@ -6,11 +6,15 @@ namespace App\Traits\Database\Eloquent;
 trait Restorable
 {
     /**
-     * @param int $id
+     * @param mixed $id
      * @return void
      */
-    public function restore(int $id): void
+    public function restore($id): void
     {
-        $this->repo->restore($id);
+        if (is_null($model = $this->eloquent->find($id))) {
+            return;
+        }
+
+        $model->restore();
     }
 }

@@ -3,17 +3,16 @@ declare(strict_types=1);
 
 namespace App\Traits\Database\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Contracts\Domain\ModelContract;
 
 trait Creatable
 {
     /**
      * @param array $args
-     * @return Model
+     * @return ModelContract
      */
-    public function create(array $args = []): Model
+    public function create(array $args = []): ModelContract
     {
-        return $this->repo->create($args);
+        return $this->eloquent->create($args);
     }
-
 }

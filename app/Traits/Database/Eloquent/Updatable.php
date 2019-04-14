@@ -6,12 +6,16 @@ namespace App\Traits\Database\Eloquent;
 trait Updatable
 {
     /**
-     * @param int $id
+     * @param mixed $id
      * @param array $args
      * @return bool
      */
-    public function update(int $id, array $args = []): bool
+    public function update($id, array $args = []): bool
     {
-        return $this->repo->update($id, $args);
+        if (is_null($model = $this->eloquent->find($id))) {
+            return false;
+        }
+
+        return $model->update($args);
     }
 }

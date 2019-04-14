@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Services\UsersService;
+use App\Repositories\Database\Eloquent\UserRepository;
 use App\UseCases\Users\GetUsers;
 use Illuminate\Support\ServiceProvider;
 
-final class UseCaseProvider extends ServiceProvider
+final class RepositoryServiceProvider extends ServiceProvider
 {
     /**
      * @var bool
@@ -52,7 +52,7 @@ final class UseCaseProvider extends ServiceProvider
          */
         $this->app->bind(GetUsers::class, function () {
             return new GetUsers(
-                app(UsersService::class)
+                app(UserRepository::class)
             );
         });
     }

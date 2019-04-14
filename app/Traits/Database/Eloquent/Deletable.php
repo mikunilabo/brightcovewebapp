@@ -6,12 +6,15 @@ namespace App\Traits\Database\Eloquent;
 trait Deletable
 {
     /**
-     * @param int $id
+     * @param mixed $id
      * @return void
      */
-    public function delete(int $id): void
+    public function delete($id): void
     {
-        $this->repo->delete($id);
-    }
+        if (is_null($model = $this->eloquent->find($id))) {
+            return;
+        }
 
+        $model->delete();
+    }
 }
