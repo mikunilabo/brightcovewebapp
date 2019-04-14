@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Ramsey\Uuid\Uuid;
 
 final class User extends Authenticatable implements ModelContract
 {
@@ -55,5 +56,15 @@ final class User extends Authenticatable implements ModelContract
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    /**
+     * @return void
+     */
+    public function generateUuid4(): void
+    {
+        do {
+            $this->id = Uuid::uuid4()->toString();
+        } while ($this->find($this->id));
     }
 }
