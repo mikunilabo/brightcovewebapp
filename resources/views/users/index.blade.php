@@ -46,13 +46,14 @@
                                                 <td><span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span></td>
                                                 <td>{{ optional($row->loginHistories->first())->created_at }}</td>
                                                 <td>{{ $row->created_at }}</td>
-                                                <td class="p-0">
-                                                    <ul class="nav mt-1">
-                                                        <li class="nav-item dropdown">
-                                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                                                <td>
+                                                    <div class="nav navbar-nav">
+                                                        <div class="nav-item dropdown">
+                                                            <a class="nav-link p-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                                                 <i class="nav-icon icon-options"></i>
                                                             </a>
-                                                            <div class="dropdown-menu">
+
+                                                            <div class="dropdown-menu dropdown-menu-right">
                                                                 @can ('select', $row)
                                                                     <a class="dropdown-item" href="{{ route('accounts.update', $row->id) }}">
                                                                         <i class="icons icon-note"></i>@lang ('Detail')
@@ -60,14 +61,13 @@
                                                                 @endcan
 
                                                                 @can ('delete', $row)
-                                                                    <div class="dropdown-divider"></div>
                                                                     <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); if (confirm('@lang("test?")')) console.log('entered.'); return false;">
                                                                         <i class="icons icon-trash text-danger"></i>@lang ('Delete')
                                                                     </a>
                                                                 @endcan
                                                             </div>
-                                                        </li>
-                                                    </ul>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
