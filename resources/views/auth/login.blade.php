@@ -24,8 +24,10 @@
                             <span class="input-group-text"> <i class="icon-user"></i>
                             </span>
                         </div>
-                        <input name="email" type="email" value="{{ old('email') }}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
-                        @include ('components.messages.invalid', ['name' => 'email'])
+
+                        @set ($attribute, 'email')
+                        <input name="{{ $attribute }}" type="email" value="{{ old($attribute) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -33,12 +35,14 @@
                             <span class="input-group-text"> <i class="icon-lock"></i>
                             </span>
                         </div>
-                        <input name="password" type="password" value="" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
-                        @include ('components.messages.invalid', ['name' => 'password'])
+
+                        @set ($attribute, 'password')
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group mt-2">
-                        <button class="btn btn-block btn-outline-primary px-4" type="{{ empty($demo) ? 'submit' : 'button' }}">
+                        <button class="btn btn-block btn-outline-primary px-4" type="submit">
                             @lang ('Login')
                         </button>
                     </div>

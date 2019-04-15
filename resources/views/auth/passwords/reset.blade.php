@@ -24,8 +24,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">@</span>
                         </div>
-                        <input name="email" type="email" value="{{ old('email') }}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
-                        @include ('components.messages.invalid', ['name' => 'email'])
+
+                        @set ($attribute, 'email')
+                        <input name="{{ $attribute }}" type="email" value="{{ old($attribute) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -33,8 +35,10 @@
                             <span class="input-group-text"> <i class="icon-lock"></i>
                             </span>
                         </div>
-                        <input name="password" type="password" value="" class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
-                        @include ('components.messages.invalid', ['name' => 'password'])
+
+                        @set ($attribute, 'password')
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -43,11 +47,14 @@
                                 <i class="icon-lock"></i>
                             </span>
                         </div>
-                        <input name="password_confirmation" type="password" value class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" placeholder="@lang ('Repeat password')" required />
+
+                        @set ($attribute, 'password_confirmation')
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Repeat password')" required />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group mt-2">
-                        <button class="btn btn-block btn-outline-danger" type="{{ empty($demo) ? 'submit' : 'button' }}">
+                        <button class="btn btn-block btn-outline-danger" type="submit">
                             @lang ('Reset')
                         </button>
                     </div>

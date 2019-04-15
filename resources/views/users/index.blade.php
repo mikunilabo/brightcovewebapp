@@ -13,9 +13,12 @@
                         <div class="card">
                             <div class="card-header">
                                 <i class="fa fa-align-justify"></i>@lang ('Accounts list')
-                                <a class="btn btn-primary btn-sm float-right" href="#">
-                                    <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
-                                </a>
+
+                                @can ('authorize', 'user-create')
+                                    <a class="btn btn-primary btn-sm float-right" href="#">
+                                        <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
+                                    </a>
+                                @endcan
                             </div>
                             <div class="card-body">
                                 <table class="table table-responsive-sm table-striped table-hover">
@@ -30,23 +33,23 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
+                                        @foreach ($users as $row)
                                             <tr>
-                                                <td>{{ $user->name }}</td>
-                                                <td><code>{{ $user->email }}</code></td>
-                                                <td><span class="badge badge-{{ $user->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $user->role->name }}</span></td>
-                                                <td>{{ optional($user->loginHistories->first())->created_at }}</td>
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $row->name }}</td>
+                                                <td><code>{{ $row->email }}</code></td>
+                                                <td><span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span></td>
+                                                <td>{{ optional($row->loginHistories->first())->created_at }}</td>
+                                                <td>{{ $row->created_at }}</td>
                                                 <td>
                                                     <ul class="nav">
                                                         <li class="nav-item dropdown">
                                                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="nav-icon icon-options"></i></a>
                                                             <div class="dropdown-menu">
-                                                                @can ('select', $user)
-                                                                    <a class="dropdown-item" href="#"><i class="icons icon-note"></i>@lang ('Detail')</a>
+                                                                @can ('select', $row)
+                                                                    <a class="dropdown-item" href="{{ route('accounts.update', $row->id) }}"><i class="icons icon-note"></i>@lang ('Detail')</a>
                                                                 @endcan
 
-                                                                @can ('delete', $user)
+                                                                @can ('delete', $row)
                                                                     <div class="dropdown-divider"></div>
                                                                     <a class="dropdown-item text-danger" href="#"><i class="icons icon-trash text-danger"></i>@lang ('Delete')</a>
                                                                 @endcan
@@ -60,6 +63,13 @@
                                 </table>
 
                                 {!! $users->render() !!}
+                            </div>
+                            <div class="card-footer">
+                                @can ('authorize', 'user-create')
+                                    <a class="btn btn-primary btn-sm float-right" href="#">
+                                        <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
+                                    </a>
+                                @endcan
                             </div>
                         </div>
                     </div>

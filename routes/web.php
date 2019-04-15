@@ -27,8 +27,8 @@ Route::prefix('/')->group(function () {
 //         Route::post($name, );
 
         Route::prefix('{userId}')->group(function () {
-//             Route::get($name = 'update', )->name($name);
-//             Route::post($name, );
+            Route::get($name = 'update', sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'view'))->name($name);
+            Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'update'));
 //             Route::post($name = 'delete', )->name($name);
         });
     });

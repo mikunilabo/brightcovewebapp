@@ -24,12 +24,14 @@
                             <span class="input-group-text"> <i class="icon-user"></i>
                             </span>
                         </div>
-                        <input name="email" type="email" value="{{ old('email') }}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
-                        @include ('components.messages.invalid', ['name' => 'email'])
+
+                        @set ($attribute, 'email')
+                        <input name="{{ $attribute }}" type="email" value="{{ old($attribute) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
+                        @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 
                     <div class="input-prepend input-group">
-                        <button class="btn btn-block btn-outline-warning mt-2" type="{{ empty($demo) ? 'submit' : 'button' }}">
+                        <button class="btn btn-block btn-outline-warning mt-2" type="submit">
                             @lang ('Submit')
                         </button>
                     </div>
