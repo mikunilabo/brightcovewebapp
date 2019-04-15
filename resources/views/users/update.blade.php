@@ -62,7 +62,7 @@
                                     @endcan
 
                                     @can ('delete', $row)
-                                        <a class="btn btn-danger btn-sm float-right" href="#">
+                                        <a class="btn btn-danger btn-sm float-right" href="#" onclick="event.preventDefault(); if (confirm('@lang("test?")')) console.log('entered.'); return false;">
                                             <i class="icons icon-trash"></i> @lang ('Delete account')
                                         </a>
                                     @endcan
@@ -78,6 +78,4 @@
 
 @section ('scripts')
     @parent
-
-    <script type="text/javascript" src="{{ asset(mix('js/vendor/coreui/main.js')) }}" defer></script>
 @endsection
