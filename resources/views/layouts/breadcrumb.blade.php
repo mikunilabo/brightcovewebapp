@@ -1,6 +1,6 @@
 <!-- Breadcrumb-->
 <ol class="breadcrumb">
-    @foreach (array_merge(['Home' => route('home')], $lists ?? []) as $key => $item)
+    @foreach (array_merge([__('Home') => route('home')], $lists ?? []) as $key => $item)
         @if (is_null($item) || $loop->last)
             <li class="breadcrumb-item active">{{ $key }}</li>
         @else

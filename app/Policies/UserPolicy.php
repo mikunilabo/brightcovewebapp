@@ -27,17 +27,7 @@ final class UserPolicy
      */
     public function select(User $user, User $targetUser): bool
     {
-        if ($user->can('authorize', 'users.select')) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-users.select')
-            && optional($user->store)->company_id === optional($targetUser->store())->companyId()
-        ) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-self-store-users.select')
-            && $user->store_id === $targetUser->storeId()
-        ) {
-            return true;
-        } elseif ($user->id === $targetUser->id()) {
+        if ($user->can('authorize', 'user-select')) {
             return true;
         }
 
@@ -50,6 +40,10 @@ final class UserPolicy
      */
     public function create(User $user): bool
     {
+        if ($user->can('authorize', 'user-create')) {
+            return true;
+        }
+
         return false;
     }
 
@@ -60,17 +54,7 @@ final class UserPolicy
      */
     public function update(User $user, User $targetUser): bool
     {
-        if ($user->can('authorize', 'users.update')) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-users.update')
-            && optional($user->store)->company_id === optional($targetUser->store())->companyId()
-        ) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-self-store-users.update')
-            && $user->store_id === $targetUser->storeId()
-        ) {
-            return true;
-        } elseif ($user->id === $targetUser->id()) {
+        if ($user->can('authorize', 'user-update')) {
             return true;
         }
 
@@ -84,18 +68,8 @@ final class UserPolicy
      */
     public function delete(User $user, User $targetUser): bool
     {
-        if ($user->id === $targetUser->id()) {
-            return false;
-        }
-
-        if ($user->can('authorize', 'users.delete')) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-users.delete')
-            && optional($user->store)->company_id === optional($targetUser->store())->companyId()
-        ) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-self-store-users.delete')
-            && $user->store_id === $targetUser->storeId()
+        if ($user->id !== $targetUser->id
+            && $user->can('authorize', 'user-delete')
         ) {
             return true;
         }
@@ -110,22 +84,6 @@ final class UserPolicy
      */
     public function restore(User $user, User $targetUser): bool
     {
-        if ($user->id === $targetUser->id()) {
-            return false;
-        }
-
-        if ($user->can('authorize', 'users.restore')) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-users.restore')
-            && optional($user->store)->company_id === optional($targetUser->store())->companyId()
-        ) {
-            return true;
-        } elseif ($user->can('authorize', 'own-company-self-store-users.restore')
-            && $user->store_id === $targetUser->storeId()
-        ) {
-            return true;
-        }
-
         return false;
     }
 
@@ -136,13 +94,13 @@ final class UserPolicy
      */
     public function changeRole(User $user, User $targetUser): bool
     {
-        if ($user->id === $targetUser->id()) {
-            return false;
-        }
+//         if ($user->can('authorize', config('permissions.groups.user-create'))) {
+//             return true;
+//         }
 
-        if ($user->can('authorize', config('permissions.groups.users.create'))) {
-            return true;
-        }
+//         if ($user->id !== $targetUser->id) {
+//             return true;
+//         }
 
         return false;
     }

@@ -34,7 +34,7 @@ final class IndexController extends Controller
      */
     public function __invoke(IndexRequest $request)
     {
-        return view('accounts.index', [
+        return view('users.index', [
             'users' => $this->useCase->excute([
                 'param' => $request->validated(),
             ]),

@@ -9,7 +9,6 @@ use App\Traits\Database\Eloquent\Creatable;
 use App\Traits\Database\Eloquent\Deletable;
 use App\Traits\Database\Eloquent\Findable;
 use App\Traits\Database\Eloquent\Updatable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 final class UserRepository implements RepositoryContract
@@ -31,11 +30,20 @@ final class UserRepository implements RepositoryContract
     }
 
     /**
-     * @param Builder $builder
-     * @return Builder
+     * @param mixed $builder
+     * @return mixed
      */
-    public function build(Builder $builder): Builder
+    public function build($builder)
     {
+        $builder->with([
+            'role',
+            'loginHistories' => function ($query) {
+                $query->latest()->limit(1);
+            },
+        ]);
+
+        $builder->latest();
+
         return $builder;
     }
 }
