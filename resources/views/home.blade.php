@@ -26,6 +26,8 @@
                             </div>
                             <div class="collapse show" id="collapseExample">
                                 <div class="card-body">
+                                    @component ('components.messages.alerts') @endcomponent
+
                                     Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip exea commodo consequat.
                                 </div>
                             </div>

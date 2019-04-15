@@ -19,6 +19,8 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body">
+                                        @component ('components.messages.alerts') @endcomponent
+
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 @set ($attribute, 'name')

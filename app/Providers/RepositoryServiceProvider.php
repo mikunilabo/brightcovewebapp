@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Repositories\Database\Eloquent\UserRepository;
-use App\UseCases\Users\GetUsers;
+use App\Repositories\Database\Eloquent;
+use App\UseCases\Users;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -38,7 +38,8 @@ final class RepositoryServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
-            GetUsers::class,
+            Users\GetUsers::class,
+            Users\UpdateUser::class
         ];
     }
 
@@ -50,9 +51,15 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Users
          */
-        $this->app->bind(GetUsers::class, function () {
-            return new GetUsers(
-                app(UserRepository::class)
+        $this->app->bind(Users\GetUsers::class, function () {
+            return new Users\GetUsers(
+                app(Eloquent\UserRepository::class)
+            );
+        });
+
+        $this->app->bind(Users\UpdateUser::class, function () {
+            return new Users\UpdateUser(
+                app(Eloquent\UserRepository::class)
             );
         });
     }
