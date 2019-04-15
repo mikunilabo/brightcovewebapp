@@ -18,9 +18,9 @@ return [
         'id'                    => __('ID'),
         'name'                  => __('Name'),
         'email'                 => __('E-Mail'),
-        'role'                  => __('Role'),
+        'role_id'               => __('Role'),
         'password'              => __('Password'),
-        'password_confirmation' => __('Password'),
+        'password_confirmation' => __('Repeat Password'),
     ],
 
 ];

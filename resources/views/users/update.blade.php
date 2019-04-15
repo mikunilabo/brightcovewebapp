@@ -24,7 +24,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 @set ($attribute, 'name')
-                                                <label for="{{ $attribute }}">@lang ($attribute)</label>
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ old($attribute, optional($row)->{$attribute}) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Name')" required autofocus />
                                                 @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
@@ -32,7 +32,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 @set ($attribute, 'email')
-                                                <label for="{{ $attribute }}">@lang ($attribute)</label>
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <input name="{{ $attribute }}" type="email" value="{{ old($attribute, optional($row)->{$attribute}) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required disabled />
                                                 @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
@@ -40,7 +40,7 @@
                                         <div class="row">
                                             <div class="form-group col-sm-12">
                                                 @set ($attribute, 'role_id')
-                                                <label for="{{ $attribute }}">@lang ($attribute)</label>
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <select name="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required disabled>
                                                     {{-- TODO from master table --}}
                                                     @foreach ([1 => 'Admin', 2 => 'User'] as $key => $value)
