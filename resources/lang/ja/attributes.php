@@ -18,6 +18,7 @@ return [
         'id'                    => __('ID'),
         'name'                  => __('Name'),
         'email'                 => __('E-Mail'),
+        'company'               => __('Company Name'),
         'role_id'               => __('Role'),
         'password'              => __('Password'),
         'password_confirmation' => __('Repeat Password'),

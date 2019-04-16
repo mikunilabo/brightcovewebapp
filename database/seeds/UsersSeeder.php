@@ -19,8 +19,9 @@ class UsersSeeder extends Seeder
     {
         $this->items = [
             [
-                'name' => 'Test User',
+                'name' => 'Test user',
                 'email' => config('app.user'),
+                'company' => 'Test, Inc.',
                 'password' => bcrypt(config('app.password')),
                 'role_id' => 1,
             ],

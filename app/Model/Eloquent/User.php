@@ -31,6 +31,8 @@ final class User extends Authenticatable implements ModelContract
     protected $fillable = [
         'name',
         'email',
+        'company',
+        'role_id',
         'password',
     ];
 
