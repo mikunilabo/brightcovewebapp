@@ -26,7 +26,7 @@
                         </div>
 
                         @set ($attribute, 'email')
-                        <input name="{{ $attribute }}" type="email" value="{{ old($attribute) }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
                         @include ('components.messages.invalid', ['name' => $attribute])
                     </div>
 

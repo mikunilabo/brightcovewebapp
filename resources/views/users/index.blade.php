@@ -28,8 +28,9 @@
                                                 <input type="checkbox" />
                                             </th>
                                             <th>@lang ('attributes.users.name')</th>
-                                            <th>@lang ('attributes.users.email')</th>
+                                            <th>@lang ('ID')</th>
                                             <th>@lang ('attributes.users.role_id')</th>
+                                            <th>@lang ('attributes.users.email')</th>
                                             <th>@lang ('Last login')</th>
                                             <th>@lang ('Created At')</th>
                                             <th><i class="nav-icon icon-options"></i></th>
@@ -41,9 +42,18 @@
                                                 <td>
                                                     <input type="checkbox" />
                                                 </td>
-                                                <td>{{ $row->name }}</td>
-                                                <td><code>{{ $row->email }}</code></td>
-                                                <td><span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span></td>
+                                                <td>
+                                                    <a href="{{ route('accounts.detail', $row->id) }}">{{ $row->name }}</a>
+                                                </td>
+                                                <td><code>{{ $row->id }}</code></td>
+                                                <td>
+                                                    <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('accounts.detail', $row->id) }}">
+                                                        <code>{{ $row->email }}</code>
+                                                    </a>
+                                                </td>
                                                 <td>{{ optional($row->loginHistories->first())->created_at }}</td>
                                                 <td>{{ $row->created_at }}</td>
                                                 <td>
@@ -55,7 +65,7 @@
 
                                                             <div class="dropdown-menu dropdown-menu-right">
                                                                 @can ('select', $row)
-                                                                    <a class="dropdown-item" href="{{ route('accounts.update', $row->id) }}">
+                                                                    <a class="dropdown-item" href="{{ route('accounts.detail', $row->id) }}">
                                                                         <i class="icons icon-note"></i>@lang ('Detail')
                                                                     </a>
                                                                 @endcan
