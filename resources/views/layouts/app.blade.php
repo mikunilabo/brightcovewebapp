@@ -28,6 +28,8 @@
         @include ('layouts.footer')
     @show
 
+    @component ('components.forms.basic') @endcomponent
+
     @section ('scripts')
         @include ('layouts.scripts')
     @show

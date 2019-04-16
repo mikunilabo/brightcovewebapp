@@ -21,6 +21,8 @@
                                 @endcan
                             </div>
                             <div class="card-body">
+                                @component ('components.messages.alerts') @endcomponent
+
                                 <table class="table table-responsive-sm table-striped table-hover">
                                     <thead>
                                         <tr>

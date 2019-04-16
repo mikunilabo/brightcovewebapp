@@ -29,7 +29,7 @@ Route::prefix('/')->group(function () {
         Route::prefix('{userId}')->group(function () {
             Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'view'))->name($name);
             Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'update'));
-//             Route::post($name = 'delete', )->name($name);
+            Route::post($name = 'delete', \App\Http\Controllers\Users\DeleteController::class)->name($name);
         });
     });
 

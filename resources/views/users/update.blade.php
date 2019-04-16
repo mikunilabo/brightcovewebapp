@@ -23,6 +23,19 @@
 
                                         <div class="row">
                                             <div class="form-group col-sm-6">
+                                                @set ($attribute, 'id')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <div><code>{{ $row->{$attribute} }}</code></div>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                @set ($attribute, 'email')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : optional($row)->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required disabled />
+                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
                                                 @set ($attribute, 'name')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : optional($row)->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
@@ -36,12 +49,6 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                @set ($attribute, 'email')
-                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : optional($row)->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required disabled />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
-                                            </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'role_id')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
@@ -58,28 +65,14 @@
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'created_at')
                                                 <label for="{{ $attribute }}">@lang ('Created At')</label>
-                                                <input type="text" value="{{ optional($row)->{$attribute} }}" id="{{ $attribute }}" class="form-control" disabled />
+                                                <div>{{ optional($row)->{$attribute} }}</div>
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'updated_at')
                                                 <label for="{{ $attribute }}">@lang ('Updated At')</label>
-                                                <input type="text" value="{{ optional($row)->{$attribute} }}" id="{{ $attribute }}" class="form-control" disabled />
+                                                <div>{{ optional($row)->{$attribute} }}</div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-12">
-                                                @set ($attribute, 'test')
-                                                <label for="test">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input type="search" name="q" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" id="{{ $attribute }}" autocomplete="on" list="keywords">
-                                                <datalist id="keywords">
-                                                    <option value="test1">
-                                                    <option value="test2">
-                                                    <option value="test3">
-                                                </datalist>
-                                            </div>
-                                        </div>
-
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
@@ -92,7 +85,7 @@
                                     @endcan
 
                                     @can ('delete', $row)
-                                        <a class="btn btn-danger btn-sm float-right" href="#" onclick="event.preventDefault(); if (confirm('@lang("test?")')) console.log('entered.'); return false;">
+                                        <a class="btn btn-danger btn-sm float-right" href="{{ route('accounts.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
                                             <i class="icons icon-trash"></i> @lang ('Delete account')
                                         </a>
                                     @endcan

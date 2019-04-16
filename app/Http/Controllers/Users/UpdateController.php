@@ -70,6 +70,6 @@ final class UpdateController extends Controller
 
         return redirect()
             ->route('accounts.detail', $userId)
-            ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Accounts'), 'action' => __('Update')])]);
+            ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Account'), 'action' => __('Update')])]);
     }
 }

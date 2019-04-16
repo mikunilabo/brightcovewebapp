@@ -10,6 +10,8 @@
 <body class="app flex-row align-items-center">
     @yield ('content')
 
+    @component ('components.forms.basic') @endcomponent
+
     @section ('scripts')
         @include ('layouts.scripts')
     @show
