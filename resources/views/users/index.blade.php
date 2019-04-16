@@ -73,7 +73,7 @@
                                                                 @endcan
 
                                                                 @can ('delete', $row)
-                                                                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); if (confirm('@lang("test?")')) console.log('entered.'); return false;">
+                                                                    <a class="dropdown-item text-danger" href="{{ route('accounts.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
                                                                         <i class="icons icon-trash text-danger"></i>@lang ('Delete')
                                                                     </a>
                                                                 @endcan
