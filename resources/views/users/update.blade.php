@@ -4,10 +4,6 @@
 
 @section ('styles')
     @parent
-
-    {{-- TODO Fetch stack from child view. --}}
-    <link href="{{ asset(mix('css/vendor/typeaheadjs-bootstrap4-css/typeaheadjs.css')) }}" rel="stylesheet">
-    @stack ('styles.typeaheadjs')
 @endsection
 
 @section ('content')
