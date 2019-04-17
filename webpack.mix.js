@@ -37,6 +37,7 @@ mix.js('resources/js/app.js', 'public/js')
         'bootstrap',
         'pace-progress',
         'perfect-scrollbar',
+        'typeahead.js',
         '@coreui/coreui',
         'chart.js',
 //        'vue',
@@ -46,6 +47,7 @@ mix.js('resources/js/app.js', 'public/js')
  * CSS
  */
 mix.sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/vendor/typeahead.js-bootstrap4-css/typeaheadjs.scss', 'public/css/vendor/typeaheadjs-bootstrap4-css');
 
 /**
  * Source Maps
