@@ -7,9 +7,12 @@ use App\Contracts\Domain\ModelContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class Role extends Model implements ModelContract
 {
+    use SoftDeletes;
+
     /**
      * @var array
      */

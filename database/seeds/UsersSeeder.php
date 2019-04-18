@@ -22,7 +22,7 @@ class UsersSeeder extends Seeder
                 'name' => 'Test user',
                 'email' => config('app.user'),
                 'company' => 'Test, Inc.',
-                'password' => bcrypt(config('app.password')),
+                'password' => config('app.password'),
                 'role_id' => 1,
             ],
         ];

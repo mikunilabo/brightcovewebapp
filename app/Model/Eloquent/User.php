@@ -7,13 +7,14 @@ use App\Contracts\Domain\ModelContract;
 use App\Traits\Database\Eloquent\Observers\UserObservable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Ramsey\Uuid\Uuid;
 
 final class User extends Authenticatable implements ModelContract
 {
-    use Notifiable, UserObservable;
+    use Notifiable, SoftDeletes, UserObservable;
 
     /**
      * @var string

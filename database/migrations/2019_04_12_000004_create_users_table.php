@@ -22,11 +22,12 @@ final class CreateUsersTable extends Migration
                 $table->uuid('id')->primary();
                 $table->string('name');
                 $table->string('company')->nullable();
-                $table->string('email')->unique();
+                $table->string('email')->nullable()->unique();
                 $table->unsignedInteger('role_id');
                 $table->string('password');
                 $table->rememberToken();
                 $table->timestamps();
+                $table->softDeletes();
 
                 $table->foreign('role_id')
                     ->references('id')

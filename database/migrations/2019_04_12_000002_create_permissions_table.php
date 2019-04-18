@@ -23,6 +23,7 @@ final class CreatePermissionsTable extends Migration
                 $table->string('name');
                 $table->string('slug')->unique();
                 $table->timestamps();
+                $table->softDeletes();
             });
         } catch (\Exception $e) {
             report($e);
