@@ -25,6 +25,7 @@ final class UpdateRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'company' => 'nullable|string|max:255',
+            'sports.*' => 'sometimes|required|array',
         ];
     }
 
