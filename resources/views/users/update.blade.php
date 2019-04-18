@@ -2,6 +2,10 @@
 
 @section ('title', __('Account detail'))
 
+@section ('styles')
+    @parent
+@endsection
+
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Account detail') => route('accounts.index')]]) @endcomponent
@@ -27,12 +31,6 @@
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <div><code>{{ $row->{$attribute} }}</code></div>
                                             </div>
-                                            <div class="form-group col-sm-6">
-                                                @set ($attribute, 'email')
-                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : optional($row)->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required disabled />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
-                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
@@ -50,6 +48,12 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
+                                                @set ($attribute, 'email')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : optional($row)->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required disabled />
+                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                            </div>
+                                            <div class="form-group col-sm-6">
                                                 @set ($attribute, 'role_id')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <select name="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required disabled>
@@ -61,6 +65,36 @@
                                                 @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
                                         </div>
+
+                                        <hr>
+
+                                        <div class="row">
+                                            @set ($attribute, 'sports')
+                                            <div class="form-group col-sm-12">
+                                                <label for="{{ $attribute }}">@lang ('Sports')</label>
+                                            </div>
+                                            @for ($i = 0; $i < 3; $i++)
+                                                <div class="form-group col-sm-6">
+                                                    <div class="input-group">
+                                                        <input name="{{ sprintf('%s[%s]', $attribute, $i) }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute)[$i] : optional($row)->{$attribute} }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $i)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                        <span class="input-group-append">
+                                                            <button class="btn btn-outline-danger" type="button">
+                                                                <i class="icons icon-close"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                    @include ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $i)])
+                                                </div>
+                                            @endfor
+                                            <div class="form-group col-md-6">
+                                                <button class="btn btn-block btn-outline-success" type="button">
+                                                    <i class="icons icon-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <hr>
+
                                         <div class="row">
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'created_at')
@@ -101,4 +135,17 @@
 
 @section ('scripts')
     @parent
+
+    <script type="text/javascript">
+        	$('.typeahead').typeahead({
+            highlight: true,
+            hint: false,
+            minLength: 0
+        	},
+        	{
+            name: 'states',
+            limit: 100,
+            source: window.Common.substringMatcher(@json (Auth::user()->pluck('name')->all()))
+        	});
+    </script>
 @endsection
