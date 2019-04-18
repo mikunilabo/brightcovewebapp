@@ -15,7 +15,7 @@
                                 <i class="fa fa-align-justify"></i>@lang ('Accounts list')
 
                                 @can ('authorize', 'user-create')
-                                    <a class="btn btn-primary btn-sm float-right" href="#">
+                                    <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
                                         <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
                                     </a>
                                 @endcan
@@ -99,7 +99,7 @@
                                 </div>
 
                                 @can ('authorize', 'user-create')
-                                    <a class="btn btn-primary btn-sm float-right" href="#">
+                                    <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
                                         <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
                                     </a>
                                 @endcan

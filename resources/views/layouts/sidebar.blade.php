@@ -52,7 +52,7 @@
 
                         @can ('authorize', ['user-create'])
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('accounts.create') }}">
                                     <i class="nav-icon icon-user-follow"></i>@lang ('Create account')
                                 </a>
                             </li>

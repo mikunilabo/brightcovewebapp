@@ -21,8 +21,8 @@ Route::prefix('/')->group(function () {
      */
     Route::prefix($prefix = 'accounts')->name(sprintf('%s.', $prefix))->group(function () {
         Route::get('/', \App\Http\Controllers\Users\IndexController::class)->name('index');
-//         Route::get($name = 'create', )->name($name);
-//         Route::post($name, );
+        Route::get($name = 'create', sprintf('%s@%s', \App\Http\Controllers\Users\CreateController::class, 'view'))->name($name);
+        Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\CreateController::class, $name));
 //         Route::get($name = 'profile', )->name($name);
 //         Route::post($name, );
 

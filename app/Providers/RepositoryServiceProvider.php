@@ -38,6 +38,7 @@ final class RepositoryServiceProvider extends ServiceProvider
     public function provides(): array
     {
         return [
+            Users\CreateUser::class,
             Users\DeleteUser::class,
             Users\GetUsers::class,
             Users\UpdateUser::class
@@ -52,6 +53,12 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Users
          */
+        $this->app->bind(Users\CreateUser::class, function () {
+            return new Users\CreateUser(
+                app(Eloquent\UserRepository::class)
+                );
+        });
+
         $this->app->bind(Users\DeleteUser::class, function () {
             return new Users\DeleteUser(
                 app(Eloquent\UserRepository::class)
