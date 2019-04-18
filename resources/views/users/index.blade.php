@@ -2,6 +2,10 @@
 
 @section ('title', __('Accounts list'))
 
+@section ('Styles')
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+@endsection
+
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Accounts list') => route('accounts.index')]]) @endcomponent
@@ -23,7 +27,7 @@
                             <div class="card-body">
                                 @component ('components.messages.alerts') @endcomponent
 
-                                <table class="table table-responsive-sm table-striped table-hover">
+                                <table class="table table-responsive-sm table-striped table-hover" id="users-table">
                                     <thead>
                                         <tr>
                                             <th>
@@ -31,10 +35,10 @@
                                             </th>
                                             <th>@lang ('attributes.users.name')</th>
                                             <th>@lang ('ID')</th>
+                                            <th>@lang ('attributes.users.company')</th>
                                             <th>@lang ('attributes.users.role_id')</th>
                                             <th>@lang ('attributes.users.email')</th>
                                             <th>@lang ('Last login')</th>
-                                            <th>@lang ('Created At')</th>
                                             <th><i class="nav-icon icon-options"></i></th>
                                         </tr>
                                     </thead>
@@ -48,6 +52,7 @@
                                                     <a href="{{ route('accounts.detail', $row->id) }}">{{ $row->name }}</a>
                                                 </td>
                                                 <td><code>{{ $row->id }}</code></td>
+                                                <td>{{ $row->company }}</td>
                                                 <td>
                                                     <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
                                                 </td>
@@ -57,7 +62,6 @@
                                                     </a>
                                                 </td>
                                                 <td>{{ optional($row->loginHistories->first())->created_at }}</td>
-                                                <td>{{ $row->created_at }}</td>
                                                 <td>
                                                     <div class="nav navbar-nav">
                                                         <div class="nav-item dropdown">
@@ -86,7 +90,7 @@
                                     </tbody>
                                 </table>
 
-                                {!! $users->render() !!}
+                                {{--{!! $users->render() !!}--}}
                             </div>
                             <div class="card-footer">
                                 <a class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -114,4 +118,36 @@
 
 @section ('scripts')
     @parent
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.extend( $.fn.dataTable.defaults, {
+                language: {
+                    url: "{{ asset('vendor/DataTables/ja.json') }}"
+                }
+            });
+            $('#users-table').DataTable({
+                columnDefs: [
+                    {
+                        targets: [0, 7],
+                        orderable: false
+                    }
+                ],
+                displayLength: 25,
+                info: true,
+                lengthChange: true,
+                lengthMenu: [10, 25, 50, 100],
+                order: [],
+                ordering: true,
+                paging: true,
+                scrollX: false,
+                searching: true,
+                stateSave: true,
+                responsive: true,
+            });
+        });
+    </script>
+} );
 @endsection
