@@ -14,6 +14,7 @@ final class UserObserver
     public function creating(Model $model)
     {
         $model->generateUuid4();
+        $model->password = bcrypt($model->password);
     }
 
     /**

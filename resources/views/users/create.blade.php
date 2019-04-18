@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 
-@section ('title', __('Account detail'))
+@section ('title', __('Create Account'))
 
 @section ('styles')
     @parent
@@ -8,18 +8,18 @@
 
 @section ('content')
     <main class="main">
-        @component ('layouts.breadcrumb', ['lists' => [__('Account detail') => route('accounts.index')]]) @endcomponent
+        @component ('layouts.breadcrumb', ['lists' => [__('Create Account') => route('accounts.create')]]) @endcomponent
 
         <div class="container-fluid">
             <div class="animated fadeIn">
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.detail', $row->id) }}" method="POST">
+                            <form action="{{ route('accounts.create') }}" method="POST">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
-                                    <i class="fa fa-align-justify"></i>@lang ('Account detail')
+                                    <i class="fa fa-align-justify"></i>@lang ('Create Account')
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body">
@@ -27,40 +27,49 @@
 
                                         <div class="row">
                                             <div class="form-group col-sm-6">
-                                                @set ($attribute, 'id')
-                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <div><code>{{ $row->{$attribute} }}</code></div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
                                                 @set ($attribute, 'name')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
                                                 @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'company')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" />
+                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" />
                                                 @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'email')
-                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input name="{{ $attribute }}" type="email" value="{{ $row->{$attribute} }}" class="form-control" placeholder="" disabled />
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                                <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                                                @include ('components.messages.invalid', ['name' => $attribute])
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'role_id')
-                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <select name="{{ $attribute }}" class="form-control" disabled>
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                                <select name="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required>
                                                     {{-- TODO from master table --}}
                                                     @foreach ([1 => 'Admin', 2 => 'User'] as $key => $value)
-                                                        <option value="{{ $key }}" {{ $row->{$attribute} === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
+                                                        <option value="{{ $key }}" {{ (int)($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : 2) === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
                                                     @endforeach
                                                 </select>
+                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                @set ($attribute, 'password')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                                <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                                                @include ('components.messages.invalid', ['name' => $attribute])
+
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                @set ($attribute, 'password_confirmation')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                                <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
                                             </div>
                                         </div>
 
@@ -74,7 +83,7 @@
                                             @for ($i = 0; $i < 3; $i++)
                                                 <div class="form-group col-sm-6">
                                                     <div class="input-group">
-                                                        <input name="{{ sprintf('%s[%s]', $attribute, $i) }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute)[$i] : $row->{$attribute} }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $i)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                        <input name="{{ sprintf('%s[%s]', $attribute, $i) }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute)[$i] : null }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $i)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                         <span class="input-group-append">
                                                             <button class="btn btn-outline-danger" type="button">
                                                                 <i class="icons icon-close"></i>
@@ -90,37 +99,14 @@
                                                 </button>
                                             </div>
                                         </div>
-
-                                        <hr>
-
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                @set ($attribute, 'created_at')
-                                                <label for="{{ $attribute }}">@lang ('Created At')</label>
-                                                <div>{{ $row->{$attribute} }}</div>
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                @set ($attribute, 'updated_at')
-                                                <label for="{{ $attribute }}">@lang ('Updated At')</label>
-                                                <div>{{ $row->{$attribute} }}</div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
 
-                                    @can ('update', $row)
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="icons icon-check"></i> @lang ('Update')
-                                        </button>
-                                    @endcan
-
-                                    @can ('delete', $row)
-                                        <a class="btn btn-danger btn-sm float-right" href="{{ route('accounts.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
-                                            <i class="icons icon-trash"></i> @lang ('Delete account')
-                                        </a>
-                                    @endcan
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="icons icon-check"></i> @lang ('Create')
+                                    </button>
                                 </div>
                             </form>
                         </div>
