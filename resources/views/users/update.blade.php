@@ -66,29 +66,33 @@
 
                                         <hr>
 
-                                        <div class="row">
-                                            @set ($attribute, 'sports')
-                                            <div class="form-group col-sm-12">
+                                        @set ($attribute, 'sports')
+                                        <div class="row" id="{{ sprintf('%s-area', $attribute) }}">
+                                            <div class="form-group col-md-12">
                                                 <label for="{{ $attribute }}">@lang ('Sports')</label>
                                             </div>
-                                            @for ($i = 0; $i < 3; $i++)
-                                                <div class="form-group col-sm-6">
+
+                                            {{--@for ($i = 0; $i < 3; $i++)--}}
+                                            @foreach ($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $sports = [] as $key => $value)
+                                                <div class="form-group col-md-6" id="{{ $id = sprintf('%s-list-%s', $attribute, $key) }}">
                                                     <div class="input-group">
-                                                        <input name="{{ sprintf('%s[%s]', $attribute, $i) }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute)[$i] : $row->{$attribute} }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $i)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                        <input name="{{ sprintf('%s[%s]', $attribute, $key) }}" type="text" value="{{ $value }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $key)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                         <span class="input-group-append">
-                                                            <button class="btn btn-outline-danger" type="button">
+                                                            <button class="btn btn-outline-danger" type="button" onclick="removeElement('{{ $id }}')">
                                                                 <i class="icons icon-close"></i>
                                                             </button>
                                                         </span>
                                                     </div>
-                                                    @include ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $i)])
+                                                    @include ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $key)])
                                                 </div>
-                                            @endfor
+                                            @endforeach
+
                                             <div class="form-group col-md-6">
-                                                <button class="btn btn-block btn-outline-success" type="button">
+                                                <button class="btn btn-block btn-outline-success" type="button" onclick="createList('{{ $attribute }}')">
                                                     <i class="icons icon-plus"></i>
                                                 </button>
                                             </div>
+                                            <input type="hidden" id="{{ sprintf('%s-list-cnt', $attribute) }}" value="{{ count($sports) }}">
                                         </div>
 
                                         <hr>
@@ -135,15 +139,76 @@
     @parent
 
     <script type="text/javascript">
-        	$('.typeahead').typeahead({
-            highlight: true,
-            hint: false,
-            minLength: 0
-        	},
-        	{
-            name: 'states',
-            limit: 100,
-            source: window.Common.substringMatcher(@json (Auth::user()->pluck('name')->all()))
-        	});
+        (function() {
+            'use strict';
+
+            typeAhead('.typeahead');
+        })()
+
+        	/**
+        	 * @param string name
+        	 */
+        	function createList(name) {
+            	var cnt = document.getElementById(name + '-list-cnt');
+            	var listId = name + '-list-' + cnt.value;
+
+            	var i = document.createElement('i');
+            	i.classList.add('icons', 'icon-close');
+
+            	var button = document.createElement('button');
+            	button.classList.add('btn', 'btn-outline-danger');
+            	button.type = 'button';
+            	button.addEventListener('click', () => { removeElement(listId); }, false);
+            	button.appendChild(i);
+
+            	var span = document.createElement('span');
+            	span.classList.add('input-group-append');
+            	span.appendChild(button);
+
+            	var input = document.createElement('input');
+            	var inputId = 'typeahead-' + cnt.value;
+            	input.id = inputId;
+            	input.classList.add('form-control', 'typeahead');
+            	input.name = name + '[' + cnt.value + ']';
+            	input.type = 'text';
+            	input.value = '';
+            	input.autocomplete = 'off';
+
+            	var inputGroup = document.createElement('div');
+            	inputGroup.classList.add('input-group');
+            	inputGroup.appendChild(input);
+            	inputGroup.appendChild(span);
+
+            	var child = document.createElement('div');
+            	child.id = listId;
+            	child.classList.add('form-group', 'col-md-6');
+            	child.appendChild(inputGroup);
+
+            	var parent = document.getElementById(name + '-area');
+            parent.appendChild(child);
+
+            cnt.value++;
+
+            typeAhead('#' + inputId);
+        	}
+
+        	function removeElement(id) {
+            	var element = document.getElementById(id);
+            	element.parentNode.removeChild(element);
+        	}
+
+        	function typeAhead(tag) {
+            	console.log(tag);
+            $(tag).typeahead({
+                highlight: true,
+                hint: false,
+                minLength: 0
+            	},
+            	{
+                name: 'states',
+                limit: 100,
+                source: window.Common.substringMatcher(@json (Auth::user()->pluck('name')->all()))
+            	});
+        }
     </script>
 @endsection
