@@ -77,7 +77,7 @@
                                                     <div class="input-group">
                                                         <input name="{{ sprintf('%s[%s]', $attribute, $key) }}" type="text" value="{{ $value }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $key)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                         <span class="input-group-append">
-                                                            <button class="btn btn-outline-danger" type="button" onclick="removeElement('{{ $id }}')">
+                                                            <button class="btn btn-outline-danger" type="button" onclick="window.Common.removeElement('{{ $id }}')">
                                                                 <i class="icons icon-close"></i>
                                                             </button>
                                                         </span>
@@ -87,7 +87,7 @@
                                             @endforeach
 
                                             <div class="form-group col-md-6" id="{{ sprintf('%s-add-btn-area', $attribute) }}">
-                                                <button class="btn btn-block btn-outline-success" type="button" onclick="createList('{{ $attribute }}')">
+                                                <button class="btn btn-block btn-outline-success" type="button" onclick="window.Common.createTypeAheadList('{{ $attribute }}')">
                                                     <i class="icons icon-plus"></i>
                                                 </button>
                                             </div>
@@ -142,71 +142,25 @@
             'use strict';
 
             typeAhead('.typeahead');
-        })()
+        })();
 
-        	/**
-        	 * @param string name
-        	 */
-        	function createList(name) {
-            	var cnt = document.getElementById(name + '-list-cnt');
-            	var listId = name + '-list-' + cnt.value;
+        /**
+         * @param string id
+         * @return void
+         */
+        function typeAhead(tag) {
+            var json = @json (Auth::user()->pluck('name')->all());
 
-            	var i = document.createElement('i');
-            	i.classList.add('icons', 'icon-close');
-
-            	var button = document.createElement('button');
-            	button.classList.add('btn', 'btn-outline-danger');
-            	button.type = 'button';
-            	button.addEventListener('click', () => { removeElement(listId); }, false);
-            	button.appendChild(i);
-
-            	var span = document.createElement('span');
-            	span.classList.add('input-group-append');
-            	span.appendChild(button);
-
-            	var input = document.createElement('input');
-            	var inputId = 'typeahead-' + cnt.value;
-            	input.id = inputId;
-            	input.classList.add('form-control', 'typeahead');
-            	input.name = name + '[' + cnt.value + ']';
-            	input.type = 'text';
-            	input.value = '';
-            	input.autocomplete = 'off';
-
-            	var inputGroup = document.createElement('div');
-            	inputGroup.classList.add('input-group');
-            	inputGroup.appendChild(input);
-            	inputGroup.appendChild(span);
-
-            	var child = document.createElement('div');
-            	child.id = listId;
-            	child.classList.add('form-group', 'col-md-6');
-            	child.appendChild(inputGroup);
-
-            	var parent = document.getElementById(name + '-area');
-            var target = document.getElementById(name + '-add-btn-area');
-            parent.insertBefore(child, target);
-
-            typeAhead('#' + inputId);
-            cnt.value++;
-        	}
-
-        	function removeElement(id) {
-            	var element = document.getElementById(id);
-            	element.parentNode.removeChild(element);
-        	}
-
-        	function typeAhead(tag) {
             $(tag).typeahead({
                 highlight: true,
                 hint: false,
                 minLength: 0
-            	},
-            	{
+            },
+            {
                 name: 'states',
                 limit: 100,
-                source: window.Common.substringMatcher(@json (Auth::user()->pluck('name')->all()))
-            	});
+                source: window.Common.substringMatcher(json)
+            });
         }
     </script>
 @endsection
