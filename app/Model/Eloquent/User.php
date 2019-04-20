@@ -6,6 +6,7 @@ namespace App\Model\Eloquent;
 use App\Contracts\Domain\ModelContract;
 use App\Traits\Database\Eloquent\Observers\UserObservable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -59,6 +60,30 @@ final class User extends Authenticatable implements ModelContract
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function leagues(): BelongsToMany
+    {
+        return $this->belongsToMany(League::class)->withTimestamps();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function universities(): BelongsToMany
+    {
+        return $this->belongsToMany(University::class)->withTimestamps();
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function sports(): BelongsToMany
+    {
+        return $this->belongsToMany(Sport::class)->withTimestamps();
     }
 
     /**

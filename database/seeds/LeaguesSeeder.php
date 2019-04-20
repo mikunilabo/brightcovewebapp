@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-use App\Model\Eloquent\Role;
+use App\Model\Eloquent\League;
 use App\Traits\Database\Transactionable;
 use Illuminate\Database\Seeder;
 
-class RolesSeeder extends Seeder
+class LeaguesSeeder extends Seeder
 {
     use Transactionable;
 
@@ -19,12 +19,19 @@ class RolesSeeder extends Seeder
     {
         $this->items = [
             [
-                'name' => 'Admin',
-                'slug' => 'admin',
+                'name' => '全日本大学野球連盟',
             ],
             [
-                'name' => 'User',
-                'slug' => 'user',
+                'name' => '東京六大学野球連盟',
+            ],
+            [
+                'name' => '全日本大学バスケットボール連盟',
+            ],
+            [
+                'name' => '全日本大学ソフトボール連盟',
+            ],
+            [
+                'name' => '全日本学生レスリング連盟',
             ],
         ];
     }
@@ -37,7 +44,7 @@ class RolesSeeder extends Seeder
         try {
             $this->transaction(function () {
                 collect($this->items)->each(function ($item) {
-                    Role::create($item);
+                    League::create($item);
                 });
             });
         } catch (\Exception $e) {

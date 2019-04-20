@@ -14,5 +14,8 @@ final class DatabaseSeeder extends Seeder
         $this->call(PermissionsSeeder::class);
         $this->call(PermissionRoleSeeder::class);
         $this->call(UsersSeeder::class);
+        $this->call(LeaguesSeeder::class);
+        $this->call(UniversitiesSeeder::class);
+        $this->call(SportsSeeder::class);
     }
 }
