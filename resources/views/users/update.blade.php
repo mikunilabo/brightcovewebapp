@@ -8,7 +8,7 @@
 
 @section ('content')
     <main class="main">
-        @component ('layouts.breadcrumb', ['lists' => [__('Account detail') => route('accounts.index')]]) @endcomponent
+        @component ('layouts.breadcrumb', ['lists' => [__('Account detail') => route('accounts.detail', $row->id)]]) @endcomponent
 
         <div class="container-fluid">
             <div class="animated fadeIn">
@@ -37,13 +37,13 @@
                                                 @set ($attribute, 'name')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
                                                 <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'company')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
                                         <div class="row">
@@ -67,32 +67,7 @@
                                         <hr>
 
                                         @set ($attribute, 'sports')
-                                        <div class="row" id="{{ sprintf('%s-area', $attribute) }}">
-                                            <div class="form-group col-md-12">
-                                                <label for="{{ $attribute }}">@lang ('Sports')</label>
-                                            </div>
-
-                                            @foreach (($errors->{$errorBag ?? 'default'}->any() ? $items = old($attribute) : $items = []) as $key => $value)
-                                                <div class="form-group col-md-6" id="{{ $id = sprintf('%s-list-%s', $attribute, $key) }}">
-                                                    <div class="input-group">
-                                                        <input name="{{ sprintf('%s[%s]', $attribute, $key) }}" type="text" value="{{ $value }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $key)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
-                                                        <span class="input-group-append">
-                                                            <button class="btn btn-outline-danger" type="button" onclick="window.Common.removeElement('{{ $id }}')">
-                                                                <i class="icons icon-close"></i>
-                                                            </button>
-                                                        </span>
-                                                    </div>
-                                                    @include ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $key)])
-                                                </div>
-                                            @endforeach
-
-                                            <div class="form-group col-md-6" id="{{ sprintf('%s-add-btn-area', $attribute) }}">
-                                                <button class="btn btn-block btn-outline-success" type="button" onclick="window.Common.createTypeAheadList('{{ $attribute }}')">
-                                                    <i class="icons icon-plus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="hidden" id="{{ sprintf('%s-list-cnt', $attribute) }}" value="{{ collect($items)->keys()->max() + 1 }}">
-                                        </div>
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : []])
 
                                         <hr>
 

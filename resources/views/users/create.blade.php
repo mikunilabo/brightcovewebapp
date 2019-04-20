@@ -30,13 +30,13 @@
                                                 @set ($attribute, 'name')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
                                                 <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'company')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
                                         <div class="row">
@@ -44,7 +44,7 @@
                                                 @set ($attribute, 'email')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
                                                 <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'role_id')
@@ -55,7 +55,7 @@
                                                         <option value="{{ $key }}" {{ (int)($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : 2) === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
                                                     @endforeach
                                                 </select>
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
                                         <div class="row">
@@ -63,7 +63,7 @@
                                                 @set ($attribute, 'password')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
                                                 <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
-                                                @include ('components.messages.invalid', ['name' => $attribute])
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
 
                                             </div>
                                             <div class="form-group col-sm-6">
@@ -90,7 +90,7 @@
                                                             </button>
                                                         </span>
                                                     </div>
-                                                    @include ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $i)])
+                                                    @component ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $i)])
                                                 </div>
                                             @endfor
                                             <div class="form-group col-md-6">

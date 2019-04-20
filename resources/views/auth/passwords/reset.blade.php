@@ -27,7 +27,7 @@
 
                         @set ($attribute, 'email')
                         <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
-                        @include ('components.messages.invalid', ['name' => $attribute])
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -38,7 +38,7 @@
 
                         @set ($attribute, 'password')
                         <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
-                        @include ('components.messages.invalid', ['name' => $attribute])
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -50,7 +50,7 @@
 
                         @set ($attribute, 'password_confirmation')
                         <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
-                        @include ('components.messages.invalid', ['name' => $attribute])
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-2">
