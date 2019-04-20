@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace App\Repositories\Database\Eloquent;
 
 use App\Contracts\Domain\RepositoryContract;
-use App\Model\Eloquent\User;
+use App\Model\Eloquent\Sport;
 use App\Traits\Database\Eloquent\Creatable;
 use App\Traits\Database\Eloquent\Deletable;
 use App\Traits\Database\Eloquent\Findable;
 use App\Traits\Database\Eloquent\Updatable;
 use Illuminate\Database\Eloquent\Model;
 
-final class UserRepository implements RepositoryContract
+final class SportRepository implements RepositoryContract
 {
     use Creatable,
         Deletable,
@@ -24,7 +24,7 @@ final class UserRepository implements RepositoryContract
     /**
      * @param Model $eloquent
      */
-    public function __construct(User $eloquent)
+    public function __construct(Sport $eloquent)
     {
         $this->eloquent = $eloquent;
     }
@@ -35,15 +35,6 @@ final class UserRepository implements RepositoryContract
      */
     public function build($builder)
     {
-        $builder->with([
-            'role',
-            'loginHistories' => function ($query) {
-                $query->latest()->limit(1);
-            },
-        ]);
-
-        $builder->latest();
-
         return $builder;
     }
 }

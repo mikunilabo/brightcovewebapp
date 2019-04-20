@@ -14,7 +14,7 @@ final class CreateUser implements UseCaseContract
     /** @var RepositoryContract */
     private $repo;
 
-     /**
+    /**
      * @param RepositoryContract $repo
      * @return void
      */
