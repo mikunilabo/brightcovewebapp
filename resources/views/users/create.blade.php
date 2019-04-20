@@ -72,10 +72,10 @@
                                             </div>
                                         </div>
 
-                                        <hr>
-
-                                        @set ($attribute, 'sports')
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : []])
+                                        @foreach (['leagues', 'universities', 'sports'] as $attribute)
+                                            <hr>
+                                            @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : []])
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
@@ -101,15 +101,23 @@
         (function() {
             'use strict';
 
-            typeAhead('.typeahead');
+            ta('.ta-leagues', 'leagues');
+            ta('.ta-sports', 'sports');
+            ta('.ta-universities', 'universities');
         })();
 
         /**
          * @param string id
          * @return void
          */
-        function typeAhead(tag) {
-            var json = @json (Auth::user()->pluck('name')->all());
+        function ta(tag, name) {
+            if (name === 'leagues') {
+                var json = @json ($vc_leagues->pluck('name'));
+            } else if (name === 'sports') {
+                var json = @json ($vc_sports->pluck('name'));
+            } else if (name === 'universities') {
+                var json = @json ($vc_universities->pluck('name'));
+            }
 
             $(tag).typeahead({
                 highlight: true,

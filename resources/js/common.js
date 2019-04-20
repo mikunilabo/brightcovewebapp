@@ -60,7 +60,7 @@ class Common {
         span.appendChild(button);
 
         var input = document.createElement('input');
-        var inputId = 'typeahead-' + cnt.value;
+        var inputId = 'ta-' + name + '-' + cnt.value;
         input.id = inputId;
         input.classList.add('form-control', 'typeahead');
         input.name = name + '[' + cnt.value + ']';
@@ -82,7 +82,7 @@ class Common {
         var target = document.getElementById(name + '-add-btn-area');
         parent.insertBefore(child, target);
 
-        typeAhead('#' + inputId);
+        ta('#' + inputId, name);
         cnt.value++;
     }
 

@@ -37,6 +37,7 @@ final class ViewServiceProvider extends ServiceProvider
 
         View::composer([
             'users.create',
+            'users.update',
         ], Composers\RolesComposer::class);
 
         View::composer([

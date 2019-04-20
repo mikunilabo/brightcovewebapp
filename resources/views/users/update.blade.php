@@ -56,20 +56,19 @@
                                                 @set ($attribute, 'role_id')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
                                                 <select name="{{ $attribute }}" class="form-control" disabled>
-                                                    {{-- TODO from master table --}}
-                                                    @foreach ([1 => 'Admin', 2 => 'User'] as $key => $value)
+                                                    @foreach ($vc_roles->pluck('name', 'id') as $key => $value)
                                                         <option value="{{ $key }}" {{ $row->{$attribute} === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <hr>
+                                        @foreach (['leagues', 'universities', 'sports'] as $attribute)
+                                            <hr>
+                                            @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])
 
-                                        @set ($attribute, 'sports')
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : []])
-
-                                        <hr>
+                                            @if ($loop->last) <hr> @endif
+                                        @endforeach
 
                                         <div class="row">
                                             <div class="form-group col-sm-6">
@@ -116,15 +115,23 @@
         (function() {
             'use strict';
 
-            typeAhead('.typeahead');
+            ta('.ta-leagues', 'leagues');
+            ta('.ta-sports', 'sports');
+            ta('.ta-universities', 'universities');
         })();
 
         /**
          * @param string id
          * @return void
          */
-        function typeAhead(tag) {
-            var json = @json (Auth::user()->pluck('name')->all());
+        function ta(tag, name) {
+            if (name === 'leagues') {
+                var json = @json ($vc_leagues->pluck('name'));
+            } else if (name === 'sports') {
+                var json = @json ($vc_sports->pluck('name'));
+            } else if (name === 'universities') {
+                var json = @json ($vc_universities->pluck('name'));
+            }
 
             $(tag).typeahead({
                 highlight: true,
