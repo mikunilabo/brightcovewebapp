@@ -72,8 +72,7 @@
                                                 <label for="{{ $attribute }}">@lang ('Sports')</label>
                                             </div>
 
-                                            {{--@for ($i = 0; $i < 3; $i++)--}}
-                                            @foreach ($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $sports = [] as $key => $value)
+                                            @foreach (($errors->{$errorBag ?? 'default'}->any() ? $items = old($attribute) : $items = []) as $key => $value)
                                                 <div class="form-group col-md-6" id="{{ $id = sprintf('%s-list-%s', $attribute, $key) }}">
                                                     <div class="input-group">
                                                         <input name="{{ sprintf('%s[%s]', $attribute, $key) }}" type="text" value="{{ $value }}" class="typeahead form-control {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $key)) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
@@ -87,12 +86,12 @@
                                                 </div>
                                             @endforeach
 
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-md-6" id="{{ sprintf('%s-add-btn-area', $attribute) }}">
                                                 <button class="btn btn-block btn-outline-success" type="button" onclick="createList('{{ $attribute }}')">
                                                     <i class="icons icon-plus"></i>
                                                 </button>
                                             </div>
-                                            <input type="hidden" id="{{ sprintf('%s-list-cnt', $attribute) }}" value="{{ count($sports) }}">
+                                            <input type="hidden" id="{{ sprintf('%s-list-cnt', $attribute) }}" value="{{ collect($items)->keys()->max() + 1 }}">
                                         </div>
 
                                         <hr>
@@ -185,11 +184,11 @@
             	child.appendChild(inputGroup);
 
             	var parent = document.getElementById(name + '-area');
-            parent.appendChild(child);
-
-            cnt.value++;
+            var target = document.getElementById(name + '-add-btn-area');
+            parent.insertBefore(child, target);
 
             typeAhead('#' + inputId);
+            cnt.value++;
         	}
 
         	function removeElement(id) {
@@ -198,7 +197,6 @@
         	}
 
         	function typeAhead(tag) {
-            	console.log(tag);
             $(tag).typeahead({
                 highlight: true,
                 hint: false,
