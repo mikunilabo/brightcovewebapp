@@ -95,4 +95,29 @@ final class User extends Authenticatable implements ModelContract
             $this->id = Uuid::uuid4()->toString();
         } while ($this->find($this->id));
     }
+
+    /**
+     * @param string $related
+     * @param array $args
+     * @return void
+     */
+    public function sync(string $related, array $args = []): void
+    {
+        /** @var \Illuminate\Database\Eloquent\Relations\BelongsToMany $builder */
+        $builder = $this->{$related}();
+        $relations = $builder->get();
+        $related = $builder->getRelated();
+        $sync = [];
+
+        foreach ($args as $name) {
+
+            if (is_null($model = $relations->firstWhere('name', $name))) {
+                $model = $related->updateOrCreate(['name' => $name]);
+            }
+
+            $sync[] = $model->id;
+        }
+
+        $builder->sync($sync);
+    }
 }

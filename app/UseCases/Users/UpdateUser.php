@@ -43,6 +43,10 @@ final class UpdateUser implements UseCaseContract
     public function excute($args)
     {
         return $this->transaction(function () use ($args) {
+            $args['entity']->sync($related = 'leagues', empty($args['param'][$related]) ? [] : $args['param'][$related]);
+            $args['entity']->sync($related = 'sports', empty($args['param'][$related]) ? [] : $args['param'][$related]);
+            $args['entity']->sync($related = 'universities', empty($args['param'][$related]) ? [] : $args['param'][$related]);
+
             return $args['entity']->update($args['param']);
         });
     }
