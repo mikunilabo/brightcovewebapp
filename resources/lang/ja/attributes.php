@@ -22,8 +22,11 @@ return [
         'role_id'               => __('Role'),
         'password'              => __('Password'),
         'password_confirmation' => __('Repeat Password'),
+        'leagues'               => __('Leagues'),
         'leagues.*'             => __('Leagues'),
+        'sports'                => __('Sports'),
         'sports.*'              => __('Sports'),
+        'universities'          => __('Universities'),
         'universities.*'        => __('Universities'),
     ],
 

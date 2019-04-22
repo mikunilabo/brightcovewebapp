@@ -36,13 +36,13 @@
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'name')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" required autofocus />
                                                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'company')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" />
+                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
@@ -62,13 +62,31 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                @set ($attribute, 'leagues')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <div class="input-group">
+                                                    <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                </div>
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                @set ($attribute, 'universities')
+                                                <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <div class="input-group">
+                                                    <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                </div>
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                            </div>
+                                        </div>
 
-                                        @foreach (['leagues', 'universities', 'sports'] as $attribute)
-                                            <hr>
-                                            @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])
+                                        <hr>
 
-                                            @if ($loop->last) <hr> @endif
-                                        @endforeach
+                                        @set ($attribute, 'sports')
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])
+
+                                        <hr>
 
                                         <div class="row">
                                             <div class="form-group col-sm-6">

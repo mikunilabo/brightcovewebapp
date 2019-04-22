@@ -30,7 +30,12 @@ final class CreateUser implements UseCaseContract
     public function excute($args)
     {
         return $this->transaction(function () use ($args) {
-            return $this->repo->create($args['param']);
+            $entity = $this->repo->create($args['param']);
+            $entity->sync($related = 'leagues', empty($args['param'][$related]) ? [] : [$args['param'][$related]]);
+            $entity->sync($related = 'sports', empty($args['param'][$related]) ? [] : $args['param'][$related]);
+            $entity->sync($related = 'universities', empty($args['param'][$related]) ? [] : [$args['param'][$related]]);
+
+            return $entity;
         });
     }
 }

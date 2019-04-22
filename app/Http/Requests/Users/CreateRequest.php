@@ -28,7 +28,11 @@ final class CreateRequest extends FormRequest
             'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|max:16|confirmed',
             'role_id'  => 'required|numeric|exists:roles,id',
-//             'sports.*' => 'sometimes|required',
+
+            'leagues'      => 'nullable|string|max:255',
+            'universities' => 'nullable|string|max:255',
+            'sports'       => 'sometimes|array',
+            'sports.*'     => 'sometimes|required|string|max:255',
         ];
     }
 

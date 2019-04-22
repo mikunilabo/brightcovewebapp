@@ -23,11 +23,13 @@ final class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'    => 'required|string|max:255',
-            'company' => 'nullable|string|max:255',
-            'leagues.*' => 'sometimes|required|string|max:255',
-            'sports.*' => 'sometimes|required|string|max:255',
-            'universities.*' => 'sometimes|required|string|max:255',
+            'name'         => 'required|string|max:255',
+            'company'      => 'nullable|string|max:255',
+
+            'leagues'      => 'nullable|string|max:255',
+            'universities' => 'nullable|string|max:255',
+            'sports'       => 'sometimes|array',
+            'sports.*'     => 'sometimes|required|string|max:255',
         ];
     }
 
