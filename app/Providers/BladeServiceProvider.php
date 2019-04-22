@@ -36,5 +36,14 @@ final class BladeServiceProvider extends ServiceProvider
         Blade::if('env', function ($env) {
             return app()->environment($env);
         });
+
+        /**
+         * @param string $arg
+         * @return string
+         */
+        Blade::directive('set', function (string $arg): string {
+            list($key, $value) = explode(',', $arg);
+            return "<?php $key = $value; ?>";
+        });
     }
 }

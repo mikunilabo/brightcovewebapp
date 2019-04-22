@@ -95,6 +95,25 @@ return [
     'fallback_locale' => 'en',
 
     /*
+     |--------------------------------------------------------------------------
+     | Faker Locale Setting
+     |--------------------------------------------------------------------------
+     */
+
+    'faker_locale' => env('FAKER_LOCALE', 'ja_JP'),
+
+    /*
+     |--------------------------------------------------------------------------
+     | Application Default Admin User Credentials
+     |--------------------------------------------------------------------------
+     |
+     */
+
+    'user' => env('APP_ACCOUNT', 'user@example.com'),
+
+    'password' => env('APP_PASSWORD', 'password'),
+
+    /*
     |--------------------------------------------------------------------------
     | Encryption Key
     |--------------------------------------------------------------------------
@@ -176,10 +195,12 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\DatabaseServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\LocalServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\ViewServiceProvider::class,
     ],
 
     /*

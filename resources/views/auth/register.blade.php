@@ -8,8 +8,7 @@
             <div class="col-md-6">
                 <div class="clearfix">
                     <h2>
-                        <i class="fa fa-send fa-fw"></i>
-                        @lang ('Sign Up')
+                        <i class="icons icon-user-follow"></i> @lang ('Sign Up')
                     </h2>
                     <p class="text-muted">@lang ('Please enter your name, e-mail address, and password.')</p>
                 </div>
@@ -23,8 +22,10 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon-user"></i></span>
                         </div>
-                        <input name="name" type="text" value="{{ old('name') }}" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="@lang ('Username')" required autofocus />
-                        @include ('components.messages.invalid', ['name' => 'name'])
+
+                        @set ($attribute, 'name')
+                        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-1">
@@ -32,27 +33,34 @@
                             <span class="input-group-text"> <i class="icon-user"></i>
                             </span>
                         </div>
-                        <input name="email" type="email" value="{{ old('email') }}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required />
-                        @include ('components.messages.invalid', ['name' => 'email'])
+
+                        @set ($attribute, 'email')
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon-lock"></i></span>
                         </div>
-                        <input name="password" type="password" value class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
-                            @include ('components.messages.invalid', ['name' => 'password'])
+
+                        @set ($attribute, 'password')
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="icon-lock"></i></span>
                         </div>
-                        <input name="password_confirmation" type="password" value class="form-control {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" placeholder="@lang ('Repeat password')" required />
+
+                        @set ($attribute, 'password_confirmation')
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group mt-2">
-                        <button class="btn btn-block btn-outline-success" type="{{ empty($demo) ? 'submit' : 'button' }}">
+                        <button class="btn btn-block btn-outline-success" type="submit">
                             @lang ('Create Account')
                         </button>
                     </div>

@@ -24,10 +24,14 @@ final class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $maxAttempts = 5;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $decayMinutes = 30;
 
     /**
@@ -39,11 +43,10 @@ final class LoginController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
      * @param  LoginRequest $validator
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
-    public function login(Request $request, LoginRequest $validator)
+    public function login(LoginRequest $request)
     {
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and

@@ -8,17 +8,11 @@
             <div class="col-md-6">
                 <div class="clearfix">
                     <h1 class="float-left display-3 mr-4">500</h1>
-                    <h4 class="pt-3">Houston, we have a problem!</h4>
-                    <p class="text-muted">The page you are looking for is temporarily unavailable.</p>
-                </div>
-                <div class="input-prepend input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-search"></i></span>
-                    </div>
-                    <input class="form-control" id="prependedInput" size="16" type="text" placeholder="What are you looking for?" />
-                    <span class="input-group-append">
-                        <button class="btn btn-info" type="button">Search</button>
-                    </span>
+                    <h4 class="pt-1">@lang ('An internal server error has occurred.')</h4>
+                    <p class="text-muted">
+                        @lang ('Please contact the administrator.')<br>
+                        <a href="{{ route('home') }}">@lang ('Return to home')</a>
+                    </p>
                 </div>
             </div>
         </div>

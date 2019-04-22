@@ -8,8 +8,7 @@
             <div class="col-md-6">
                 <div class="clearfix">
                     <h2>
-                        <i class="fa fa-send fa-fw"></i>
-                        @lang ('Reset Password')
+                        <i class="icons icon-paper-plane"></i> @lang ('Reset Password')
                     </h2>
                     <p class="text-muted">@lang ('Please enter your registered e-mail address.')</p>
                 </div>
@@ -24,12 +23,14 @@
                             <span class="input-group-text"> <i class="icon-user"></i>
                             </span>
                         </div>
-                        <input name="email" type="email" value="{{ old('email') }}" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
-                        @include ('components.messages.invalid', ['name' => 'email'])
+
+                        @set ($attribute, 'email')
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
                     <div class="input-prepend input-group">
-                        <button class="btn btn-block btn-outline-warning mt-2" type="{{ empty($demo) ? 'submit' : 'button' }}">
+                        <button class="btn btn-block btn-outline-warning mt-2" type="submit">
                             @lang ('Submit')
                         </button>
                     </div>

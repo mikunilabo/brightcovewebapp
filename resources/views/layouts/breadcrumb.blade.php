@@ -1,6 +1,6 @@
 <!-- Breadcrumb-->
 <ol class="breadcrumb">
-    @foreach (array_merge(['Home' => route('home')], $lists ?? []) as $key => $item)
+    @foreach (array_merge([__('Home') => route('home')], $lists ?? []) as $key => $item)
         @if (is_null($item) || $loop->last)
             <li class="breadcrumb-item active">{{ $key }}</li>
         @else
@@ -14,7 +14,7 @@
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
             <a class="btn" href="#">
-                <i class="icon-settings"></i>  Settings
+                <i class="icon-settings"></i> @lang ('Settings')
             </a>
         </div>
     </li>

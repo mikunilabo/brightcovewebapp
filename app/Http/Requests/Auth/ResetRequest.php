@@ -31,7 +31,7 @@ final class ResetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'    => 'required|string|email|max:191|exists:users',
+            'email'    => 'required|string|email|max:255|exists:users',
             'password' => 'required|string|min:8|max:16|confirmed',
         ];
     }

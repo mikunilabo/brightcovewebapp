@@ -1,5 +1,5 @@
-@if ($errors->{empty($errBag) ? 'default' : $errBag}->has($name))
-    <span class="invalid-feedback" role="alert">
-        <strong>{{ $errors->first($name) }}</strong>
+@if ($errors->{$errorBag ?? 'default'}->has($name))
+    <span class="invalid-feedback" role="alert" style="display: block;">
+        <strong>{{ $errors->{$errorBag ?? 'default'}->first($name) }}</strong>
     </span>
 @endif

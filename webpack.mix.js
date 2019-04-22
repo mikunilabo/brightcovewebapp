@@ -37,6 +37,7 @@ mix.js('resources/js/app.js', 'public/js')
         'bootstrap',
         'pace-progress',
         'perfect-scrollbar',
+        'typeahead.js',
         '@coreui/coreui',
         'chart.js',
 //        'vue',

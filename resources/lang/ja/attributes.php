@@ -15,17 +15,19 @@ return [
     */
 
     'users' => [
-        'id'                    => 'ID',
-        'name'                  => 'ログイン名',
-        'email'                 => 'メールアドレス',
-        'role'                  => 'ロール',
-        'password'              => 'パスワード',
-        'password_confirmation' => 'パスワード（確認）',
-        'remember'              => '次回から自動でログインする',
-
-        'created_at'            => '登録日時',
-        'updated_at'            => '更新日時',
-        'deleted_at'            => '削除日時',
+        'id'                    => __('ID'),
+        'name'                  => __('Name'),
+        'email'                 => __('E-Mail'),
+        'company'               => __('Company Name'),
+        'role_id'               => __('Role'),
+        'password'              => __('Password'),
+        'password_confirmation' => __('Repeat Password'),
+        'leagues'               => __('Leagues'),
+        'leagues.*'             => __('Leagues'),
+        'sports'                => __('Sports'),
+        'sports.*'              => __('Sports'),
+        'universities'          => __('Universities'),
+        'universities.*'        => __('Universities'),
     ],
 
 ];

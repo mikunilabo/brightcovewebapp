@@ -1,0 +1,17 @@
+{
+    "sProcessing": "処理中...",
+    "sLengthMenu": "_MENU_ 件表示",
+    "sZeroRecords": "データがありません。",
+    "sInfo": " _TOTAL_ 件中 _START_ - _END_ まで表示",
+    "sInfoEmpty": " 該当 0 件",
+    "sInfoFiltered": "（全 _MAX_ 件より抽出）",
+    "sInfoPostFix": "",
+    "sSearch": "絞り込み: ",
+    "sUrl": "",
+    "oPaginate": {
+        "sFirst": "<<",
+        "sPrevious": "<",
+        "sNext": ">",
+        "sLast": ">>"
+    }
+}

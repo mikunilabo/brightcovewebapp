@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Password;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResendRequest;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 
-final class ForgotPasswordController extends Controller
+final class ForgotController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -33,11 +33,10 @@ final class ForgotPasswordController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  ResendRequest $validator
+     * @param  ResendRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function sendResetLinkEmail(Request $request, ResendRequest $validator)
+    public function sendResetLinkEmail(ResendRequest $request)
     {
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
@@ -46,9 +45,9 @@ final class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        /**
-         * メールアドレスの探索目的回避のため、登録アドレスが無くても正常送信したように見せかける
-         */
+        // In order to avoid the search purpose of the e-mail address,
+        // even if there is no registered address it appears as if it was sent normally
+        // @author kwada
         return $response == Password::RESET_LINK_SENT || $response === Password::INVALID_USER
             ? $this->sendResetLinkResponse($response)
             : $this->sendResetLinkFailedResponse($request, $response);
