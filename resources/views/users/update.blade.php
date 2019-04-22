@@ -66,6 +66,7 @@
                                             <div class="form-group col-md-6">
                                                 @set ($attribute, 'leagues')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')"></i>
                                                 <div class="input-group">
                                                     <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                 </div>
@@ -74,14 +75,13 @@
                                             <div class="form-group col-md-6">
                                                 @set ($attribute, 'universities')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                                <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')"></i>
                                                 <div class="input-group">
                                                     <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                 </div>
                                                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
-
-                                        <hr>
 
                                         @set ($attribute, 'sports')
                                         @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])

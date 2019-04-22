@@ -8,8 +8,7 @@
             <div class="col-md-5">
                 <div class="clearfix">
                     <h2>
-                        <i class="fa fa-sign-in fa-fw"></i>
-                        @lang ('Sign In')
+                        <i class="icons icon-lock-open"></i> @lang ('Sign In')
                     </h2>
                     <p class="text-muted">@lang ('Please enter your registered e-mail address and password.')</p>
                 </div>

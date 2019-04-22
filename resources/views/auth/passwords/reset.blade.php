@@ -8,8 +8,7 @@
             <div class="col-md-6">
                 <div class="clearfix">
                     <h2>
-                        <i class="fa fa-send fa-fw"></i>
-                        @lang ('Reset Password')
+                        <i class="icons icon-key"></i> @lang ('Reset Password')
                     </h2>
                     <p class="text-muted">@lang ('Please enter the email address of the account you want to reset and the new password.')</p>
                 </div>

@@ -1,6 +1,10 @@
 <div class="row" id="{{ sprintf('%s-area', $attribute) }}">
     <div class="form-group col-md-12">
         <label for="{{ $attribute }}">@lang (ucfirst($attribute))</label>
+
+        @if (request()->route()->named(['accounts.create', 'accounts.detail']))
+            <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')<br>@lang ('Multiple selections are possible.')"></i>
+        @endif
     </div>
 
     @foreach ($items as $key => $value)

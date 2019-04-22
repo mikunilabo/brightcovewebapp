@@ -56,7 +56,7 @@
                 <div class="dropdown-divider"></div>
 
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); if (confirm('@lang("Do you want to log out?")')) document.getElementById('logout-form').submit(); return false;">
-                    <i class="nav-icon icon-lock"></i>@lang ('Logout')
+                    <i class="nav-icon icon-power"></i>@lang ('Logout')
                 </a>
             </div>
         </li>

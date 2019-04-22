@@ -8,8 +8,7 @@
             <div class="col-md-6">
                 <div class="clearfix">
                     <h2>
-                        <i class="fa fa-send fa-fw"></i>
-                        @lang ('Sign Up')
+                        <i class="icons icon-user-follow"></i> @lang ('Sign Up')
                     </h2>
                     <p class="text-muted">@lang ('Please enter your name, e-mail address, and password.')</p>
                 </div>
