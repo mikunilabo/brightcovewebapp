@@ -37,6 +37,15 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
+環境ファイルへ下記の用に追加しておくと、任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。
+
+```.env
+APP_ACCOUNT=your_email（デフォルト：user@example.com）
+APP_PASSWORD=your_password（デフォルト：password）
+
+```
+
+
 以下いくつかの便利なマイグレーションコマンドがあります。
 
 ```SSH
@@ -54,6 +63,7 @@ node.jsとパッケージマネージャにnpmを使用しています。
 ```SSH
 npm install
 npm run dev [or prod]
+npm run watch
 ```
 
 以下は主に開発時/デプロイ時に使用します。
