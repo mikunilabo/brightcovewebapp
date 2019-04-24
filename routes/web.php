@@ -23,8 +23,8 @@ Route::prefix('/')->group(function () {
         Route::get('/', \App\Http\Controllers\Users\IndexController::class)->name('index');
         Route::get($name = 'create', sprintf('%s@%s', \App\Http\Controllers\Users\CreateController::class, 'view'))->name($name);
         Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\CreateController::class, $name));
-//         Route::get($name = 'profile', )->name($name);
-//         Route::post($name, );
+        Route::get($name = 'profile', sprintf('%s@%s', \App\Http\Controllers\Users\ProfileController::class, 'view'))->name($name);
+        Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\ProfileController::class, 'update'));
 
         Route::prefix('{userId}')->group(function () {
             Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'view'))->name($name);
