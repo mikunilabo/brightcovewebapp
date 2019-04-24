@@ -17,15 +17,32 @@ class UsersSeeder extends Seeder
      */
     public function __construct()
     {
-        $this->items = [
-            [
-                'name' => 'Test user',
-                'email' => config('app.user'),
-                'company' => 'Test, Inc.',
-                'password' => config('app.password'),
-                'role_id' => 1,
-            ],
-        ];
+        foreach (config('accounts.administrators') as $key => $value) {
+            if (empty($value['email']))  continue;
+
+            if (app()->isLocal()) {
+                if ($key !== 'ktoda' && $key !== 'kwada') {
+                    continue;
+                }
+            } elseif (app()->environment('develop')) {
+                if ($key !== 'tkumagai' && $key !== 'ykumagai' && $key !== 'ktoda' && $key !== 'kwada') {
+                    continue;
+                }
+            } elseif (app()->environment('production')) {
+                if ($key !== 'tkumagai' && $key !== 'ykumagai') {
+                    continue;
+                }
+            } else {
+                break;
+            }
+
+            $this->items[] = $value;
+        }
+
+        if (! count($this->items)) {
+            $this->items[] = config('accounts.dummy');
+        }
+
     }
 
     /**
@@ -38,8 +55,7 @@ class UsersSeeder extends Seeder
                 collect($this->items)->each(function ($item) {
                     User::forceCreate($item);
                 });
-
-                factory(User::class, 100)->create();
+//                 factory(User::class, 100)->create();
             });
         } catch (\Exception $e) {
             report($e);
