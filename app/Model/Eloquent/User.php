@@ -34,8 +34,6 @@ final class User extends Authenticatable implements ModelContract
         'name',
         'email',
         'company',
-        'role_id',
-        'password',
     ];
 
     /**

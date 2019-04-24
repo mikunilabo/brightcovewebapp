@@ -94,7 +94,7 @@
                                         </div>
 
                                         @set ($attribute, 'sports')
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : $row->{$attribute}->pluck('name')])
 
                                         <hr>
 

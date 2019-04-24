@@ -36,7 +36,7 @@ class UsersSeeder extends Seeder
         try {
             $this->transaction(function () {
                 collect($this->items)->each(function ($item) {
-                    User::create($item);
+                    User::forceCreate($item);
                 });
 
                 factory(User::class, 100)->create();

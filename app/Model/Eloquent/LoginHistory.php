@@ -28,13 +28,6 @@ final class LoginHistory extends Model implements ModelContract
     ];
 
     /**
-     * @var array
-     */
-    protected $touches = [
-        'user',
-    ];
-
-    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo

@@ -132,11 +132,9 @@
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
 
-                                    @can ('update', $row)
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="icons icon-check"></i> @lang ('Update')
-                                        </button>
-                                    @endcan
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="icons icon-check"></i> @lang ('Update')
+                                    </button>
                                 </div>
                             </form>
                         </div>

@@ -62,8 +62,8 @@
                                                 @set ($attribute, 'password')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
                                                 <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please enter.')" required />
-                                                <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
                                                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                                <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
                                             </div>
                                             <div class="form-group col-sm-6">
                                                 @set ($attribute, 'password_confirmation')
@@ -103,7 +103,7 @@
                                         </div>
 
                                         @set ($attribute, 'sports')
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : []])
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : []])
                                     </div>
                                 </div>
                                 <div class="card-footer text-center">
