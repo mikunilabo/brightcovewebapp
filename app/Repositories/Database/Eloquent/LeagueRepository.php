@@ -3,38 +3,15 @@ declare(strict_types=1);
 
 namespace App\Repositories\Database\Eloquent;
 
-use App\Contracts\Domain\RepositoryContract;
 use App\Model\Eloquent\League;
-use App\Traits\Database\Eloquent\Creatable;
-use App\Traits\Database\Eloquent\Deletable;
-use App\Traits\Database\Eloquent\Findable;
-use App\Traits\Database\Eloquent\Updatable;
-use Illuminate\Database\Eloquent\Model;
 
-final class LeagueRepository implements RepositoryContract
+final class LeagueRepository extends EloquentRepository
 {
-    use Creatable,
-        Deletable,
-        Findable,
-        Updatable;
-
-    /** @var Model */
-    private $eloquent;
-
     /**
-     * @param Model $eloquent
+     * @param League $eloquent
      */
     public function __construct(League $eloquent)
     {
         $this->eloquent = $eloquent;
-    }
-
-    /**
-     * @param mixed $builder
-     * @return mixed
-     */
-    public function build($builder)
-    {
-        return $builder;
     }
 }
