@@ -83,7 +83,12 @@
                                             <div class="form-group col-md-6">
                                                 @set ($attribute, 'leagues')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')"></i>
+
+                                                @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
+                                                    __('It will be automatically selected when uploading.'),
+                                                    Auth::user()->can('authorize', 'user-create') ? __('If it is not in the list, it will be newly registered.') : '')
+                                                ]) @endcomponent
+
                                                 <div class="input-group">
                                                     <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                 </div>
@@ -92,7 +97,12 @@
                                             <div class="form-group col-md-6">
                                                 @set ($attribute, 'universities')
                                                 <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
-                                                <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')"></i>
+
+                                                @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
+                                                    __('It will be automatically selected when uploading.'),
+                                                    Auth::user()->can('authorize', 'user-create') ? __('If it is not in the list, it will be newly registered.') : '')
+                                                ]) @endcomponent
+
                                                 <div class="input-group">
                                                     <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                                 </div>

@@ -2,9 +2,11 @@
     <div class="form-group col-md-12">
         <label for="{{ $attribute }}">@lang (ucfirst($attribute))</label>
 
-        @if (request()->route()->named(['accounts.create', 'accounts.detail']))
-            <i class="icons icon-question text-warning" data-toggle="popover" data-trigger="hover" data-container="body" data-html="true" data-content="@lang ('It will be automatically selected when uploading.')<br>@lang ('If it is not in the list, it will be newly registered.')<br>@lang ('Multiple selections are possible.')"></i>
-        @endif
+        @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s<br>%s',
+            __('It will be automatically selected when uploading.'),
+            Auth::user()->can('authorize', 'user-create') ? __('If it is not in the list, it will be newly registered.') : '',
+            __('Multiple selections are possible.'))
+        ]) @endcomponent
     </div>
 
     @foreach ($items as $key => $value)
