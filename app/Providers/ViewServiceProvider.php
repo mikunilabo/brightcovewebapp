@@ -32,21 +32,25 @@ final class ViewServiceProvider extends ServiceProvider
     {
         View::composer([
             'users.create',
+            'users.profile',
             'users.update',
         ], Composers\LeaguesComposer::class);
 
         View::composer([
             'users.create',
+            'users.profile',
             'users.update',
         ], Composers\RolesComposer::class);
 
         View::composer([
             'users.create',
+            'users.profile',
             'users.update',
         ], Composers\SportsComposer::class);
 
         View::composer([
             'users.create',
+            'users.profile',
             'users.update',
         ], Composers\UniversitiesComposer::class);
     }

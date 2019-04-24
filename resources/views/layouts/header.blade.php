@@ -13,13 +13,7 @@
     @if (false)
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu1</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu2</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu3</a>
+                <a class="nav-link" href="#">Menu</a>
             </li>
         </ul>
     @endif
@@ -42,7 +36,7 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('accounts.profile') }}">
                     <i class="nav-icon icon-user"></i>@lang ('Profile')
                 </a>
                 <a class="dropdown-item" href="#">
