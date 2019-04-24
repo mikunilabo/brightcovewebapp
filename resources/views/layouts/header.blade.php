@@ -4,7 +4,7 @@
     </button>
     <a class="navbar-brand" href="{{ route('home') }}">
         <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="145" height="auto" alt="{{ config('app.name') }}">
-        <img class="navbar-brand-minimized" src="{{ asset('images/brand/logo.png') }}" width="30" height="30" alt="">
+        <img class="navbar-brand-minimized" src="{{ asset('images/brand/logo.png') }}" width="25" height="25" alt="">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
