@@ -16,7 +16,9 @@
 @show
 
 <!-- Favicon -->
-<link type="image/vnd.microsoft.icon" rel="shortcut icon" href="{{ asset(sprintf('images/favicon/%s', app()->isLocal() ? 'favicon.local.ico' : 'favicon.ico')) }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-touch-icon.png') }}">
+<link rel="apple-touch-icon-precomposed" href="{{ asset('images/icons/apple-touch-icon.png') }}">
+<link rel="icon" sizes="192x192" href="{{ asset('images/icons/apple-touch-icon.png') }}">
 
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">

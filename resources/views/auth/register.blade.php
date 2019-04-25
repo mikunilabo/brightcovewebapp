@@ -5,12 +5,15 @@
 @section ('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="clearfix">
-                    <h2>
+                    <div>
+                        <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="100%" height="auto" alt="{{ config('app.name') }}">
+                    </div>
+                    <h2 class="text-center mt-3">
                         <i class="icons icon-user-follow"></i> @lang ('Sign Up')
                     </h2>
-                    <p class="text-muted">@lang ('Please enter your name, e-mail address, and password.')</p>
+                    <p class="text-muted mt-3">@lang ('Please enter your name, e-mail address, and password.')</p>
                 </div>
 
                 @component ('components.messages.alerts') @endcomponent
@@ -30,7 +33,7 @@
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="icon-user"></i>
+                            <span class="input-group-text">@</i>
                             </span>
                         </div>
 

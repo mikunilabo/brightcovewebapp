@@ -3,12 +3,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{{ route('home') }}">
-        {{ config('app.name') }}
-
-        @if (false)
-            <img class="navbar-brand-full" src="{{ asset('img/brand/logo.svg') }}" width="89" height="25" alt="">
-            <img class="navbar-brand-minimized" src="{{ asset('img/brand/sygnet.svg') }}" width="30" height="30" alt="">
-        @endif
+        <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="145" height="auto" alt="{{ config('app.name') }}">
+        <img class="navbar-brand-minimized" src="{{ asset('images/brand/logo.png') }}" width="25" height="25" alt="">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -17,13 +13,7 @@
     @if (false)
         <ul class="nav navbar-nav d-md-down-none">
             <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu1</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu2</a>
-            </li>
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu3</a>
+                <a class="nav-link" href="#">Menu</a>
             </li>
         </ul>
     @endif
@@ -46,7 +36,7 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{ route('accounts.profile') }}">
                     <i class="nav-icon icon-user"></i>@lang ('Profile')
                 </a>
                 <a class="dropdown-item" href="#">
@@ -55,16 +45,12 @@
 
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); if (confirm('@lang("Do you want to log out?")')) document.getElementById('logout-form').submit(); return false;">
+                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); if (confirm('@lang("Do you want to log out?")')) { window.Common.submitForm('{{ route('logout') }}'); } return false;">
                     <i class="nav-icon icon-power"></i>@lang ('Logout')
                 </a>
             </div>
         </li>
     </ul>
-
-    <form action="{{ route('logout') }}" method="POST" id="logout-form" style="display: none;">
-        {{ csrf_field() }}
-    </form>
 
     <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
         <span class="navbar-toggler-icon"></span>

@@ -14,8 +14,9 @@ try {
     require('bootstrap');
     require('pace-progress');
     require('perfect-scrollbar');
+    require('typeahead.js');
     require('@coreui/coreui');
-    require('chart.js');
+//    require('chart.js');
 } catch (e) {}
 
 /**

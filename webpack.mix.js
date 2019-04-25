@@ -25,12 +25,6 @@ mix.webpackConfig({
 /**
  * JS
  */
-// The following modules unique to the coreui page are undefined function unless they are described
-// in the same file as the tooltip plugin, so build the combined file.
-mix.js('resources/js/vendor/coreui/main.js', 'public/js/vendor/coreui');
-mix.js('resources/js/vendor/coreui/charts.js', 'public/js/vendor/coreui');
-mix.js('resources/js/vendor/coreui/widgets.js', 'public/js/vendor/coreui');
-
 mix.js('resources/js/app.js', 'public/js')
     .extract([
         'jquery',
@@ -42,6 +36,10 @@ mix.js('resources/js/app.js', 'public/js')
         'chart.js',
 //        'vue',
     ]);
+
+//mix.js('resources/js/vendor/coreui/main.js', 'public/js/vendor/coreui');
+//mix.js('resources/js/vendor/coreui/charts.js', 'public/js/vendor/coreui');
+//mix.js('resources/js/vendor/coreui/widgets.js', 'public/js/vendor/coreui');
 
 /**
  * CSS

@@ -17,15 +17,20 @@ class UsersSeeder extends Seeder
      */
     public function __construct()
     {
-        $this->items = [
-            [
-                'name' => 'Test user',
-                'email' => config('app.user'),
-                'company' => 'Test, Inc.',
-                'password' => config('app.password'),
-                'role_id' => 1,
-            ],
-        ];
+        foreach (config('accounts.administrators') as $key => $items) {
+            if (empty($items['email']))  continue;
+
+            foreach (config('accounts.environments') as $env => $names) {
+                if (app()->environment($env) && in_array($key, $names, true)) {
+                    $this->items[] = $items;
+                }
+            }
+        }
+
+        if (! count($this->items)) {
+            $this->items[] = config('accounts.dummy');
+        }
+
     }
 
     /**
@@ -36,10 +41,9 @@ class UsersSeeder extends Seeder
         try {
             $this->transaction(function () {
                 collect($this->items)->each(function ($item) {
-                    User::create($item);
+                    User::forceCreate($item);
                 });
-
-                factory(User::class, 100)->create();
+//                 factory(User::class, 100)->create();
             });
         } catch (\Exception $e) {
             report($e);
