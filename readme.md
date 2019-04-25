@@ -38,11 +38,13 @@ DB_PASSWORD=your_password
 ```
 
 環境ファイルへ下記の用に追加しておくと、任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。
+初期状態では自動的にデフォルトアカウントが作成されます。
+環境変数の確認は `/config/accounts.php`
 
 ```.env
-APP_ACCOUNT=your_email（デフォルト：user@example.com）
-APP_PASSWORD=your_password（デフォルト：password）
-
+ADMIN_KWADA_NAME=your_name
+ADMIN_KWADA_EMAIL=your_email
+ADMIN_KWADA_PASSWORD=your_password
 ```
 
 

@@ -37,6 +37,23 @@ return [
         ],
     ],
 
+    'environments' => [
+        'production' => [
+            'tkumagai',
+            'ykumagai',
+        ],
+        'develop' => [
+            'tkumagai',
+            'ykumagai',
+            'ktoda',
+            'kwada',
+        ],
+        'local' => [
+            'ktoda',
+            'kwada',
+        ],
+    ],
+
     'dummy' => [
         'name'     => 'Mr.Dummy',
         'email'    => 'dummy@example.com',

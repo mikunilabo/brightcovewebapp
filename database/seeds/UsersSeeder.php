@@ -17,26 +17,14 @@ class UsersSeeder extends Seeder
      */
     public function __construct()
     {
-        foreach (config('accounts.administrators') as $key => $value) {
-            if (empty($value['email']))  continue;
+        foreach (config('accounts.administrators') as $key => $items) {
+            if (empty($items['email']))  continue;
 
-            if (app()->isLocal()) {
-                if ($key !== 'ktoda' && $key !== 'kwada') {
-                    continue;
+            foreach (config('accounts.environments') as $env => $names) {
+                if (app()->environment($env) && in_array($key, $names, true)) {
+                    $this->items[] = $items;
                 }
-            } elseif (app()->environment('develop')) {
-                if ($key !== 'tkumagai' && $key !== 'ykumagai' && $key !== 'ktoda' && $key !== 'kwada') {
-                    continue;
-                }
-            } elseif (app()->environment('production')) {
-                if ($key !== 'tkumagai' && $key !== 'ykumagai') {
-                    continue;
-                }
-            } else {
-                break;
             }
-
-            $this->items[] = $value;
         }
 
         if (! count($this->items)) {
