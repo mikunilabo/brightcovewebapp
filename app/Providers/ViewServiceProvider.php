@@ -31,27 +31,30 @@ final class ViewServiceProvider extends ServiceProvider
     private function viewComposers(): void
     {
         View::composer([
+            'media.upload',
             'users.create',
             'users.profile',
-            'users.update',
+            'users.detail',
         ], Composers\LeaguesComposer::class);
 
         View::composer([
             'users.create',
             'users.profile',
-            'users.update',
+            'users.detail',
         ], Composers\RolesComposer::class);
 
         View::composer([
+            'media.upload',
             'users.create',
             'users.profile',
-            'users.update',
+            'users.detail',
         ], Composers\SportsComposer::class);
 
         View::composer([
+            'media.upload',
             'users.create',
             'users.profile',
-            'users.update',
+            'users.detail',
         ], Composers\UniversitiesComposer::class);
     }
 }

@@ -58,11 +58,6 @@ class PermissionsSeeder extends Seeder
                 'name' => 'メディア削除',
                 'slug' => 'media-delete',
             ],
-            [
-                'id'   => 9,
-                'name' => 'メディアアップロード',
-                'slug' => 'media-upload',
-            ],
         ];
     }
 

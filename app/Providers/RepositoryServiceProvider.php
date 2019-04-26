@@ -5,7 +5,9 @@ namespace App\Providers;
 
 use App\Http\Views\Composers;
 use App\Repositories\Database\Eloquent;
+use App\Repositories\Vendor\VideoCloud\MediaRepository;
 use App\UseCases\Users;
+use App\UseCases\Media;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -42,6 +44,8 @@ final class RepositoryServiceProvider extends ServiceProvider
             /**
              * Usecases
              */
+            Media\CreateMedia::class,
+
             Users\CreateUser::class,
             Users\DeleteUser::class,
             Users\GetUsers::class,
@@ -65,6 +69,12 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Usecases
          */
+        $this->app->bind(Media\CreateMedia::class, function () {
+            return new Media\CreateMedia(
+                app(MediaRepository::class)
+            );
+        });
+
         $this->app->bind(Users\CreateUser::class, function () {
             return new Users\CreateUser(
                 app(Eloquent\UserRepository::class)

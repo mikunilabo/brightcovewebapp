@@ -40,7 +40,7 @@
     "masters": "マスタ",
     "Media": "メディア",
     "Media list": "メディア一覧",
-    "Media upload": "アップロード",
+    "Media Upload": "アップロード",
     "Menu": "メニュー",
     "Multiple selections are possible.": "複数選択が可能です。",
     "Name": "氏名",
@@ -78,6 +78,7 @@
     "Universities": "大学名",
     "Update": "更新",
     "Updated At": "更新日時",
+    "Upload": "アップロード",
     "User": "ユーザー",
     "Version": "バージョン",
     "You do not have access.": "アクセス権限がありません。"
