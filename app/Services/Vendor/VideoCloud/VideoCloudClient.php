@@ -21,12 +21,6 @@ final class VideoCloudClient
     private $clientSecret;
 
     /** @var string */
-    private $videoProfile;
-
-    /** @var string */
-    private $callbackUrl;
-
-    /** @var string */
     private $accessToken;
 
     const CMS_URL    = 'https://cms.api.brightcove.com';
@@ -37,23 +31,17 @@ final class VideoCloudClient
      * @param string $accountId
      * @param string $clientId
      * @param string $clientSecret
-     * @param string|null $videoProfile
-     * @param string|null $callbackUrl
      * @return void
      */
     public function __construct(
         $accountId,
         $clientId,
-        $clientSecret,
-        $videoProfile = null,
-        $callbackUrl = null
+        $clientSecret
     ) {
         $this->client = new Client;
         $this->accountId = $accountId;
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
-        $this->videoProfile = $videoProfile;
-        $this->callbackUrl = $callbackUrl;
     }
 
     /**
@@ -65,7 +53,6 @@ final class VideoCloudClient
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
-            'http_errors' => false,
             'auth' => [
                 $this->clientId,
                 $this->clientSecret,
@@ -85,9 +72,73 @@ final class VideoCloudClient
         return $this->client->post(sprintf('%s/v1/accounts/%s/videos', self::CMS_URL, $this->accountId), [
             'headers' => [
                 'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
             ],
             'http_errors' => false,
             'json' => $args,
+        ]);
+    }
+
+    /**
+     * @param string $videoId
+     * @param string $sourceName
+     * @return ResponseInterface
+     */
+    public function getTemporaryS3UrlsToUploadVideo(string $videoId, string $sourceName): ResponseInterface
+    {
+        return $this->client->get(sprintf('%s/v1/accounts/%s/videos/%s/upload-urls/%s', self::INGEST_URL, $this->accountId, $videoId, $sourceName), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+        ]);
+    }
+
+    /**
+     * @param string $videoId
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function ingestRequest(string $videoId, array $args = []): ResponseInterface
+    {
+        return $this->client->post(sprintf('%s/v1/accounts/%s/videos/%s/ingest-requests', self::INGEST_URL, $this->accountId, $videoId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+            'json' => $args,
+        ]);
+    }
+
+    /**
+     * @param string $videoId
+     * @return ResponseInterface
+     */
+    public function getStatusOfIngestJobs(string $videoId): ResponseInterface
+    {
+        return $this->client->get(sprintf('%s/v1/accounts/%s/videos/%s/ingest_jobs', self::CMS_URL, $this->accountId, $videoId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+        ]);
+    }
+
+    /**
+     * @param string $videoId
+     * @return ResponseInterface
+     */
+    public function getVideo(string $videoId): ResponseInterface
+    {
+        return $this->client->get(sprintf('%s/v1/accounts/%s/videos/%s', self::CMS_URL, $this->accountId, $videoId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
         ]);
     }
 
@@ -128,32 +179,6 @@ final class VideoCloudClient
         }
 
         return $this->clientSecret;
-    }
-
-    /**
-     * @param string|null $videoProfile
-     * @return string|null
-     */
-    public function videoProfile(string $videoProfile = null): ?string
-    {
-        if (! is_null($videoProfile)) {
-            $this->videoProfile = $videoProfile;
-        }
-
-        return $this->videoProfile;
-    }
-
-    /**
-     * @param string|null $callbackUrl
-     * @return string|null
-     */
-    public function callbackUrl(string $callbackUrl = null): ?string
-    {
-        if (! is_null($callbackUrl)) {
-            $this->callbackUrl = $callbackUrl;
-        }
-
-        return $this->callbackUrl;
     }
 
     /**

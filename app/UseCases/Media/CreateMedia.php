@@ -26,6 +26,6 @@ final class CreateMedia implements UseCaseContract
      */
     public function excute($args)
     {
-        $this->repo->test($args);
+        return $this->repo->create($args);
     }
 }

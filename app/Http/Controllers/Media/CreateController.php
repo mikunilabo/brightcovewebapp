@@ -8,7 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Media\CreateRequest;
 use App\UseCases\Media\CreateMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
-use Illuminate\Http\UploadedFile;
 
 final class CreateController extends Controller
 {
@@ -45,28 +44,19 @@ final class CreateController extends Controller
     {
         $args = $request->validated();
         $args['uuid'] = $request->user()->id;
+        $args['title'] = 'test';
 
-        /** @var UploadedFile $file */
-//         $file = $request->file('avatar');
-
-//         $avatar = $user->addAvatar([
-//             'path' => $path = sprintf('images/avatars/users/%s', $user->id()),
-//             'name' => $name = sprintf('%s_%s_%s', time(), str_random(16), $file->getClientOriginalName()),
-//         ]);
-
-//         $this->filesystem->disk('public')->putFileAs($path, $file, $name);
-
-//         $callback = function () use ($args) {
-            $this->useCase->excute([
+        $callback = function () use ($args) {
+            $videoId = $this->useCase->excute([
                 'param' => $args,
             ]);
-//         };
+        };
 
-//         if (($result = rescue($callback, false)) === false) {
-//             return back()
-//                 ->with('alerts.danger', [__('An internal server error has occurred. Please contact the administrator.')])
-//                 ->withInput();
-//         }
+        if (($result = rescue($callback, false)) === false) {
+            return back()
+                ->with('alerts.danger', [__('An internal server error has occurred. Please contact the administrator.')])
+                ->withInput();
+        }
 
         return redirect()
             ->route('media.upload')
