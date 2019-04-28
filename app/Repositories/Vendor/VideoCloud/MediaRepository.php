@@ -5,6 +5,7 @@ namespace App\Repositories\Vendor\VideoCloud;
 
 use App\Contracts\Domain\ModelContract;
 use App\Contracts\Domain\RepositoryContract;
+use App\Model\Media;
 use App\Services\Vendor\VideoCloud\VideoCloudClient;
 use Aws\Exception\MultipartUploadException;
 use Aws\S3\MultipartUploader;
@@ -40,37 +41,27 @@ final class MediaRepository implements RepositoryContract
     }
 
     /**
-     * @return mixed
-     */
-    public function test($args)
-    {
-        dd( $this->getStatusOfIngestJobs('6030540548001') );
-        return $builder;
-    }
-
-    /**
      * @param array $args
      * @return ModelContract
      */
     public function create(array $args = []): ModelContract
     {
-        $content = $this->createVideo($args['param']);
-        $videoId = $content['id'];
+        $media = new Media($this->createVideo($args['param']));
 
         /** @var UploadedFile $file */
         $file = $args['param']['video_file'];
         $sourceName = $file->getClientOriginalName();// TODO except url chars.
 
-        $content = $this->getS3Url($videoId, $sourceName);
+        $content = $this->getS3Url($media->id, $sourceName);
 
         $this->multipartUpload($file->getRealPath(), $content);
 
-        $content = $this->ingestRequest($videoId, [
+        $content = $this->ingestRequest($media->id, [
             'url' => $content['api_request_url'],
             'profile' => config('services.videocloud.video_profile'),
         ]);
 
-        return $videoId;
+        return $media;
     }
 
     /**
@@ -98,7 +89,7 @@ final class MediaRepository implements RepositoryContract
      */
     public function findById($id): ?ModelContract
     {
-        dd( $this->getVideo($id) );
+        return new Media($this->getVideo($id));
     }
 
     /**
@@ -112,6 +103,15 @@ final class MediaRepository implements RepositoryContract
     }
 
     /**
+     * @param mixed $id
+     * @return Collection
+     */
+    public function ingestjobs($id): Collection
+    {
+        return collect($this->getStatusOfIngestJobs($id));
+    }
+
+    /**
      * @param array $args
      * @return mixed
      */
@@ -120,7 +120,7 @@ final class MediaRepository implements RepositoryContract
         $this->auth();
 
         $response = $this->client->createVideo([
-            'name' => $args['title'],// required, 1 <= 255
+            'name' => $args['name'],// required, 1 <= 255
 //             'custom_fields' => [
 //                 'date' => now()->format('Ymd'),// YYYY-MM-DD
 //                 'rightholder' => 'hoge',
@@ -228,7 +228,7 @@ final class MediaRepository implements RepositoryContract
         $uploader = new MultipartUploader($s3Client, $filepath, $params);
         $response = $uploader->upload();
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $response;
     }
 
     /**
@@ -238,7 +238,6 @@ final class MediaRepository implements RepositoryContract
     {
         if (! is_null($accessToken = session('videocloud.access_token')) && session('videocloud.expires_on', 0) > time()) {
             $this->client->accessToken($accessToken);
-            dump('skip');
             return;
         }
 

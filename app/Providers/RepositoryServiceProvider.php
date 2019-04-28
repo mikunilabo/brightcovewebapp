@@ -45,6 +45,7 @@ final class RepositoryServiceProvider extends ServiceProvider
              * Usecases
              */
             Media\CreateMedia::class,
+            Media\UpdateMedia::class,
 
             Users\CreateUser::class,
             Users\DeleteUser::class,
@@ -74,6 +75,13 @@ final class RepositoryServiceProvider extends ServiceProvider
                 app(MediaRepository::class)
             );
         });
+
+        $this->app->bind(Media\UpdateMedia::class, function () {
+            return new Media\UpdateMedia(
+                app(MediaRepository::class)
+            );
+        });
+
 
         $this->app->bind(Users\CreateUser::class, function () {
             return new Users\CreateUser(

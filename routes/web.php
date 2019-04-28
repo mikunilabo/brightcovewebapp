@@ -42,8 +42,8 @@ Route::prefix('/')->group(function () {
             Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\CreateController::class, 'create'));
 
         Route::prefix('{videoId}')->group(function () {
-//             Route::get($name = 'detail', )->name($name);
-//             Route::post($name, );
+            Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'view'))->name($name);
+            Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'update'));
 //             Route::post($name = 'delete', )->name($name);
         });
     });

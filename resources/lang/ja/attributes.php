@@ -30,4 +30,20 @@ return [
         'universities.*'        => __('Universities'),
     ],
 
+    'media' => [
+        'id'                    => __('ID'),
+        'name'                  => __('Title'),
+        'description'           => __('Description'),
+        'long_description'      => __('Keywords'),
+        'state'                 => __('Status'),
+        'ingestjobs'            => __('Ingest Status'),
+
+        'leagues'               => __('Leagues'),
+        'leagues.*'             => __('Leagues'),
+        'sports'                => __('Sports'),
+        'sports.*'              => __('Sports'),
+        'universities'          => __('Universities'),
+        'universities.*'        => __('Universities'),
+    ],
+
 ];

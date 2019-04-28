@@ -44,10 +44,10 @@ final class CreateController extends Controller
     {
         $args = $request->validated();
         $args['uuid'] = $request->user()->id;
-        $args['title'] = 'test';
+        $args['name'] = 'test';
 
         $callback = function () use ($args) {
-            $videoId = $this->useCase->excute([
+            return $this->useCase->excute([
                 'param' => $args,
             ]);
         };
@@ -59,11 +59,7 @@ final class CreateController extends Controller
         }
 
         return redirect()
-            ->route('media.upload')
-            ->with('alerts.info', ['end']);
-
-//         return redirect()
-//             ->route('media.detail', $id)
-//             ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Media'), 'action' => __('Upload')])]);
+            ->route('media.detail', $result->id)
+            ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Media'), 'action' => __('Upload')])]);
     }
 }

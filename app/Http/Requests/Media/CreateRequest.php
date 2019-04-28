@@ -27,7 +27,7 @@ final class CreateRequest extends FormRequest
                 'required',
                 'file',
 //                 'mimetypes:video/avi,video/mpeg,video/quicktime',
-                'max:20480',// (KB) <-20MB
+                'max:102400',// (KB) <-100MB
             ],
 
             'leagues'        => 'sometimes|array',

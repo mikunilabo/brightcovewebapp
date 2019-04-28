@@ -32,6 +32,8 @@ final class ViewServiceProvider extends ServiceProvider
     {
         View::composer([
             'media.upload',
+            'media.detail',
+
             'users.create',
             'users.profile',
             'users.detail',
@@ -45,6 +47,8 @@ final class ViewServiceProvider extends ServiceProvider
 
         View::composer([
             'media.upload',
+            'media.detail',
+
             'users.create',
             'users.profile',
             'users.detail',
@@ -52,6 +56,8 @@ final class ViewServiceProvider extends ServiceProvider
 
         View::composer([
             'media.upload',
+            'media.detail',
+
             'users.create',
             'users.profile',
             'users.detail',
