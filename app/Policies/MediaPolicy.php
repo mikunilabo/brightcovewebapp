@@ -7,7 +7,7 @@ use App\Contracts\Domain\ModelContract;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Foundation\Auth\User;
 
-final class UserPolicy
+final class MediaPolicy
 {
     use HandlesAuthorization;
 
@@ -28,7 +28,12 @@ final class UserPolicy
      */
     public function select(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'user-select')) {
+        if ($user->can('authorize', 'media-select')) {
+
+            /**
+             * TODO Only own uuid.
+             */
+
             return true;
         }
 
@@ -42,7 +47,12 @@ final class UserPolicy
      */
     public function update(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'user-update')) {
+        if ($user->can('authorize', 'media-update')) {
+
+            /**
+             * TODO Only own uuid.
+             */
+
             return true;
         }
 
@@ -51,14 +61,17 @@ final class UserPolicy
 
     /**
      * @param User $user
-     * @param ModelContract $model
+     * @param User $targetUser
      * @return bool
      */
     public function delete(User $user, ModelContract $model): bool
     {
-        if ($user->id !== $model->id
-            && $user->can('authorize', 'user-delete')
-        ) {
+        if ($user->can('authorize', 'media-delete')) {
+
+            /**
+             * TODO Only own uuid.
+             */
+
             return true;
         }
 
