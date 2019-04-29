@@ -5,6 +5,7 @@ namespace App\Repositories\Vendor\VideoCloud;
 
 use App\Contracts\Domain\ModelContract;
 use App\Contracts\Domain\RepositoryContract;
+use App\Exceptions\Domain\UnexpectedResponseException;
 use App\Model\Media;
 use App\Services\Vendor\VideoCloud\VideoCloudClient;
 use Aws\Exception\MultipartUploadException;
@@ -13,6 +14,7 @@ use Aws\S3\S3Client;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Psr\Http\Message\ResponseInterface;
 
 final class MediaRepository implements RepositoryContract
 {
@@ -80,7 +82,7 @@ final class MediaRepository implements RepositoryContract
      */
     public function delete($id): void
     {
-        //
+        $this->deleteVideo($id);
     }
 
     /**
@@ -89,7 +91,14 @@ final class MediaRepository implements RepositoryContract
      */
     public function findById($id): ?ModelContract
     {
-        return new Media($this->getVideo($id));
+        $model = null;
+        $content = $this->getVideo($id);
+
+        if (! empty($content['id'])) {
+            $model = new Media($content);
+        }
+
+        return $model;
     }
 
     /**
@@ -119,6 +128,7 @@ final class MediaRepository implements RepositoryContract
     {
         $this->auth();
 
+        /** @var ResponseInterface $response */
         $response = $this->client->createVideo([
             'name' => $args['name'],// required, 1 <= 255
 //             'custom_fields' => [
@@ -139,6 +149,8 @@ final class MediaRepository implements RepositoryContract
             ],
         ]);
 
+        $this->httpStatusCode($response, [201]);
+
         return json_decode($response->getBody()->getContents(), true);
     }
 
@@ -151,6 +163,7 @@ final class MediaRepository implements RepositoryContract
     {
         $this->auth();
 
+        /** @var ResponseInterface $response */
         $response = $this->client->ingestRequest($videoId, [
             'master' => [
                 'url' => $args['url'],
@@ -159,6 +172,8 @@ final class MediaRepository implements RepositoryContract
             'capture-images' => true,// default true
             'profile' => $args['profile'],
         ]);
+
+        $this->httpStatusCode($response, [200]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -172,7 +187,10 @@ final class MediaRepository implements RepositoryContract
     {
         $this->auth();
 
+        /** @var ResponseInterface $response */
         $response = $this->client->getTemporaryS3UrlsToUploadVideo($videoId, $sourceName);
+
+        $this->httpStatusCode($response, [200]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -185,7 +203,10 @@ final class MediaRepository implements RepositoryContract
     {
         $this->auth();
 
+        /** @var ResponseInterface $response */
         $response = $this->client->getVideo($videoId);
+
+        $this->httpStatusCode($response, [200, 404]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -198,7 +219,26 @@ final class MediaRepository implements RepositoryContract
     {
         $this->auth();
 
+        /** @var ResponseInterface $response */
         $response = $this->client->getStatusOfIngestJobs($videoId);
+
+        $this->httpStatusCode($response, [200]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param string $videoId
+     * @return mixed
+     */
+    private function deleteVideo(string $videoId)
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->deleteVideo($videoId);
+
+        $this->httpStatusCode($response, [204]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -241,7 +281,11 @@ final class MediaRepository implements RepositoryContract
             return;
         }
 
+        /** @var ResponseInterface $response */
         $response = $this->client->authenticate();
+
+        $this->httpStatusCode($response, [200]);
+
         $content = json_decode($response->getBody()->getContents(), true);
         $this->client->accessToken($content['access_token']);
 
@@ -249,5 +293,18 @@ final class MediaRepository implements RepositoryContract
             'videocloud.access_token' => $content['access_token'],
             'videocloud.expires_on' => (int)$content['expires_in'] + time(),
         ], (int)$content['expires_in']);
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @param array $allows
+     * @throws UnexpectedResponseException
+     * @return void
+     */
+    private function httpStatusCode(ResponseInterface $response, array $allows = []): void
+    {
+        if (! in_array($response->getStatusCode(), $allows, true)) {
+            throw new UnexpectedResponseException('API response status code is unexpected.');
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 final class Handler extends ExceptionHandler
 {
@@ -14,7 +15,7 @@ final class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        MethodNotAllowedHttpException::class,
     ];
 
     /**

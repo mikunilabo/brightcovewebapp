@@ -143,6 +143,35 @@ final class VideoCloudClient
     }
 
     /**
+     * @param string $videoId
+     * @return ResponseInterface
+     */
+    public function deleteVideo(string $videoId): ResponseInterface
+    {
+        return $this->client->delete(sprintf('%s/v1/accounts/%s/videos/%s', self::CMS_URL, $this->accountId, $videoId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+        ]);
+    }
+
+    /**
+     * @return ResponseInterface
+     */
+    public function getCustomFields(): ResponseInterface
+    {
+        return $this->client->get(sprintf('%s/v1/accounts/video_fields', self::CMS_URL, $this->accountId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+        ]);
+    }
+
+    /**
      * @param string|null $accountId
      * @return string|null
      */

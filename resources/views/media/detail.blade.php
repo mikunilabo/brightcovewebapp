@@ -1,6 +1,6 @@
 @extends ('layouts.app')
 
-@section ('title', __('Account detail'))
+@section ('title', __('Media detail'))
 
 @section ('styles')
     @parent
@@ -8,7 +8,7 @@
 
 @section ('content')
     <main class="main">
-        @component ('layouts.breadcrumb', ['lists' => [__('Account detail') => route('accounts.detail', $row->id)]]) @endcomponent
+        @component ('layouts.breadcrumb', ['lists' => [__('Media detail') => route('accounts.detail', $row->id)]]) @endcomponent
 
         <div class="container-fluid">
             <div class="animated fadeIn">
@@ -19,7 +19,7 @@
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
-                                    <i class="fa fa-align-justify"></i>@lang ('Account detail')
+                                    <i class="fa fa-align-justify"></i>@lang ('Media detail')
                                 </div>
                                 <div class="card-body">
                                     <div class="card-body">
@@ -107,8 +107,8 @@
                                     @endcan
 
                                     @can ('delete', $row)
-                                        <a class="btn btn-danger btn-sm float-right" href="{{ route('accounts.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
-                                            <i class="icons icon-trash"></i> @lang ('Delete account')
+                                        <a class="btn btn-danger btn-sm float-right" href="{{ route('media.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Media')])')) { window.Common.submitForm('{{ route('media.delete', $row->id) }}'); } return false;">
+                                            <i class="icons icon-trash"></i> @lang ('Delete media')
                                         </a>
                                     @endcan
                                 </div>
