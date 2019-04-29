@@ -18,7 +18,7 @@
                     <ul class="nav-dropdown-items">
                         @can ('authorize', ['media-select'])
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('media.index') }}">
                                     <i class="nav-icon icon-list"></i>@lang ('Media list')
                                 </a>
                             </li>

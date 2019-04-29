@@ -103,6 +103,22 @@ trait Accessable
     }
 
     /**
+     * @param array $args
+     * @return mixed
+     */
+    private function getVideos(array $args = [])
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->getVideos($args);
+
+        $this->httpStatusCode($response, [200]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * @param string $videoId
      * @return mixed
      */

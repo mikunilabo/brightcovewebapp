@@ -37,14 +37,14 @@ Route::prefix('/')->group(function () {
      * Media
      */
         Route::prefix($prefix = 'media')->name(sprintf('%s.', $prefix))->group(function () {
-//             Route::get('/', )->name('index');
+            Route::get('/', \App\Http\Controllers\Media\IndexController::class)->name('index');
             Route::get($name = 'upload', sprintf('%s@%s', \App\Http\Controllers\Media\CreateController::class, 'view'))->name($name);
             Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\CreateController::class, 'create'));
 
         Route::prefix('{videoId}')->group(function () {
             Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'view'))->name($name);
             Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'update'));
-//             Route::post($name = 'delete', )->name($name);
+            Route::post($name = 'delete', \App\Http\Controllers\Media\DeleteController::class)->name($name);
         });
     });
 

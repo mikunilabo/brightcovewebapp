@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Users\IndexRequest;
-use App\UseCases\Users\GetUsers;
+use App\Http\Requests\Media\IndexRequest;
+use App\UseCases\Media\GetMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
 final class IndexController extends Controller
@@ -15,14 +15,14 @@ final class IndexController extends Controller
     private $useCase;
 
     /**
-     * @param GetUsers $useCase
+     * @param GetMedia $useCase
      * @return void
      */
-    public function __construct(GetUsers $useCase)
+    public function __construct(GetMedia $useCase)
     {
         $this->middleware([
             'authenticate',
-            'authorize:user-select',
+            'authorize:media-select',
         ]);
 
         $this->useCase = $useCase;
@@ -34,7 +34,7 @@ final class IndexController extends Controller
      */
     public function __invoke(IndexRequest $request)
     {
-        return view('users.index', [
+        return view('media.index', [
             'rows' => $this->useCase->excute([
                 'param' => $request->validated(),
             ]),

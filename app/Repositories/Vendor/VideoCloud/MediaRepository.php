@@ -106,7 +106,13 @@ final class MediaRepository implements RepositoryContract
      */
     public function findAll(array $args = [], $paginate = false)
     {
-        //
+        $contents = collect([]);
+
+        foreach ($this->getVideos($args) as $content) {
+            $contents->push(new Media($content));
+        }
+
+        return $contents;
     }
 
     /**
