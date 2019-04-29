@@ -70,6 +70,22 @@
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'rightholder')
+                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
+                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'tournament')
+                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
+                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                        </div>
+                                    </div>
 
                                     @foreach (['leagues' => $vc_leagues, 'universities' => $vc_universities, 'sports' => $vc_sports] as $attribute => $items)
                                         @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : collect($row->tags)->filter(function ($value, $key) use ($items) { return $items->containsStrict('name', $value); })])

@@ -37,7 +37,9 @@ return [
         'long_description'      => __('Keywords'),
         'state'                 => __('Status'),
         'ingestjobs'            => __('Ingest Status'),
-
+        'video_file'            => __('Video File'),
+        'rightholder'           => __('Rightholder'),
+        'tournament'            => __('Tournament'),
         'leagues'               => __('Leagues'),
         'leagues.*'             => __('Leagues'),
         'sports'                => __('Sports'),

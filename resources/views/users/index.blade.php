@@ -34,7 +34,7 @@
                                                 <input type="checkbox" />
                                             </th>
                                             <th>@lang ('attributes.users.name')</th>
-                                            <th>@lang ('ID')</th>
+                                            <th>@lang ('attributes.users.id')</th>
                                             <th>@lang ('attributes.users.company')</th>
                                             <th>@lang ('attributes.users.role_id')</th>
                                             <th>@lang ('attributes.users.email')</th>
@@ -43,7 +43,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $row)
+                                        @foreach ($rows as $row)
                                             <tr>
                                                 <td>
                                                     <input type="checkbox" />
@@ -90,7 +90,7 @@
                                     </tbody>
                                 </table>
 
-                                {{--{!! $users->render() !!}--}}
+                                {{--{!! $rows->render() !!}--}}
                             </div>
                             <div class="card-footer">
                                 <a class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

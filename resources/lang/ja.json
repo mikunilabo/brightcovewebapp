@@ -77,6 +77,7 @@
     "Profile Details": "プロフィール詳細",
     "published": "公開済",
     "publishing": "公開中",
+    "Rightholder": "制作元",
     "Settings": "設定",
     "Sign In": "ログイン",
     "Sign up": "アカウント登録",
@@ -89,6 +90,7 @@
     "The page you are looking for was not found.": "ページが見つかりませんでした。",
     "The :name information was :action.": ":name情報を:actionしました。",
     "Title": "タイトル",
+    "Tournament": "大会名",
     "University": "大学名",
     "Universities": "大学名",
     "Update": "更新",
@@ -96,5 +98,6 @@
     "Upload": "アップロード",
     "User": "ユーザー",
     "Version": "バージョン",
+    "Video File": "動画ファイル",
     "You do not have access.": "アクセス権限がありません。"
 }

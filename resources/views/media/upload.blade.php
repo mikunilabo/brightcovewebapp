@@ -37,79 +37,51 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    @if (false)
                                     <div class="row">
-                                        <div class="form-group col-md-6">
+                                        <div class="form-group col-md-12">
                                             @set ($attribute, 'name')
                                             <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" required autofocus />
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'company')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
-                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off" required>{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'email')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" required />
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'description')
+                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="4" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'password')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please enter.')" required />
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'long_description')
+                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="3" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                            <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'password_confirmation')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please re-enter to confirm.')" required />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'leagues')
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'rightholder')
                                             <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
-
-                                            @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
-                                                __('It will be automatically selected when uploading.'),
-                                                Auth::user()->can('authorize', 'user-create') ? __('If it is not in the list, it will be newly registered.') : '')
-                                            ]) @endcomponent
-
-                                            <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
-                                            </div>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'universities')
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-md-12">
+                                            @set ($attribute, 'tournament')
                                             <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
-
-                                            @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
-                                                __('It will be automatically selected when uploading.'),
-                                                Auth::user()->can('authorize', 'user-create') ? __('If it is not in the list, it will be newly registered.') : '')
-                                            ]) @endcomponent
-
-                                            <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
-                                            </div>
+                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
 
-                                    @set ($attribute, 'sports')
-                                    @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : []])
-
-                                        @endif
+                                    @foreach (['leagues' => Auth::user()->leagues, 'universities' => Auth::user()->universities, 'sports' => Auth::user()->sports] as $attribute => $items)
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : $items->pluck('name')->all()])
+                                        <hr>
+                                    @endforeach
                                 </div>
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
