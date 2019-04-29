@@ -8,7 +8,7 @@ use App\Contracts\Domain\ModelContract;
 final class Media implements ModelContract
 {
     /** @var array */
-    private static $attributes = [];
+    private $attributes = [];
 
     /**
      * @param array $attributes
@@ -16,24 +16,24 @@ final class Media implements ModelContract
      */
     public function __construct(array $attributes = [])
     {
-        self::$attributes = $attributes;
+        $this->attributes = $attributes;
     }
 
     /**
      * @param string $name
      * @return mixed
      */
-    public static function __get($name)
+    public function __get($name)
     {
-        return array_key_exists($name, self::$attributes) ? self::$attributes[$name] : null;
+        return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : null;
     }
 
     /**
      * @param string $name
      * @param void
      */
-    public static function __set($name, $value)
+    public function __set($name, $value)
     {
-        self::$attributes[$name] = $value;
+        $this->attributes[$name] = $value;
     }
 }

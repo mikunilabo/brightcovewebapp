@@ -5,6 +5,7 @@ namespace App\UseCases\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
+use App\Exceptions\Domain\NotFoundException;
 
 final class UpdateMedia implements UseCaseContract
 {
@@ -26,11 +27,11 @@ final class UpdateMedia implements UseCaseContract
      */
     public function media(string $videoId)
     {
-        /**
-         * TODO Not found exception
-         */
+        if (is_null($model = $this->repo->findById($videoId))) {
+            throw new NotFoundException('The media was not found.');
+        }
 
-        return $this->repo->findById($videoId);
+        return $model;
     }
 
     /**
