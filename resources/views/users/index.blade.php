@@ -61,7 +61,7 @@
                                                         <code>{{ $row->email }}</code>
                                                     </a>
                                                 </td>
-                                                <td>{{ optional($row->loginHistories->first())->created_at }}</td>
+                                                <td>{{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}</td>
                                                 <td>
                                                     <div class="nav navbar-nav">
                                                         <div class="nav-item dropdown">

@@ -87,7 +87,7 @@ return [
     |
     */
 
-    'locale' => 'ja',
+    'locale' => env('APP_LOCALE', 'ja'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,9 +138,9 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
-
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
+    'log'           => env('APP_LOG', 'single'),
+    'log_level'     => env('APP_LOG_LEVEL', 'debug'),
+    'log_max_files' => env('APP_LOG_MAX_FILES', 5),
 
     /*
     |--------------------------------------------------------------------------
@@ -192,6 +192,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\BladeServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\CarbonServiceProvider::class,
         App\Providers\DatabaseServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\FacadeServiceProvider::class,
