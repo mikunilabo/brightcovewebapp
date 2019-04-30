@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Media;
 
-final class UpdateRequest extends UsersRequest
+final class UpdateRequest extends MediaRequest
 {
     /**
      * @return array
