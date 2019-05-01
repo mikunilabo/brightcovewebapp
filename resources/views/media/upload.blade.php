@@ -27,7 +27,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             @set ($attribute, 'video_file')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
 
                                             @component ('components.popovers.informations', ['content' => '20MB']) @endcomponent
 
@@ -40,7 +40,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'name')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Title') <code>*</code></label>
                                             <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off" required>{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -48,7 +48,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'description')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Description')</label>
                                             <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="4" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -56,7 +56,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'long_description')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Keywords')</label>
                                             <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="3" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -64,7 +64,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'rightholder')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Rightholder')</label>
                                             <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -72,7 +72,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'tournament')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.media.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Tournament')</label>
                                             <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}</textarea>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>

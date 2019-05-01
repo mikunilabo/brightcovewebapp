@@ -27,13 +27,13 @@
                                     <div class="row">
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'name')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Name') <code>*</code></label>
                                             <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" required autofocus />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'company')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Company')</label>
                                             <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -41,13 +41,13 @@
                                     <div class="row">
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'email')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('E-Mail') <code>*</code></label>
                                             <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" required />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'role_id')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Role') <code>*</code></label>
                                             <select name="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required>
                                                 @foreach ($vc_roles->pluck('name', 'id') as $key => $value)
                                                     <option value="{{ $key }}" {{ (int)($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : 2) === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
@@ -59,21 +59,21 @@
                                     <div class="row">
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Password') <code>*</code></label>
                                             <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please enter.')" required />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password_confirmation')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute)) <code>*</code></label>
+                                            <label for="{{ $attribute }}">@lang ('Repeat Password') <code>*</code></label>
                                             <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please re-enter to confirm.')" required />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             @set ($attribute, 'leagues')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Leagues')</label>
 
                                             @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
                                                 __('It will be automatically selected when uploading.'),
@@ -87,7 +87,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             @set ($attribute, 'universities')
-                                            <label for="{{ $attribute }}">@lang (sprintf('attributes.users.%s', $attribute))</label>
+                                            <label for="{{ $attribute }}">@lang ('Universities')</label>
 
                                             @component ('components.popovers.informations', ['content' => sprintf('%s<br>%s',
                                                 __('It will be automatically selected when uploading.'),

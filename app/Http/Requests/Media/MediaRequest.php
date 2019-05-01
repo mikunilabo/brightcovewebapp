@@ -46,12 +46,10 @@ abstract class MediaRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id'                    => __('ID'),
             'name'                  => __('Title'),
             'description'           => __('Description'),
             'long_description'      => __('Keywords'),
             'state'                 => __('Status'),
-            'ingestjobs'            => __('Ingest Status'),
             'video_file'            => __('Video File'),
             'rightholder'           => __('Rightholder'),
             'tournament'            => __('Tournament'),

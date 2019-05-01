@@ -33,9 +33,9 @@
                                             <th>
                                                 <input type="checkbox" />
                                             </th>
-                                            <th>@lang ('attributes.media.id')</th>
-                                            <th>@lang ('attributes.media.name')</th>
-                                            <th>@lang ('attributes.media.state')</th>
+                                            <th>@lang ('ID')</th>
+                                            <th>@lang ('Title')</th>
+                                            <th>@lang ('Status')</th>
                                             <th>@lang ('Created At')</th>
                                             <th>@lang ('Updated At')</th>
                                             <th><i class="nav-icon icon-options"></i></th>

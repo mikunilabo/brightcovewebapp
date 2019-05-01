@@ -33,11 +33,11 @@
                                             <th>
                                                 <input type="checkbox" />
                                             </th>
-                                            <th>@lang ('attributes.users.name')</th>
-                                            <th>@lang ('attributes.users.id')</th>
-                                            <th>@lang ('attributes.users.company')</th>
-                                            <th>@lang ('attributes.users.role_id')</th>
-                                            <th>@lang ('attributes.users.email')</th>
+                                            <th>@lang ('Name')</th>
+                                            <th>@lang ('ID')</th>
+                                            <th>@lang ('Company')</th>
+                                            <th>@lang ('Role')</th>
+                                            <th>@lang ('E-Mail')</th>
                                             <th>@lang ('Last login')</th>
                                             <th><i class="nav-icon icon-options"></i></th>
                                         </tr>

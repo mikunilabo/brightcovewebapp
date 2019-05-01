@@ -46,19 +46,15 @@ abstract class UsersRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'id'                    => __('ID'),
             'name'                  => __('Name'),
             'email'                 => __('E-Mail'),
             'company'               => __('Company Name'),
             'role_id'               => __('Role'),
             'password'              => __('Password'),
-            'password_confirmation' => __('Repeat Password'),
             'leagues'               => __('Leagues'),
-            'leagues.*'             => __('Leagues'),
             'sports'                => __('Sports'),
             'sports.*'              => __('Sports'),
             'universities'          => __('Universities'),
-            'universities.*'        => __('Universities'),
         ];
     }
 
