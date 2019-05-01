@@ -3,3 +3,36 @@
 body {
     font-family: "メイリオ", Meiryo, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", "MS PGothic", "MS UI Gothic", Helvetica, Arial, sans-serif;
 }
+
+// Datatables.js
+table.dataTable thead th {
+  position: relative;
+  background-image: none !important;
+
+  &.sorting:after,
+  &.sorting_asc:after,
+  &.sorting_desc:after {
+    font-family: FontAwesome;
+    position: inherit;
+    display: inline;
+    right: -.5em;
+    top: 0px;
+    //position: absolute;
+    //top: 12px;
+    //right: 8px;
+    //display: block;
+  }
+
+  &.sorting:after {
+    content: '\f0dc'; // fa-sort
+    color: #c8ced3;
+  }
+  &.sorting_asc:after {
+    content: '\f160'; // fa-sort-amount-asc
+    color: #2f353a;
+  }
+  &.sorting_desc:after {
+    content: '\f161'; // fa-sort-amount-desc
+    color: #2f353a;
+  }
+}

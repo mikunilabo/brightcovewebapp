@@ -2,10 +2,6 @@
 
 @section ('title', __('Media list'))
 
-@section ('Styles')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
-@endsection
-
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Media list') => route('media.index')]]) @endcomponent
@@ -119,8 +115,6 @@
 @section ('scripts')
     @parent
 
-
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $.extend( $.fn.dataTable.defaults, {
@@ -139,7 +133,9 @@
                 info: true,
                 lengthChange: true,
                 lengthMenu: [10, 25, 50, 100],
-                order: [],
+                order: [
+                    [4, 'desc'],
+                	],
                 ordering: true,
                 paging: true,
                 scrollX: false,
@@ -149,5 +145,4 @@
             });
         });
     </script>
-} );
 @endsection

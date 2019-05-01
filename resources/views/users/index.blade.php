@@ -2,10 +2,6 @@
 
 @section ('title', __('Accounts list'))
 
-@section ('Styles')
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
-@endsection
-
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Accounts list') => route('accounts.index')]]) @endcomponent
@@ -119,8 +115,6 @@
 @section ('scripts')
     @parent
 
-
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $.extend( $.fn.dataTable.defaults, {
@@ -149,5 +143,4 @@
             });
         });
     </script>
-} );
 @endsection

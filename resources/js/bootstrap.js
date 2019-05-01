@@ -16,6 +16,7 @@ try {
     require('perfect-scrollbar');
     require('typeahead.js');
     require('@coreui/coreui');
+    require('datatables.net-bs4')();
 //    require('chart.js');
 } catch (e) {}
 
