@@ -23,7 +23,7 @@
     </div>
 
     @section ('footer')
-        @include ('layouts.footer')
+        @component ('layouts.footer') @endcomponent
     @show
 
     @component ('components.forms.basic') @endcomponent

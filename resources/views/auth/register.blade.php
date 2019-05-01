@@ -72,6 +72,8 @@
                 <a href="{{ route('login') }}" class="btn btn-block btn-link px-0 mt-3">
                     @lang ('Already have a account? Sign in!')
                 </a>
+
+                @component ('layouts.skeleton_footer') @endcomponent
             </div>
         </div>
     </div>

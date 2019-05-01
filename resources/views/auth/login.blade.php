@@ -53,6 +53,8 @@
                 <a href="{{ route('password.request') }}" class="btn btn-block btn-link px-0">
                     @lang ('Forgot password?')
                 </a>
+
+                @component ('layouts.skeleton_footer') @endcomponent
             </div>
         </div>
     </div>

@@ -42,6 +42,8 @@
                 <a href="{{ route('login') }}" class="btn btn-block btn-link px-0">
                     @lang ('Back to sign in page.')
                 </a>
+
+                @component ('layouts.skeleton_footer') @endcomponent
             </div>
         </div>
     </div>
