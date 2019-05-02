@@ -72,7 +72,7 @@ final class UpdateController extends Controller
         }
 
         return redirect()
-            ->route('accounts.detail', $videoId)
+            ->route('media.detail', $videoId)
             ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Media'), 'action' => __('Update')])]);
     }
 }

@@ -2,10 +2,6 @@
 
 @section ('title', __('Create Account'))
 
-@section ('styles')
-    @parent
-@endsection
-
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Create Account') => route('accounts.create')]]) @endcomponent
@@ -15,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.create') }}" method="POST">
+                            <form action="{{ route('accounts.create') }}" method="POST" onsubmit="window.Common.overlay();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">

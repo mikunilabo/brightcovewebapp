@@ -2,10 +2,6 @@
 
 @section ('title', __('Profile Details'))
 
-@section ('styles')
-    @parent
-@endsection
-
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Profile Details') => route('accounts.detail', $row->id)]]) @endcomponent
@@ -15,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.profile') }}" method="POST">
+                            <form action="{{ route('accounts.profile') }}" method="POST" onsubmit="window.Common.overlay();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">

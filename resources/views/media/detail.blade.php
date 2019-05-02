@@ -2,10 +2,6 @@
 
 @section ('title', __('Media detail'))
 
-@section ('styles')
-    @parent
-@endsection
-
 @section ('content')
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Media detail') => route('accounts.detail', $row->id)]]) @endcomponent
@@ -15,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.detail', $row->id) }}" method="POST">
+                            <form action="{{ route('media.detail', $row->id) }}" method="POST" onsubmit="window.Common.overlay();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -88,7 +84,7 @@
                                     </div>
 
                                     @foreach (['leagues' => $vc_leagues, 'universities' => $vc_universities, 'sports' => $vc_sports] as $attribute => $items)
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : collect($row->tags)->filter(function ($value, $key) use ($items) { return $items->containsStrict('name', $value); })])
+                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : collect($row->tags)->filter(function ($value) use ($items) { return $items->containsStrict('name', $value); })])
                                         <hr>
                                     @endforeach
 

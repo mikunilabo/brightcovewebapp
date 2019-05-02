@@ -11,6 +11,7 @@ class Common {
         form.action = url;
         form.method = method;
         form.submit();
+        this.overlay();
     }
 
     /**
@@ -93,6 +94,16 @@ class Common {
     removeElement(id) {
         var element = document.getElementById(id);
         element.parentNode.removeChild(element);
+    }
+
+    /**
+     * @return void
+     */
+    overlay() {
+        $("#overlay").fadeIn(500);
+//        setTimeout(function(){
+//            $("#overlay").fadeOut(500);
+//        },3000);
     }
 }
 

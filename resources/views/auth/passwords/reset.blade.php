@@ -18,7 +18,7 @@
 
                 @component ('components.messages.alerts') @endcomponent
 
-                <form action="{{ route('password.request') }}" method="POST">
+                <form action="{{ route('password.request') }}" method="POST" onsubmit="window.Common.overlay();">
                     <input type="hidden" name="token" value="{{ $token }}">
                     {{ csrf_field() }}
 

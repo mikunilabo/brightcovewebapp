@@ -27,6 +27,7 @@
     @show
 
     @component ('components.forms.basic') @endcomponent
+    @component ('components.overlay.loading') @endcomponent
 
     @section ('scripts')
         @stack ('scripts.app')
