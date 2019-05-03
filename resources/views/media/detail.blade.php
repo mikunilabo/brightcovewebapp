@@ -39,13 +39,12 @@
                                         <div class="form-group col-md-6">
                                             @set ($attribute, 'ingestjobs')
                                             <label for="{{ $attribute }}">@lang ('Ingest Status')</label>
-                                            <div>
-                                                <span id="ingestjobs_result" class="badge badge-light">@lang ('Not received')</span>
+                                            <div class="lead">
+                                                <span id="ingestjobs_result" class="badge badge-light">@lang ('There is no jobs')</span>
+                                                <button type="button" class="btn btn-sm btn-outline-warning" onclick="ingestjobs();">
+                                                    <i class="icons icon-refresh"></i> @lang ('Update')
+                                                </button>
                                             </div>
-
-                                            <button type="button" class="btn btn-sm btn-outline-warning" onclick="ingestjobs();">
-                                                <i class="icons icon-refresh"></i> @lang ('Update')
-                                            </button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -170,18 +169,21 @@
             });
         }
 
+        /**
+         * @return void
+         */
         function ingestjobs() {
             window.Common.overlay();
             window.axios.get("{{ route('webapi.media.ingestjobs', $row->id) }}")
                 .then(response => {
-                    Object.keys(response.data).forEach(function (key) {
+                    for (let key of Object.keys(response.data)) {
                         var state = response.data[key].state;
                         var span = document.getElementById('ingestjobs_result');
                         span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
                         span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
                         span.textContent = state;
-                        return false;
-                    	});
+                        break;
+                    }
                     window.Common.overlayOut();
                 }).catch(error => {
                     window.Common.overlayOut();
