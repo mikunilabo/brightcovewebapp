@@ -31,6 +31,7 @@
 
     @section ('scripts')
         @stack ('scripts.app')
+        @stack ('scripts.resources')
     @show
 </body>
 </html>

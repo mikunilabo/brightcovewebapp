@@ -176,15 +176,15 @@
             window.Common.overlay();
             window.axios.get("{{ route('webapi.media.ingestjobs', $row->id) }}")
                 .then(response => {
+                    window.Common.overlayOut();
                     for (let key of Object.keys(response.data)) {
                         var state = response.data[key].state;
                         var span = document.getElementById('ingestjobs_result');
                         span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
                         span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
-                        span.textContent = state;
+                        span.textContent = window.lang[state];
                         break;
                     }
-                    window.Common.overlayOut();
                 }).catch(error => {
                     window.Common.overlayOut();
                     console.log(error);
