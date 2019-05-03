@@ -37,11 +37,8 @@ final class UpdateController extends Controller
 
 //         $this->authorize('select', $media);// TODO
 
-        $ingestjobs = $this->useCase->ingestjobs($videoId);
-
         return view('media.detail', [
             'row' => $media,
-            'ingestjobs' => $ingestjobs,
         ]);
     }
 

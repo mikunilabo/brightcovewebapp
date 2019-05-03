@@ -46,6 +46,7 @@ final class RepositoryServiceProvider extends ServiceProvider
              */
             Media\CreateMedia::class,
             Media\DeleteMedia::class,
+            Media\GetIngestJobs::class,
             Media\GetMedia::class,
             Media\UpdateMedia::class,
 
@@ -80,6 +81,12 @@ final class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(Media\DeleteMedia::class, function () {
             return new Media\DeleteMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\GetIngestJobs::class, function () {
+            return new Media\GetIngestJobs(
                 app(MediaRepository::class)
             );
         });

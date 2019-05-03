@@ -39,7 +39,13 @@
                                         <div class="form-group col-md-6">
                                             @set ($attribute, 'ingestjobs')
                                             <label for="{{ $attribute }}">@lang ('Ingest Status')</label>
-                                            @component ('components.labels.videos.ingest_jobs', ['items' => $ingestjobs]) @endcomponent
+                                            <div>
+                                                <span id="ingestjobs_result" class="badge badge-light">@lang ('Not received')</span>
+                                            </div>
+
+                                            <button type="button" class="btn btn-sm btn-outline-warning" onclick="ingestjobs();">
+                                                <i class="icons icon-refresh"></i> @lang ('Update')
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -132,6 +138,8 @@
         (function() {
             'use strict';
 
+            ingestjobs();
+
             ta('.ta-leagues', 'leagues');
             ta('.ta-sports', 'sports');
             ta('.ta-universities', 'universities');
@@ -160,6 +168,25 @@
                 limit: 100,
                 source: window.Common.substringMatcher(json)
             });
+        }
+
+        function ingestjobs() {
+            window.Common.overlay();
+            window.axios.get("{{ route('webapi.media.ingestjobs', $row->id) }}")
+                .then(response => {
+                    Object.keys(response.data).forEach(function (key) {
+                        var state = response.data[key].state;
+                        var span = document.getElementById('ingestjobs_result');
+                        span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
+                        span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
+                        span.textContent = state;
+                        return false;
+                    	});
+                    window.Common.overlayOut();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
         }
     </script>
 @endsection

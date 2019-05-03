@@ -11,13 +11,14 @@ final class UpdateRequest extends MediaRequest
     public function rules(): array
     {
         return [
-            'name'         => 'required|string|max:255',
-            'company'      => 'nullable|string|max:255',
+            'name'           => 'required|string|max:255',
 
-            'leagues'      => 'nullable|string|max:255',
-            'universities' => 'nullable|string|max:255',
-            'sports'       => 'sometimes|array',
-            'sports.*'     => 'sometimes|required|string|max:255',
+            'leagues'        => 'sometimes|array',
+            'leagues.*'      => 'nullable|string|exists:leagues,name',
+            'universities'   => 'sometimes|array',
+            'universities.*' => 'nullable|string|exists:universities,name',
+            'sports'         => 'sometimes|array',
+            'sports.*'       => 'sometimes|required|string|exists:sports,name',
         ];
     }
 }
