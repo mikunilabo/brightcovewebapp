@@ -37,7 +37,7 @@
                                             <th><i class="nav-icon icon-options"></i></th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tbody" class="d-none">
                                         @foreach ($rows as $row)
                                             <tr>
                                                 <td>
@@ -116,6 +116,8 @@
     @parent
 
     <script type="text/javascript">
+        window.Common.overlay();
+
         $(document).ready(function () {
             $.extend( $.fn.dataTable.defaults, {
                 language: {
@@ -130,6 +132,10 @@
                     }
                 ],
                 displayLength: 25,
+                "drawCallback": function() {
+                    window.Common.overlayOut();
+                    document.getElementById('tbody').classList.remove('d-none');
+                },
                 info: true,
                 lengthChange: true,
                 lengthMenu: [10, 25, 50, 100],
