@@ -104,7 +104,7 @@
                                             <label for="{{ $attribute }}">@lang ('Updated At')</label>
                                             <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}</div>
                                         </div>
-                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent

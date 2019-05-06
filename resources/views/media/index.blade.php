@@ -80,7 +80,7 @@
                                         <div class="dropdown-divider"></div>
 
                                         @can ('authorize', 'media-delete')
-                                            <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Delete')])')) {  } return false;">
+                                            <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
                                                 <i class="icons icon-trash text-danger"></i>@lang ('Delete')
                                             </a>
                                         @endcan
@@ -138,14 +138,7 @@
                 },
                 stateSave: true,
                 responsive: true,
-            });
-
-            $('#delete-btn').click(function () {
-                var ids = table.rows('.selected').ids();
-                console.log(ids.toArray());
-            });
-
-            table
+            })
             .on('select', function (e, dt, type, indexes) {
                 if (type === 'row' && table.rows('.selected').data().length > 0) {
                     document.getElementById('activate-btn').classList.remove('disabled');
@@ -159,6 +152,25 @@
                     document.getElementById('deactivate-btn').classList.add('disabled');
                     document.getElementById('delete-btn').classList.add('disabled');
                 }
+            });
+
+            $('#delete-btn').click(function () {
+                if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Delete')])')) {
+                    return false;
+                }
+
+                var ids = table.rows('.selected').ids();
+
+                window.Common.overlay();
+                window.axios.post("{{ route('webapi.media.deletes') }}", {
+                    ids: ids.toArray()
+                })
+                .then(response => {
+                    window.location.reload();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
             });
         });
     </script>

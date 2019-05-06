@@ -110,8 +110,10 @@ trait Accessable
     {
         $this->auth();
 
+        $q = $this->queries($args);
+
         /** @var ResponseInterface $response */
-        $response = $this->client->getVideos($args);
+        $response = $this->client->getVideos($q);
 
         $this->httpStatusCode($response, [200]);
 
@@ -135,15 +137,17 @@ trait Accessable
     }
 
     /**
-     * @param string $videoId
+     * @param string|array $videoIds
      * @return mixed
      */
-    private function deleteVideo(string $videoId)
+    private function deleteVideos($videoIds)
     {
         $this->auth();
 
+        $videoIds = is_array($videoIds) ? $videoIds : [$videoIds];
+
         /** @var ResponseInterface $response */
-        $response = $this->client->deleteVideo($videoId);
+        $response = $this->client->deleteVideos(implode(',', $videoIds));
 
         $this->httpStatusCode($response, [204]);
 
@@ -218,7 +222,33 @@ trait Accessable
     private function httpStatusCode(ResponseInterface $response, array $allows = []): void
     {
         if (! in_array($response->getStatusCode(), $allows, true)) {
-            throw new UnexpectedResponseException('API response status code is unexpected.');
+            throw new UnexpectedResponseException(sprintf('API response status code is unexpected. [allowd: %s] [returned: %s]', implode(',', $allows), $response->getStatusCode()));
         }
+    }
+
+    /**
+     * @param array $args
+     * @return array
+     */
+    private function queries(array $args = []): array
+    {
+        $q = [];
+
+        // ids
+        if (array_key_exists('ids', $args) && is_array($args['ids'])) {
+            $q[] = collect($args['ids'])->map(function ($item) {
+                return sprintf('id:%s', $item);
+            })->implode(' ');
+        }
+
+        // state
+//         $q[] = '+state:ACTIVE,INACTIVE';
+
+        // uuid
+//         $q[] = '+custom_fields:uuid';
+
+        return [
+            'q' => implode(' ', $q),
+        ];
     }
 }

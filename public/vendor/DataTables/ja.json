@@ -2,7 +2,7 @@
     "processing": "処理中...",
     "lengthMenu": "_MENU_ 件表示",
     "loadingRecords" : "ロード中",
-    "zeroRecords": "データがありません。",
+    "sZeroRecords": "データがありません。",
     "info": " _TOTAL_ 件中 _START_ - _END_ まで表示",
     "infoEmpty": " 該当 0 件",
     "infoFiltered": "（全 _MAX_ 件より抽出）",

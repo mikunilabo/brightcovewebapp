@@ -80,7 +80,16 @@ final class MediaRepository implements RepositoryContract
      */
     public function delete($id): void
     {
-        $this->deleteVideo($id);
+        $this->deleteVideos($id);
+    }
+
+    /**
+     * @param array $ids
+     * @return void
+     */
+    public function deletes($ids = []): void
+    {
+        $this->deleteVideos($ids);
     }
 
     /**
@@ -106,7 +115,7 @@ final class MediaRepository implements RepositoryContract
      */
     public function findAll(array $args = [], $paginate = false)
     {
-        $contents = collect([]);
+        $contents = collect();
 
         foreach ($this->getVideos($args) as $content) {
             $contents->push(new Media($content));

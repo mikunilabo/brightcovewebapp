@@ -5,9 +5,8 @@ namespace App\UseCases\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
-use App\Exceptions\Domain\NotFoundException;
 
-final class DeleteMedia implements UseCaseContract
+final class DeletesMedia implements UseCaseContract
 {
     /** @var RepositoryContract */
     private $repo;
@@ -22,16 +21,12 @@ final class DeleteMedia implements UseCaseContract
     }
 
     /**
-     * @param string $videoId
+     * @param array $args
      * @return mixed
      */
-    public function media(string $videoId)
+    public function media(array $args = [])
     {
-        if (is_null($model = $this->repo->findById($videoId))) {
-            throw new NotFoundException('The media was not found.');
-        }
-
-        return $this->repo->findById($videoId);
+        return $this->repo->findAll($args);
     }
 
     /**
@@ -40,6 +35,6 @@ final class DeleteMedia implements UseCaseContract
      */
     public function excute($args)
     {
-        return $this->repo->delete($args['id']);
+        return $this->repo->deletes($args['ids']);
     }
 }

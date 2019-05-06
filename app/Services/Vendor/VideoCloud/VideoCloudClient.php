@@ -159,12 +159,12 @@ final class VideoCloudClient
     }
 
     /**
-     * @param string $videoId
+     * @param string $videoIds
      * @return ResponseInterface
      */
-    public function deleteVideo(string $videoId): ResponseInterface
+    public function deleteVideos(string $videoIds): ResponseInterface
     {
-        return $this->client->delete(sprintf('%s/v1/accounts/%s/videos/%s', self::CMS_URL, $this->accountId, $videoId), [
+        return $this->client->delete(sprintf('%s/v1/accounts/%s/videos/%s', self::CMS_URL, $this->accountId, $videoIds), [
             'headers' => [
                 'Authorization' => sprintf('Bearer %s', $this->accessToken),
                 'Content-Type' => 'application/json',

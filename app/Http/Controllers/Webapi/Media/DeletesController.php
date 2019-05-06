@@ -5,40 +5,43 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\UseCases\Media\GetIngestJobs;
+use App\Http\Requests\Webapi\Media\DeletesRequest;
+use App\UseCases\Media\DeletesMedia;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
-final class IngestJobsController extends Controller
+final class DeletesController extends Controller
 {
     /** @var UseCaseContract */
     private $useCase;
 
     /**
-     * @param GetIngestJobs $useCase
+     * @param DeletesMedia $useCase
      * @return void
      */
-    public function __construct(GetIngestJobs $useCase)
+    public function __construct(DeletesMedia $useCase)
     {
         $this->middleware([
             'authenticate',
+            'authorize:media-delete',
         ]);
 
         $this->useCase = $useCase;
     }
 
     /**
-     * @param string $videoId
+     * @param ValidatesWhenResolved $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(string $videoId)
+    public function __invoke(DeletesRequest $request)
     {
-        $media = $this->useCase->media($videoId);
+        $args = $request->validated();
 
-//         $this->authorize('select', $media);// TODO
+        $media = $this->useCase->media($args);
+
+//         $this->authorize('delete', $media);// TODO
 
         try {
-            return $this->useCase->excute([
-                'id' => $videoId,
-            ]);
+            return $this->useCase->excute($args);
         } catch (\Exception $e) {
             return [
                 'code' => $e->getCode(),
