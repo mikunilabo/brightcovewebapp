@@ -8,6 +8,12 @@
     "infoFiltered": "（全 _MAX_ 件より抽出）",
     "infoPostFix": "",
     "search": "絞り込み: ",
+    "select": {
+        "rows": {
+            "_": "%d 件選択中",
+            "0": ""
+        }
+    },
     "url": "",
     "thousands" : ",",
     "paginate": {
