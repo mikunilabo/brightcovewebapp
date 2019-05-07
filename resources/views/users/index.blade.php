@@ -24,15 +24,24 @@
                                 @component ('components.messages.alerts') @endcomponent
 
                                 <table class="table table-responsive-sm table-striped table-hover" id="users-table">
+                                    <colgroup>
+                                        <col style="width: 15%;">
+                                        <col style="width: 20%;">
+                                        <col style="width: 15%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 20%;">
+                                        <col style="width: 8%;">
+                                        <col style="width: 12%;">
+                                    </colgroup>
                                     <thead>
                                         <tr>
-                                            <th>@lang ('Name')</th>
-                                            <th>@lang ('ID')</th>
-                                            <th>@lang ('Company')</th>
-                                            <th>@lang ('Role')</th>
-                                            <th>@lang ('E-Mail')</th>
-                                            <th>@lang ('Last login')</th>
-                                            <th>@lang ('Created At')</th>
+                                            <th class="text-nowrap">@lang ('Name')</th>
+                                            <th class="text-nowrap">@lang ('ID')</th>
+                                            <th class="text-nowrap">@lang ('Company')</th>
+                                            <th class="text-nowrap">@lang ('Role')</th>
+                                            <th class="text-nowrap">@lang ('E-Mail')</th>
+                                            <th class="text-nowrap">@lang ('Last login')</th>
+                                            <th class="text-nowrap">@lang ('Created At')</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody" class="d-none">
@@ -51,7 +60,9 @@
                                                         <code>{{ $row->email }}</code>
                                                     </a>
                                                 </td>
-                                                <td>{{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}</td>
+                                                <td class="text-center">
+                                                    {{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}
+                                                </td>
                                                 <td>{{ $row->created_at }}</td>
                                             </tr>
                                         @endforeach
@@ -101,6 +112,7 @@
                 ],
                 ordering: true,
                 paging: true,
+                pagingType: 'full_numbers',
                 scrollX: false,
                 searching: true,
                 select: {

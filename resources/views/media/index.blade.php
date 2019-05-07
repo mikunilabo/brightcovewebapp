@@ -24,13 +24,20 @@
                                 @component ('components.messages.alerts') @endcomponent
 
                                 <table class="table table-responsive-sm table-striped table-hover" id="media-table">
+                                    <colgroup>
+                                        <col style="width: 15%;">
+                                        <col style="width: 40%;">
+                                        <col style="width: 15%;">
+                                        <col style="width: 15%;">
+                                        <col style="width: 15%;">
+                                    </colgroup>
                                     <thead>
                                         <tr>
-                                            <th>@lang ('ID')</th>
-                                            <th>@lang ('Title')</th>
-                                            <th>@lang ('Status')</th>
-                                            <th>@lang ('Created At')</th>
-                                            <th>@lang ('Updated At')</th>
+                                            <th class="text-nowrap">@lang ('ID')</th>
+                                            <th class="text-nowrap">@lang ('Title')</th>
+                                            <th class="text-nowrap">@lang ('Status')</th>
+                                            <th class="text-nowrap">@lang ('Created At')</th>
+                                            <th class="text-nowrap">@lang ('Updated At')</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody" class="d-none">
@@ -40,7 +47,7 @@
                                                 <td>
                                                     <a href="{{ route('media.detail', $row->id) }}">{{ $row->name }}</a>
                                                 </td>
-                                                <td>
+                                                <td class="text-center">
                                                     @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
                                                 </td>
                                                 <td>
@@ -66,13 +73,13 @@
                                 @can ('authorize', ['media-delete', 'media-update'])
                                     <div class="dropdown-menu" disabled>
                                         @can ('authorize', 'media-update')
-                                            <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Activate')])')) {  } return false;">
+                                            <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault();">
                                                 <i class="icons icon-share text-success"></i>@lang ('Activate')
                                             </a>
                                         @endcan
 
                                         @can ('authorize', 'media-update')
-                                            <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Deactivate')])')) {  } return false;">
+                                            <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
                                                 <i class="icons icon-ban"></i>@lang ('Deactivate')
                                             </a>
                                         @endcan
@@ -129,6 +136,7 @@
                 ],
                 ordering: true,
                 paging: true,
+                pagingType: 'full_numbers',
                 scrollX: false,
                 searching: true,
                 select: {
@@ -159,9 +167,9 @@
                     return false;
                 }
 
+                window.Common.overlay();
                 var ids = table.rows('.selected').ids();
 
-                window.Common.overlay();
                 window.axios.post("{{ route('webapi.media.deletes') }}", {
                     ids: ids.toArray()
                 })
