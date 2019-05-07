@@ -28,6 +28,13 @@ final class LoginHistory extends Model implements ModelContract
     ];
 
     /**
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function user(): BelongsTo

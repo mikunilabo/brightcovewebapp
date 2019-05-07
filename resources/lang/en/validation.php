@@ -142,6 +142,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'attribute-name' => 'custom-message',
+    ],
 
 ];

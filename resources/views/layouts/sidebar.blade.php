@@ -9,7 +9,7 @@
 
             <li class="nav-title">@lang ('Main menu')</li>
 
-            @can ('authorize', ['media-select', 'media-upload'])
+            @can ('authorize', ['media-select', 'media-create'])
                 <!-- Media -->
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
@@ -18,16 +18,16 @@
                     <ul class="nav-dropdown-items">
                         @can ('authorize', ['media-select'])
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('media.index') }}">
                                     <i class="nav-icon icon-list"></i>@lang ('Media list')
                                 </a>
                             </li>
                         @endcan
 
-                        @can ('authorize', ['media-upload'])
+                        @can ('authorize', ['media-create'])
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="nav-icon icon-cloud-upload"></i>@lang ('Media upload')
+                                <a class="nav-link" href="{{ route('media.upload') }}">
+                                    <i class="nav-icon icon-cloud-upload"></i>@lang ('Media Upload')
                                 </a>
                             </li>
                         @endcan

@@ -18,7 +18,7 @@
 
                 @component ('components.messages.alerts') @endcomponent
 
-                <form action="{{ route('login') }}" method="POST">
+                <form action="{{ route('login') }}" method="POST" onsubmit="window.Common.overlay();">
                     {{ csrf_field() }}
 
                     <div class="input-prepend input-group">
@@ -28,7 +28,7 @@
                         </div>
 
                         @set ($attribute, 'email')
-                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -39,7 +39,7 @@
                         </div>
 
                         @set ($attribute, 'password')
-                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -53,6 +53,8 @@
                 <a href="{{ route('password.request') }}" class="btn btn-block btn-link px-0">
                     @lang ('Forgot password?')
                 </a>
+
+                @component ('layouts.skeleton_footer') @endcomponent
             </div>
         </div>
     </div>

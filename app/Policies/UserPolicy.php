@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use App\Model\Eloquent\User;
+use App\Contracts\Domain\ModelContract;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User;
 
 final class UserPolicy
 {
@@ -21,11 +22,11 @@ final class UserPolicy
     }
 
     /**
-     * @param  User  $user
-     * @param  User  $targetUser
+     * @param User $user
+     * @param ModelContract $model
      * @return bool
      */
-    public function select(User $user, User $targetUser): bool
+    public function select(User $user, ModelContract $model): bool
     {
         if ($user->can('authorize', 'user-select')) {
             return true;
@@ -35,24 +36,11 @@ final class UserPolicy
     }
 
     /**
-     * @param  User  $user
+     * @param User $user
+     * @param ModelContract $model
      * @return bool
      */
-    public function create(User $user): bool
-    {
-        if ($user->can('authorize', 'user-create')) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param  User  $user
-     * @param  User  $targetUser
-     * @return bool
-     */
-    public function update(User $user, User $targetUser): bool
+    public function update(User $user, ModelContract $model): bool
     {
         if ($user->can('authorize', 'user-update')) {
             return true;
@@ -62,13 +50,13 @@ final class UserPolicy
     }
 
     /**
-     * @param  User  $user
-     * @param  User  $targetUser
+     * @param User $user
+     * @param ModelContract $model
      * @return bool
      */
-    public function delete(User $user, User $targetUser): bool
+    public function delete(User $user, ModelContract $model): bool
     {
-        if ($user->id !== $targetUser->id
+        if ($user->id !== $model->id
             && $user->can('authorize', 'user-delete')
         ) {
             return true;
@@ -76,33 +64,4 @@ final class UserPolicy
 
         return false;
     }
-
-    /**
-     * @param  User  $user
-     * @param  User  $targetUser
-     * @return bool
-     */
-    public function restore(User $user, User $targetUser): bool
-    {
-        return false;
-    }
-
-    /**
-     * @param  User  $user
-     * @param  User  $targetUser
-     * @return bool
-     */
-    public function changeRole(User $user, User $targetUser): bool
-    {
-//         if ($user->can('authorize', config('permissions.groups.user-create'))) {
-//             return true;
-//         }
-
-//         if ($user->id !== $targetUser->id) {
-//             return true;
-//         }
-
-        return false;
-    }
-
 }

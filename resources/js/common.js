@@ -11,6 +11,7 @@ class Common {
         form.action = url;
         form.method = method;
         form.submit();
+        this.overlay();
     }
 
     /**
@@ -93,6 +94,45 @@ class Common {
     removeElement(id) {
         var element = document.getElementById(id);
         element.parentNode.removeChild(element);
+    }
+
+    /**
+     * @param string job
+     * @return string
+     */
+    labelNameForIngestJob(job) {
+        switch (job) {
+            case 'published':// Non break
+            case 'publishing':// Non break
+            case 'finished':
+                return 'success';
+
+            case 'processing':
+                return 'warning';
+
+            case 'failed':
+                return 'danger';
+
+            default:
+                return 'light';
+        }
+    }
+
+    /**
+     * @return void
+     */
+    overlay() {
+        $("#overlay").fadeIn(500);
+//        setTimeout(function(){
+//            $("#overlay").fadeOut(500);
+//        },3000);
+    }
+
+    /**
+     * @return void
+     */
+    overlayOut() {
+        $("#overlay").fadeOut(500);
     }
 }
 

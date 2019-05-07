@@ -36,4 +36,11 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'videocloud' => [
+        'account_id'    => env('VIDEOCLOUD_ACCOUNT_ID'),
+        'client_id'     => env('VIDEOCLOUD_CLIENT_ID'),
+        'client_secret' => env('VIDEOCLOUD_CLIENT_SECRET'),
+        'video_profile' => env('VIDEOCLOUD_VIDEO_PROFILE'),
+    ],
+
 ];

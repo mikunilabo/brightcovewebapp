@@ -5,7 +5,9 @@ namespace App\Providers;
 
 use App\Http\Views\Composers;
 use App\Repositories\Database\Eloquent;
+use App\Repositories\Vendor\VideoCloud\MediaRepository;
 use App\UseCases\Users;
+use App\UseCases\Media;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -42,6 +44,13 @@ final class RepositoryServiceProvider extends ServiceProvider
             /**
              * Usecases
              */
+            Media\CreateMedia::class,
+            Media\DeleteMedia::class,
+            Media\DeletesMedia::class,
+            Media\GetIngestJobs::class,
+            Media\GetMedia::class,
+            Media\UpdateMedia::class,
+
             Users\CreateUser::class,
             Users\DeleteUser::class,
             Users\GetUsers::class,
@@ -65,6 +74,43 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Usecases
          */
+        $this->app->bind(Media\CreateMedia::class, function () {
+            return new Media\CreateMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\DeleteMedia::class, function () {
+            return new Media\DeleteMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\DeletesMedia::class, function () {
+            return new Media\DeletesMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\GetIngestJobs::class, function () {
+            return new Media\GetIngestJobs(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\GetMedia::class, function () {
+            return new Media\GetMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\UpdateMedia::class, function () {
+            return new Media\UpdateMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+
         $this->app->bind(Users\CreateUser::class, function () {
             return new Users\CreateUser(
                 app(Eloquent\UserRepository::class)

@@ -37,7 +37,7 @@ final class UpdateController extends Controller
 
         $this->authorize('select', $user);
 
-        return view('users.update', [
+        return view('users.detail', [
             'row' => $user,
         ]);
     }

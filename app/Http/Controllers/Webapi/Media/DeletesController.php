@@ -1,0 +1,52 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Http\Controllers\Webapi\Media;
+
+use App\Contracts\Domain\UseCaseContract;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Webapi\Media\DeletesRequest;
+use App\UseCases\Media\DeletesMedia;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+
+final class DeletesController extends Controller
+{
+    /** @var UseCaseContract */
+    private $useCase;
+
+    /**
+     * @param DeletesMedia $useCase
+     * @return void
+     */
+    public function __construct(DeletesMedia $useCase)
+    {
+        $this->middleware([
+            'authenticate',
+            'authorize:media-delete',
+        ]);
+
+        $this->useCase = $useCase;
+    }
+
+    /**
+     * @param ValidatesWhenResolved $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function __invoke(DeletesRequest $request)
+    {
+        $args = $request->validated();
+
+        $media = $this->useCase->media($args);
+
+//         $this->authorize('delete', $media);// TODO
+
+        try {
+            return $this->useCase->excute($args);
+        } catch (\Exception $e) {
+            return [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+}

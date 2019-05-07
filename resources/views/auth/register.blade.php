@@ -18,7 +18,7 @@
 
                 @component ('components.messages.alerts') @endcomponent
 
-                <form action="{{ route('register') }}" method="POST">
+                <form action="{{ route('register') }}" method="POST" onsubmit="window.Common.overlay();">
                     {{ csrf_field() }}
 
                     <div class="input-prepend input-group">
@@ -27,7 +27,7 @@
                         </div>
 
                         @set ($attribute, 'name')
-                        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required autofocus />
+                        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Name')" required autofocus />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -38,7 +38,7 @@
                         </div>
 
                         @set ($attribute, 'email')
-                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -48,7 +48,7 @@
                         </div>
 
                         @set ($attribute, 'password')
-                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -58,7 +58,7 @@
                         </div>
 
                         @set ($attribute, 'password_confirmation')
-                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang (sprintf('attributes.users.%s', $attribute))" required />
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Repeat Password')" required />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -72,6 +72,8 @@
                 <a href="{{ route('login') }}" class="btn btn-block btn-link px-0 mt-3">
                     @lang ('Already have a account? Sign in!')
                 </a>
+
+                @component ('layouts.skeleton_footer') @endcomponent
             </div>
         </div>
     </div>

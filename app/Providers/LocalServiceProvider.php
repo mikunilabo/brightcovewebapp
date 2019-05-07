@@ -73,5 +73,4 @@ final class LocalServiceProvider extends ServiceProvider
             }
         }
     }
-
 }
