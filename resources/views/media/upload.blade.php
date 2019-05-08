@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data" onsubmit="window.Common.overlay();">
+                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data" onsubmit="return preSubmit();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -28,11 +28,13 @@
                                             @component ('components.popovers.informations', ['content' => '20MB']) @endcomponent
 
                                             <div>
-                                                <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
+                                                <input type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
                                                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if (false)
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'name')
@@ -41,6 +43,7 @@
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
+
                                     <div class="row">
                                         <div class="form-group col-md-12">
                                             @set ($attribute, 'description')
@@ -78,6 +81,7 @@
                                         @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : $items->pluck('name')->all()])
                                         <hr>
                                     @endforeach
+                                    @endif
                                 </div>
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
@@ -102,34 +106,89 @@
         (function() {
             'use strict';
 
-            ta('.ta-leagues', 'leagues');
-            ta('.ta-sports', 'sports');
-            ta('.ta-universities', 'universities');
+//             ta('.ta-leagues', 'leagues');
+//             ta('.ta-sports', 'sports');
+//             ta('.ta-universities', 'universities');
         })();
+
+        function preSubmit() {
+          if (validate()) {
+            submit();
+          }
+
+          return false;
+        }
+
+        function validate() {
+          if (document.getElementById('video_file').files[0] === undefined) {
+            return false;
+          }
+
+          return true;
+        }
+
+        function submit() {
+          window.Common.overlay();
+
+          window.axios.post("{{ route('webapi.media.create') }}", {
+              //
+          }).then(response => {
+              var videoId = response.data.id;
+          }).catch(error => {
+              window.Common.overlayOut();
+              console.log(error);
+              return;
+          });
+
+          window.axios.get('/webapi/media/' + videoId + '/s3_url', {
+              params: {
+                source: document.getElementById('video_file').files[0].name
+              }
+          }).then(response => {
+              var s3Info = response.data;
+          }).catch(error => {
+              window.Common.overlayOut();
+              console.log(error);
+              return;
+          });
+        }
+
+        // multipart upload here.
+
+        window.axios.post('/webapi/media/' + videoId + '/ingest', {
+            master_url: s3Info['api_request_url']
+        }).then(response => {
+            // complete
+            // redirect to detail page.
+        }).catch(error => {
+            window.Common.overlayOut();
+            console.log(error);
+            return;
+        });
 
         /**
          * @param string id
          * @return void
          */
-        function ta(tag, name) {
-            if (name === 'leagues') {
-                var json = @json ($vc_leagues->pluck('name'));
-            } else if (name === 'sports') {
-                var json = @json ($vc_sports->pluck('name'));
-            } else if (name === 'universities') {
-                var json = @json ($vc_universities->pluck('name'));
-            }
+//         function ta(tag, name) {
+//             if (name === 'leagues') {
+//                 var json = @json ($vc_leagues->pluck('name'));
+//             } else if (name === 'sports') {
+//                 var json = @json ($vc_sports->pluck('name'));
+//             } else if (name === 'universities') {
+//                 var json = @json ($vc_universities->pluck('name'));
+//             }
 
-            $(tag).typeahead({
-                highlight: true,
-                hint: false,
-                minLength: 0
-            },
-            {
-                name: 'states',
-                limit: 100,
-                source: window.Common.substringMatcher(json)
-            });
-        }
+//             $(tag).typeahead({
+//                 highlight: true,
+//                 hint: false,
+//                 minLength: 0
+//             },
+//             {
+//                 name: 'states',
+//                 limit: 100,
+//                 source: window.Common.substringMatcher(json)
+//             });
+//         }
     </script>
 @endsection

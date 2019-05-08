@@ -100,7 +100,7 @@ final class VideoCloudClient
      * @param array $args
      * @return ResponseInterface
      */
-    public function ingestRequest(string $videoId, array $args = []): ResponseInterface
+    public function dynamicIngest(string $videoId, array $args = []): ResponseInterface
     {
         return $this->client->post(sprintf('%s/v1/accounts/%s/videos/%s/ingest-requests', self::INGEST_URL, $this->accountId, $videoId), [
             'headers' => [

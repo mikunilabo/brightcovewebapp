@@ -50,14 +50,14 @@ trait Accessable
      * @param array $args
      * @return mixed
      */
-    private function ingestRequest(string $videoId, array $args = [])
+    private function dynamicIngest(string $videoId, array $args = [])
     {
         $this->auth();
 
         /** @var ResponseInterface $response */
-        $response = $this->client->ingestRequest($videoId, [
+        $response = $this->client->dynamicIngest($videoId, [
             'master' => [
-                'url' => $args['url'],
+                'url' => $args['master_url'],
             ],
 //             'callbacks' => [],
             'capture-images' => true,// default true
@@ -74,7 +74,7 @@ trait Accessable
      * @param string $sourceName
      * @return mixed
      */
-    private function getS3Url(string $videoId, string $sourceName)
+    private function requestS3Url(string $videoId, string $sourceName)
     {
         $this->auth();
 
