@@ -30,10 +30,10 @@ trait Accessable
 //             ],
             'description' => 'description',// 0 <= 255 ?
             'long_description' => 'some freewords',// 0 <= 5000
-            'schedule' => [
-                'starts_at' => now()->format('c'),// ISO-8601
-                'ends_at' => now()->format('c'),// ISO-8601
-            ],
+//             'schedule' => [
+//                 'starts_at' => now()->format('c'),// ISO-8601
+//                 'ends_at' => now()->format('c'),// ISO-8601
+//             ],
             'state' => 'INACTIVE',// or ACTIVE
             'tags' => [
                 'test',

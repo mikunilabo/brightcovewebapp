@@ -36,6 +36,7 @@ final class DynamicIngestController extends Controller
     public function __invoke(DynamicIngestRequest $request, string $videoId)
     {
         $args = $request->validated();
+        $args['profile'] = config('services.videocloud.video_profile');
 
         try {
             return $this->useCase->excute([

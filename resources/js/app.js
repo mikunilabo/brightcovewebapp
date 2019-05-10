@@ -23,6 +23,10 @@ try {
     require('./vendor/coreui/popovers');
     require('./vendor/coreui/tooltips');
     require('./common');
+
+//    require('fs');
+//    require('mime');
+    require('aws-sdk');
 } catch (e) {}
 
 /**

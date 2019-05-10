@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data" onsubmit="return preSubmit();">
+                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data" onsubmit="return false;">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -86,7 +86,7 @@
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
 
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" id="submit-btn">
                                         <i class="icons icon-check"></i> @lang ('Upload')
                                     </button>
                                 </div>
@@ -106,65 +106,152 @@
         (function() {
             'use strict';
 
+            document.getElementById('submit-btn').addEventListener('click', function () {
+                process();
+            });
+
 //             ta('.ta-leagues', 'leagues');
 //             ta('.ta-sports', 'sports');
 //             ta('.ta-universities', 'universities');
         })();
 
-        function preSubmit() {
-          if (validate()) {
-            submit();
-          }
-
-          return false;
+        function process() {
+            if (validate()) {
+                createVideo();
+            }
         }
 
         function validate() {
-          if (document.getElementById('video_file').files[0] === undefined) {
-            return false;
-          }
+            if (document.getElementById('video_file').files[0] === undefined) {
+                return false;
+            }
 
           return true;
         }
 
-        function submit() {
-          window.Common.overlay();
+        function createVideo() {
+            window.Common.overlay();
 
-          window.axios.post("{{ route('webapi.media.create') }}", {
-              //
-          }).then(response => {
-              var videoId = response.data.id;
-          }).catch(error => {
-              window.Common.overlayOut();
-              console.log(error);
-              return;
-          });
-
-          window.axios.get('/webapi/media/' + videoId + '/s3_url', {
-              params: {
-                source: document.getElementById('video_file').files[0].name
-              }
-          }).then(response => {
-              var s3Info = response.data;
-          }).catch(error => {
-              window.Common.overlayOut();
-              console.log(error);
-              return;
-          });
+//             window.axios.post("{{ route('webapi.media.create') }}", {
+//               //
+//             }).then(response => {
+//                 window.video = response.data;
+                window.video = {id: '6034553343001'};// TODO XXX
+//                 console.log(response.data);
+                getS3Url();
+//             }).catch(error => {
+//                 window.Common.overlayOut();
+//                 console.log(error);
+//             });
         }
 
-        // multipart upload here.
+        function getS3Url() {
+            window.axios.post('/webapi/media/' + window.video.id + '/s3_url', {
+                source: document.getElementById('video_file').files[0].name
+            }).then(response => {
+                window.s3 = response.data;
+                console.log(response.data);
+                multiPartUpload();
+            }).catch(error => {
+                window.Common.overlayOut();
+                console.log(error);
+            });
+        }
 
-        window.axios.post('/webapi/media/' + videoId + '/ingest', {
-            master_url: s3Info['api_request_url']
-        }).then(response => {
-            // complete
-            // redirect to detail page.
-        }).catch(error => {
-            window.Common.overlayOut();
-            console.log(error);
-            return;
-        });
+        function multiPartUpload() {
+            const s3 = new AWS.S3({
+              region: 'us-east-1',
+              credentials: {
+                sessionToken: window.s3.session_token,
+                accessKeyId: window.s3.access_key_id,
+                secretAccessKey: window.s3.secret_access_key
+              }
+            })
+            const s3Params = {
+              Bucket: window.s3.bucket,
+              Key: window.s3.object_key
+            }
+
+            const file = document.getElementById('video_file').files[0];
+
+            const upload = async (s3, s3Params, file)=>{
+
+                const mime = Mime.getSize(file.name);
+                const multiPartParams = s3Params.ContentType ? s3Params : {ContentType : mime , ...s3Params};
+                const allSize = file.size
+
+                const partSize = 1024 * 1024 * 5; // 5MB/chunk
+
+                const multipartMap = {
+                    Parts: []
+                };
+
+                /*  (4)   */
+                const multiPartUploadResult = await s3.createMultipartUpload(multiPartParams).promise();
+                const uploadId = multiPartUploadResult.UploadId;
+
+                /*  (5)  */
+                let partNum = 0;
+                const {ContentType , ...otherParams} = multiPartParams;
+                for (let rangeStart = 0; rangeStart < allSize; rangeStart += partSize) {
+                    partNum++;
+                    const end = Math.min(rangeStart + partSize, allSize);
+
+                    const sendData = await new Promise((resolve)=>{
+                        let fileReader =  new FileReader();
+
+                        fileReader.onload = (event)=>{
+                            const data = event.target.result;
+                            let byte = new Uint8Array(data);
+                            resolve(byte);
+                            fileReader.abort();
+                        };
+                        const blob2 = this.file.slice(rangeStart , end);
+                        fileReader.readAsArrayBuffer(blob2);
+                    })
+
+                    const progress = end / file.size;
+                    console.log(`今,${progress * 100}%だよ`);
+
+                    const partParams = {
+                        Body: sendData,
+                        PartNumber: String(partNum),
+                        UploadId: uploadId,
+                        ...otherParams,
+                    };
+                    const partUpload = await s3.uploadPart(partParams).promise();
+
+                    multipartMap.Parts[partNum - 1] = {
+                        ETag: partUpload.ETag,
+                        PartNumber: partNum
+                    };
+                }
+
+                /* (6) */
+                const doneParams = {
+                    ...otherParams,
+                    MultipartUpload: multipartMap,
+                    UploadId: uploadId
+                };
+
+                await s3.completeMultipartUpload(doneParams)
+                    .promise()
+                    .then(()=> dynamicIngest())
+            }
+        }
+
+        function dynamicIngest() {
+            window.axios.post('/webapi/media/' + window.video.id + '/ingest', {
+                master_url: window.s3.api_request_url
+            }).then(response => {
+                // complete
+                console.log(response.data);
+                // redirect to detail page.
+            }).catch(error => {
+                window.Common.overlayOut();
+                console.log(error);
+            });
+        }
 
         /**
          * @param string id
