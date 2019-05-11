@@ -174,6 +174,23 @@
 
             const file = document.getElementById('video_file').files[0];
 
+            s3.putObject(
+  {
+    Bucket: window.s3.bucket,
+    Key: window.s3.object_key,
+    Body: file
+  },
+  function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+    }
+    else {
+      console.log(data);
+      dynamicIngest();
+    }
+  }
+);
+
             const upload = async (s3, s3Params, file)=>{
 
                 const mime = Mime.getSize(file.name);
@@ -236,7 +253,7 @@
 
                 await s3.completeMultipartUpload(doneParams)
                     .promise()
-                    .then(()=> dynamicIngest())
+                    .then(()=> { dynamicIngest() })
             }
         }
 
