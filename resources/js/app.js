@@ -24,8 +24,10 @@ try {
     require('./vendor/coreui/tooltips');
     require('./common');
 
+    // require('evaporate.js');
+    require('crypto');
 //    require('fs');
-//    require('mime');
+   // require('mime');
     require('aws-sdk');
 } catch (e) {}
 
