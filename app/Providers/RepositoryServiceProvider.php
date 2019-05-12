@@ -6,9 +6,11 @@ namespace App\Providers;
 use App\Http\Views\Composers;
 use App\Repositories\Database\Eloquent;
 use App\Repositories\Vendor\VideoCloud\MediaRepository;
-use App\UseCases\Users;
+use App\UseCases\Leagues;
 use App\UseCases\Media;
+use App\UseCases\Users;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\Database\Eloquent\LeagueRepository;
 
 final class RepositoryServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,9 @@ final class RepositoryServiceProvider extends ServiceProvider
             /**
              * Usecases
              */
+            Leagues\DeleteLeague::class,
+            Leagues\GetLeagues::class,
+
             Media\CreateMedia::class,
             Media\DeleteMedia::class,
             Media\DeletesMedia::class,
@@ -76,6 +81,18 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Usecases
          */
+        $this->app->bind(Leagues\DeleteLeague::class, function () {
+            return new Leagues\DeleteLeague(
+                app(LeagueRepository::class)
+            );
+        });
+
+        $this->app->bind(Leagues\GetLeagues::class, function () {
+            return new Leagues\GetLeagues(
+                app(LeagueRepository::class)
+            );
+        });
+
         $this->app->bind(Media\CreateMedia::class, function () {
             return new Media\CreateMedia(
                 app(MediaRepository::class)

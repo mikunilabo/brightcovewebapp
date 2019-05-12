@@ -109,6 +109,20 @@
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
 
+                                    @can ('authorize', 'user-create')
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#leagues-modal">
+                                            <i class="icons icon-tag">@lang ('Leagues')</i>
+                                        </button>
+
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#universities-modal">
+                                            <i class="icons icon-tag">@lang ('Universities')</i>
+                                        </button>
+
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#sports-modal">
+                                            <i class="icons icon-tag">@lang ('Sports')</i>
+                                        </button>
+                                    @endcan
+
                                     @can ('update', $row)
                                         <button type="submit" class="btn btn-primary">
                                             <i class="icons icon-check"></i> @lang ('Update')
@@ -128,6 +142,12 @@
             </div>
         </div>
     </main>
+
+    @can ('authorize', 'user-create')
+        @component ('components.modals.masters', ['name' => 'leagues']) @endcomponent
+        @component ('components.modals.masters', ['name' => 'universities']) @endcomponent
+        @component ('components.modals.masters', ['name' => 'sports']) @endcomponent
+    @endcan
 @endsection
 
 @section ('scripts')
@@ -138,9 +158,59 @@
             'use strict';
 
             ta('.ta-leagues', 'leagues');
-            ta('.ta-sports', 'sports');
             ta('.ta-universities', 'universities');
+            ta('.ta-sports', 'sports');
+
+            listMasters('leagues');
+            // listMasters('universities');
+            // listMasters('sports');
         })();
+
+        function listMasters(name) {
+          var body = document.getElementById(name + '-modal-body');
+          while (body.firstChild) {
+            body.removeChild(body.firstChild);
+          }
+
+          window.axios.get('/webapi/' + name)
+              .then(response => {
+                  window.Common.overlayOut();
+                  body.innerHtml = '';
+
+                  for (let key of Object.keys(response.data)) {
+                      var input = document.createElement('input');
+                      input.type = 'checkbox';
+                      input.classList.add('form-check-input');
+                      input.addEventListener('change', () => { removeMaster(name, response.data[key].id) }, false);
+
+                      var label = document.createElement('label');
+                      label.classList.add('form-check-label');
+                      label.appendChild(input);
+                      var text = document.createTextNode(response.data[key].name);
+                      label.appendChild(text);
+
+                      var div = document.createElement('div');
+                      div.classList.add('form-check', 'form-check-inline', 'mr-3');
+                      div.appendChild(label);
+
+                      body.appendChild(div);
+                  }
+              }).catch(error => {
+                  window.Common.overlayOut();
+                  console.log(error);
+              });
+        }
+
+        function removeMaster(name, id) {
+            window.Common.overlay();
+            window.axios.post('/webapi/' + name + '/' + id + '/delete')
+                .then(response => {
+                    listMasters(name);
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
+        }
 
         /**
          * @param string id

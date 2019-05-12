@@ -84,5 +84,12 @@ Route::prefix('/')->group(function () {
                 Route::get($name = 'ingestjobs', \App\Http\Controllers\Webapi\Media\IngestJobsController::class)->name($name);
             });
         });
+
+        Route::prefix($prefix = 'leagues')->name(sprintf('%s.', $prefix))->group(function () {
+            Route::get($name = '/', \App\Http\Controllers\Webapi\Leagues\IndexController::class)->name('index');
+            Route::prefix('{leagueId}')->group(function () {
+                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Leagues\DeleteController::class)->name($name);
+            });
+        });
     });
 });
