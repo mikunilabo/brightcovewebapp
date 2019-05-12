@@ -6,7 +6,7 @@ namespace App\UseCases\Media;
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
 
-final class CreateMedia implements UseCaseContract
+final class ingestMedia implements UseCaseContract
 {
     /** @var RepositoryContract */
     private $repo;
@@ -26,6 +26,6 @@ final class CreateMedia implements UseCaseContract
      */
     public function excute($args)
     {
-        return $this->repo->createObject($args);
+        return $this->repo->ingestRequest($args);
     }
 }

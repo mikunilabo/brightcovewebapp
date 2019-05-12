@@ -52,16 +52,43 @@ final class MediaRepository implements RepositoryContract
         $file = $args['param']['video_file'];
         $sourceName = $file->getClientOriginalName();// TODO except url chars.
 
-        $content = $this->getS3Url($media->id, $sourceName);
+        $content = $this->requestS3Url($media->id, $sourceName);
 
         $this->multipartUpload($file->getRealPath(), $content);
 
-        $content = $this->ingestRequest($media->id, [
-            'url' => $content['api_request_url'],
+        $content = $this->dynamicIngest($media->id, [
+            'master_url' => $content['api_request_url'],
             'profile' => config('services.videocloud.video_profile'),
         ]);
 
         return $media;
+    }
+
+    /**
+     * @param array $args
+     * @return mixed
+     */
+    public function createObject(array $args)
+    {
+        return $this->createVideo($args['param']);
+    }
+
+    /**
+     * @param array $args
+     * @return mixed
+     */
+    public function getS3Url(array $args)
+    {
+        return $this->requestS3Url($args['id'], $args['param']['source']);
+    }
+
+    /**
+     * @param array $args
+     * @return mixed
+     */
+    public function ingestRequest(array $args)
+    {
+        return $this->dynamicIngest($args['id'], $args['param']);
     }
 
     /**

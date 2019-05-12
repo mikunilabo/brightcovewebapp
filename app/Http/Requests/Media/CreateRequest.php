@@ -11,19 +11,18 @@ final class CreateRequest extends MediaRequest
     public function rules(): array
     {
         return [
-            'video_file'     => [
-                'required',
-                'file',
-//                 'mimetypes:video/avi,video/mpeg,video/quicktime',
-                'max:102400',// (KB) <-100MB
-            ],
+//             'name' => [
+//                 'required',
+//                 'string',
+//                 'max:255',
+//             ],
 
-            'leagues'        => 'sometimes|array',
-            'leagues.*'      => 'nullable|string|exists:leagues,name',
-            'universities'   => 'sometimes|array',
-            'universities.*' => 'nullable|string|exists:universities,name',
-            'sports'         => 'sometimes|array',
-            'sports.*'       => 'sometimes|required|string|exists:sports,name',
+//             'leagues'        => 'sometimes|array',
+//             'leagues.*'      => 'nullable|string|exists:leagues,name',
+//             'universities'   => 'sometimes|array',
+//             'universities.*' => 'nullable|string|exists:universities,name',
+//             'sports'         => 'sometimes|array',
+//             'sports.*'       => 'sometimes|required|string|exists:sports,name',
         ];
     }
 }

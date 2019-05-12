@@ -49,6 +49,8 @@ final class RepositoryServiceProvider extends ServiceProvider
             Media\DeletesMedia::class,
             Media\GetIngestJobs::class,
             Media\GetMedia::class,
+            Media\GetS3Url::class,
+            Media\ingestMedia::class,
             Media\UpdateMedia::class,
 
             Users\CreateUser::class,
@@ -100,6 +102,18 @@ final class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(Media\GetMedia::class, function () {
             return new Media\GetMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\GetS3Url::class, function () {
+            return new Media\GetS3Url(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\ingestMedia::class, function () {
+            return new Media\ingestMedia(
                 app(MediaRepository::class)
             );
         });
