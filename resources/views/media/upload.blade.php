@@ -133,17 +133,16 @@
         function createVideo() {
             window.Common.overlay();
 
-//             window.axios.post("{{ route('webapi.media.create') }}", {
-//               //
-//             }).then(response => {
-//                 window.video = response.data;
-                window.video = {id: '6034553343001'};// TODO XXX
-//                 console.log(response.data);
+            window.axios.post("{{ route('webapi.media.create') }}", {
+              //
+            }).then(response => {
+                window.video = response.data;
+                console.log(response.data);
                 getS3Url();
-//             }).catch(error => {
-//                 window.Common.overlayOut();
-//                 console.log(error);
-//             });
+            }).catch(error => {
+                window.Common.overlayOut();
+                console.log(error);
+            });
         }
 
         function getS3Url() {
@@ -151,7 +150,7 @@
                 source: document.getElementById('video_file').files[0].name
             }).then(response => {
                 window.s3 = response.data;
-                // console.log(response.data);
+                console.log(response.data);
                 multiPartUpload();
             }).catch(error => {
                 window.Common.overlayOut();
@@ -371,9 +370,8 @@
             window.axios.post('/webapi/media/' + window.video.id + '/ingest', {
                 master_url: window.s3.api_request_url
             }).then(response => {
-                // complete
                 console.log(response.data);
-                // TODO redirect to detail page.
+                window.location.href = '/media/' + window.video.id;
             }).catch(error => {
                 window.Common.overlayOut();
                 console.log(error);
