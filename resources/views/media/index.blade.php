@@ -220,6 +220,7 @@
                     ids: ids.toArray()
                 })
                 .then(response => {
+                    // console.log(response.data);
                     window.location.reload();
                 }).catch(error => {
                     window.Common.overlayOut();

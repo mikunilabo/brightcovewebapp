@@ -38,10 +38,14 @@ final class DeletesController extends Controller
 
         $media = $this->useCase->media($args);
 
-//         $this->authorize('delete', $media);// TODO
+        $filtered = $media->filter(function ($item) use ($request) {
+            return $request->user()->can('delete', $item);
+        });
 
         try {
-            return $this->useCase->excute($args);
+            return $this->useCase->excute([
+                'ids' => $filtered->pluck('id')->all(),
+            ]);
         } catch (\Exception $e) {
             return [
                 'code' => $e->getCode(),
