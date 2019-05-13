@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Traits\Database\Eloquent;
 
+use Illuminate\Support\Collection;
+
 trait Deletable
 {
     /**
@@ -16,5 +18,16 @@ trait Deletable
         }
 
         $model->delete();
+    }
+
+    /**
+     * @param Collection $items
+     * @return void
+     */
+    public function deletes(Collection $items): void
+    {
+        $items->map(function ($item) {
+            $item->delete();
+        });
     }
 }

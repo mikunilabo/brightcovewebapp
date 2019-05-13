@@ -70,37 +70,35 @@
                                     </a>
                                 @endcan
 
-                                @can ('authorize', ['media-delete', 'media-update'])
-                                    <div class="dropdown-menu" disabled>
-                                        @can ('authorize', 'media-update')
-                                            <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault();">
-                                                <i class="icons icon-share text-success"></i>@lang ('Activate')
-                                            </a>
-                                        @endcan
-
-                                        @can ('authorize', 'media-update')
-                                            <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
-                                                <i class="icons icon-ban"></i>@lang ('Deactivate')
-                                            </a>
-                                        @endcan
-
-                                        <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
-                                            <i class="icons icon-check"></i>@lang ('Select all')
+                                <div class="dropdown-menu">
+                                    @can ('authorize', 'media-update')
+                                        <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault();">
+                                            <i class="icons icon-share text-success"></i>@lang ('Activate')
                                         </a>
+                                    @endcan
 
-                                        <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
-                                            <i class="icons icon-close"></i>@lang ('Deselect all')
+                                    @can ('authorize', 'media-update')
+                                        <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                            <i class="icons icon-ban"></i>@lang ('Deactivate')
                                         </a>
+                                    @endcan
 
-                                        <div class="dropdown-divider"></div>
+                                    <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
+                                        <i class="icons icon-check"></i>@lang ('Select all')
+                                    </a>
 
-                                        @can ('authorize', 'media-delete')
-                                            <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
-                                                <i class="icons icon-trash text-danger"></i>@lang ('Delete')
-                                            </a>
-                                        @endcan
-                                    </div>
-                                @endcan
+                                    <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-close"></i>@lang ('Deselect all')
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    @can ('authorize', 'media-delete')
+                                        <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
+                                            <i class="icons icon-trash text-danger"></i>@lang ('Delete')
+                                        </a>
+                                    @endcan
+                                </div>
 
                                 @can ('authorize', 'media-create')
                                     <a href="{{ route('media.upload') }}" class="btn btn-primary btn-sm float-right">
@@ -222,6 +220,7 @@
                     ids: ids.toArray()
                 })
                 .then(response => {
+                    // console.log(response.data);
                     window.location.reload();
                 }).catch(error => {
                     window.Common.overlayOut();

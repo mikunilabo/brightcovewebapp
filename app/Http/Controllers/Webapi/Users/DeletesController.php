@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Webapi\Media;
+namespace App\Http\Controllers\Webapi\Users;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Webapi\Media\DeletesRequest;
-use App\UseCases\Media\DeletesMedia;
+use App\Http\Requests\Webapi\Users\DeletesRequest;
+use App\UseCases\Users\DeletesUsers;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
 final class DeletesController extends Controller
@@ -15,14 +15,14 @@ final class DeletesController extends Controller
     private $useCase;
 
     /**
-     * @param DeletesMedia $useCase
+     * @param DeletesUsers $useCase
      * @return void
      */
-    public function __construct(DeletesMedia $useCase)
+    public function __construct(DeletesUsers $useCase)
     {
         $this->middleware([
             'authenticate',
-            'authorize:media-delete',
+            'authorize:user-delete',
         ]);
 
         $this->useCase = $useCase;
@@ -36,15 +36,15 @@ final class DeletesController extends Controller
     {
         $args = $request->validated();
 
-        $media = $this->useCase->media($args);
+        $users = $this->useCase->users($args);
 
-        $filtered = $media->filter(function ($item) use ($request) {
+        $filtered = $users->filter(function ($item) use ($request) {
             return $request->user()->can('delete', $item);
         });
 
         try {
             return $this->useCase->excute([
-                'ids' => $filtered->pluck('id')->all(),
+                'items' => $filtered->values(),
             ]);
         } catch (\Exception $e) {
             return [
