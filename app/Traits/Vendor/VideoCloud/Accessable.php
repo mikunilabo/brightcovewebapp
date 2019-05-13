@@ -22,18 +22,18 @@ trait Accessable
         /** @var ResponseInterface $response */
         $response = $this->client->createVideo([
             'name' => $args['name'],// required, 1 <= 255
-//             'custom_fields' => [
-//                 'date' => now()->format('Ymd'),// YYYY-MM-DD
-//                 'rightholder' => 'hoge',
-//                 'tournament' => 'hoge',
-//                 'uuid' => $args['uuid'],
-//             ],
+            'custom_fields' => [
+                'date' => now()->format('Y-m-d'),// YYYY-MM-DD
+                'rightholder' => 'hoge',
+                'tournament' => 'fuga',
+                'uuid' => $args['uuid'],
+            ],
             'description' => 'description',// 0 <= 255 ?
             'long_description' => 'some freewords',// 0 <= 5000
-//             'schedule' => [
-//                 'starts_at' => now()->format('c'),// ISO-8601
-//                 'ends_at' => now()->format('c'),// ISO-8601
-//             ],
+            'schedule' => [
+                'starts_at' => now()->format('c'),// ISO-8601
+                'ends_at' => now()->copy()->addMonth(1)->format('c'),// ISO-8601
+            ],
             'state' => 'INACTIVE',// or ACTIVE
             'tags' => [
                 'test',
@@ -245,7 +245,9 @@ trait Accessable
 //         $q[] = '+state:ACTIVE,INACTIVE';
 
         // uuid
-//         $q[] = '+custom_fields:uuid';
+        if (array_key_exists('uuid', $args)) {
+            $q[] = sprintf('+custom_fields:%s', $args['uuid']);
+        }
 
         return [
             'q' => implode(' ', $q),

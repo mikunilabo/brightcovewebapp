@@ -371,7 +371,7 @@
                 master_url: window.s3.api_request_url
             }).then(response => {
                 console.log(response.data);
-                window.location.href = '/media/' + window.video.id;
+                window.location.href = '/media/' + window.video.id + '/detail';
             }).catch(error => {
                 window.Common.overlayOut();
                 console.log(error);

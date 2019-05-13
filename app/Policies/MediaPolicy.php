@@ -28,12 +28,10 @@ final class MediaPolicy
      */
     public function select(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'media-select')) {
-
-            /**
-             * TODO Only own uuid.
-             */
-
+        if (! empty($model->custom_fields)
+            && ! empty($model->custom_fields['uuid'])
+            && $model->custom_fields['uuid'] === $user->id
+        ) {
             return true;
         }
 
@@ -47,12 +45,10 @@ final class MediaPolicy
      */
     public function update(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'media-update')) {
-
-            /**
-             * TODO Only own uuid.
-             */
-
+        if (! empty($model->custom_fields)
+            && ! empty($model->custom_fields['uuid'])
+            && $model->custom_fields['uuid'] === $user->id
+        ) {
             return true;
         }
 
@@ -66,12 +62,10 @@ final class MediaPolicy
      */
     public function delete(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'media-delete')) {
-
-            /**
-             * TODO Only own uuid.
-             */
-
+        if (! empty($model->custom_fields)
+            && ! empty($model->custom_fields['uuid'])
+            && $model->custom_fields['uuid'] === $user->id
+        ) {
             return true;
         }
 

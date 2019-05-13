@@ -34,10 +34,20 @@ final class IndexController extends Controller
      */
     public function __invoke(IndexRequest $request)
     {
+        $args = array_merge($request->validated(), [
+            'uuid' => $request->user()->id,
+        ]);
+
+        $media = $this->useCase->excute([
+            'param' => $args,
+        ]);
+
+        $filtered = $media->filter(function ($item) use ($request) {
+            return $request->user()->can('select', $item);
+        });
+
         return view('media.index', [
-            'rows' => $this->useCase->excute([
-                'param' => $request->validated(),
-            ]),
+            'rows' => $filtered,
         ]);
     }
 }

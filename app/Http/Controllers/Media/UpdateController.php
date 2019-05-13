@@ -35,7 +35,7 @@ final class UpdateController extends Controller
     {
         $media = $this->useCase->media($videoId);
 
-//         $this->authorize('select', $media);// TODO
+        $this->authorize('select', $media);
 
         return view('media.detail', [
             'row' => $media,
@@ -51,7 +51,7 @@ final class UpdateController extends Controller
     {
         $media = $this->useCase->media($videoId);
 
-//         $this->authorize('update', $media);// TODO
+        $this->authorize('update', $media);
 
         $args = $request->validated();
 
