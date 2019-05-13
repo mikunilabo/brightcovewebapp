@@ -162,7 +162,7 @@
             ta('.ta-sports', 'sports');
 
             listMasters('leagues');
-            // listMasters('universities');
+            listMasters('universities');
             // listMasters('sports');
         })();
 

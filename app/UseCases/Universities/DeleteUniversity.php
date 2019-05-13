@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\UseCases\Leagues;
+namespace App\UseCases\Universities;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
 use App\Exceptions\Domain\NotFoundException;
 use App\Traits\Database\Transactionable;
 
-final class DeleteLeague implements UseCaseContract
+final class DeleteUniversity implements UseCaseContract
 {
     use Transactionable;
 
@@ -31,7 +31,7 @@ final class DeleteLeague implements UseCaseContract
     public function league(int $leagueId)
     {
         if (is_null($model = $this->repo->findById($leagueId))) {
-            throw new NotFoundException('The league was not found.');
+            throw new NotFoundException('The university was not found.');
         }
 
         return $model;

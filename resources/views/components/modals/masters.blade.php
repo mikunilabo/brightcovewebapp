@@ -11,7 +11,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body" id="{{ sprintf('%s-modal-body', $name) }}">
+            <div class="modal-body overflow-auto" id="{{ sprintf('%s-modal-body', $name) }}">
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">@lang ('Close')</button>

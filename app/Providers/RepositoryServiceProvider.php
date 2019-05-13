@@ -8,9 +8,9 @@ use App\Repositories\Database\Eloquent;
 use App\Repositories\Vendor\VideoCloud\MediaRepository;
 use App\UseCases\Leagues;
 use App\UseCases\Media;
+use App\UseCases\Universities;
 use App\UseCases\Users;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Database\Eloquent\LeagueRepository;
 
 final class RepositoryServiceProvider extends ServiceProvider
 {
@@ -49,6 +49,9 @@ final class RepositoryServiceProvider extends ServiceProvider
             Leagues\DeleteLeague::class,
             Leagues\GetLeagues::class,
 
+            Universities\DeleteUniversity::class,
+            Universities\GetUniversities::class,
+
             Media\CreateMedia::class,
             Media\DeleteMedia::class,
             Media\DeletesMedia::class,
@@ -83,13 +86,25 @@ final class RepositoryServiceProvider extends ServiceProvider
          */
         $this->app->bind(Leagues\DeleteLeague::class, function () {
             return new Leagues\DeleteLeague(
-                app(LeagueRepository::class)
+                app(Eloquent\LeagueRepository::class)
             );
         });
 
         $this->app->bind(Leagues\GetLeagues::class, function () {
             return new Leagues\GetLeagues(
-                app(LeagueRepository::class)
+                app(Eloquent\LeagueRepository::class)
+            );
+        });
+
+        $this->app->bind(Universities\DeleteUniversity::class, function () {
+            return new Universities\DeleteUniversity(
+                app(Eloquent\UniversityRepository::class)
+            );
+        });
+
+        $this->app->bind(Universities\GetUniversities::class, function () {
+            return new Universities\GetUniversities(
+                app(Eloquent\UniversityRepository::class)
             );
         });
 
