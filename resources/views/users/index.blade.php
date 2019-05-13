@@ -70,6 +70,30 @@
                                 </table>
                             </div>
                             <div class="card-footer">
+                                @can ('authorize', 'user-delete')
+                                    <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        @lang ('Batch operation')
+                                    </a>
+                                @endcan
+
+                                <div class="dropdown-menu">
+                                    <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
+                                        <i class="icons icon-check"></i>@lang ('Select all')
+                                    </a>
+
+                                    <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-close"></i>@lang ('Deselect all')
+                                    </a>
+
+                                    @can ('authorize', 'user-delete')
+                                        <div class="dropdown-divider"></div>
+
+                                        <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
+                                            <i class="icons icon-trash text-danger"></i>@lang ('Delete')
+                                        </a>
+                                    @endcan
+                                </div>
+
                                 @can ('authorize', 'user-create')
                                     <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
                                         <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
@@ -97,6 +121,10 @@
                 }
             });
 
+            var selectallBtn = document.getElementById('select-all-btn');
+            var deselectallBtn = document.getElementById('deselect-all-btn');
+            var deleteBtn = document.getElementById('delete-btn');
+
             var table = $('#users-table').DataTable({
                 columnDefs: [],
                 displayLength: 20,
@@ -122,6 +150,54 @@
                 },
                 stateSave: true,
                 responsive: true,
+            })
+            .on('select', function (e, dt, type, indexes) {
+                if (type === 'row' && table.rows('.selected').data().length > 0) {
+                    deleteBtn.classList.remove('disabled');
+                    deselectallBtn.classList.remove('disabled');
+
+                    if (table.rows('.selected').data().length === table.rows().data().length) {
+                        selectallBtn.classList.add('disabled');
+                    	}
+                }
+            })
+            .on('deselect', function (e, dt, type, indexes) {
+                if (type === 'row' && table.rows('.selected').data().length < table.rows().data().length) {
+                    selectallBtn.classList.remove('disabled');
+
+                    if (table.rows('.selected').data().length === 0) {
+                        deleteBtn.classList.add('disabled');
+                        deselectallBtn.classList.add('disabled');
+                    }
+                }
+            });
+
+            selectallBtn.addEventListener('click', function () {
+                table.rows().select();
+            });
+
+            deselectallBtn.addEventListener('click', function () {
+                table.rows().deselect();
+            });
+
+            deleteBtn.addEventListener('click', function () {
+                if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Account'), 'action' => __('Delete')])')) {
+                    return false;
+                }
+
+                window.Common.overlay();
+                var ids = table.rows('.selected').ids();
+
+                window.axios.post("{{ route('webapi.accounts.deletes') }}", {
+                    ids: ids.toArray()
+                })
+                .then(response => {
+                    // console.log(response.data)
+                    window.location.reload();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
             });
         });
     </script>

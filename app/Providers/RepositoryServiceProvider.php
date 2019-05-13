@@ -67,6 +67,7 @@ final class RepositoryServiceProvider extends ServiceProvider
 
             Users\CreateUser::class,
             Users\DeleteUser::class,
+            Users\DeletesUsers::class,
             Users\GetUsers::class,
             Users\UpdateUser::class,
 
@@ -181,6 +182,12 @@ final class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(Users\DeleteUser::class, function () {
             return new Users\DeleteUser(
+                app(Eloquent\UserRepository::class)
+            );
+        });
+
+        $this->app->bind(Users\DeletesUsers::class, function () {
+            return new Users\DeletesUsers(
                 app(Eloquent\UserRepository::class)
             );
         });

@@ -17,9 +17,10 @@ final class UserRepository extends EloquentRepository
 
     /**
      * @param mixed $builder
+     * @param array $args
      * @return mixed
      */
-    public function build($builder)
+    public function build($builder, $args = [])
     {
         $builder->with([
             'role',

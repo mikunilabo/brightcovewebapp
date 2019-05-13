@@ -37,7 +37,7 @@ trait Findable
         $builder = $this->eloquent->query();
 
         if (method_exists($this, 'build')) {
-            $builder = $this->build($builder);
+            $builder = $this->build($builder, $args);
         }
 
         return $builder->{$paginate ? 'paginate' : 'get'}();
