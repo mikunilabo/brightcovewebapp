@@ -1,44 +1,43 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Webapi\Universities;
+namespace App\Http\Controllers\Webapi\Sports;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\UseCases\Universities\DeleteUniversity;
+use App\Http\Requests\Sports\IndexRequest;
+use App\UseCases\Sports\GetSports;
+use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
-final class DeleteController extends Controller
+final class IndexController extends Controller
 {
     /** @var UseCaseContract */
     private $useCase;
 
     /**
-     * @param DeleteUniversity $useCase
+     * @param GetSports $useCase
      * @return void
      */
-    public function __construct(DeleteUniversity $useCase)
+    public function __construct(GetSports $useCase)
     {
         $this->middleware([
             'authenticate',
-            'authorize:user-create',
         ]);
 
         $this->useCase = $useCase;
     }
 
     /**
-     * @param int $universityId
-     * @return \Illuminate\Http\JsonResponse
+     * @param ValidatesWhenResolved $request
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function __invoke(int $universityId)
+    public function __invoke(IndexRequest $request)
     {
-        $league = $this->useCase->university($universityId);
-
-//         $this->authorize('delete', $league);// TODO
+        $args = $request->validated();
 
         try {
             return $this->useCase->excute([
-                'id' => $universityId,
+                'param' => $args,
             ]);
         } catch (\Exception $e) {
             return [

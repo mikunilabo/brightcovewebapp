@@ -100,9 +100,9 @@ Route::prefix('/')->group(function () {
         });
 
         Route::prefix($prefix = 'sports')->name(sprintf('%s.', $prefix))->group(function () {
-            Route::get($name = '/', \App\Http\Controllers\Webapi\Leagues\IndexController::class)->name('index');
+            Route::get($name = '/', \App\Http\Controllers\Webapi\Sports\IndexController::class)->name('index');
             Route::prefix('{sportId}')->group(function () {
-                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Leagues\DeleteController::class)->name($name);
+                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Sports\DeleteController::class)->name($name);
             });
         });
     });

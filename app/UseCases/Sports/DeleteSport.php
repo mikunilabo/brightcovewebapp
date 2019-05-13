@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace App\UseCases\Universities;
+namespace App\UseCases\Sports;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
 use App\Exceptions\Domain\NotFoundException;
 use App\Traits\Database\Transactionable;
 
-final class DeleteUniversity implements UseCaseContract
+final class DeleteSport implements UseCaseContract
 {
     use Transactionable;
 
@@ -25,13 +25,13 @@ final class DeleteUniversity implements UseCaseContract
     }
 
     /**
-     * @param int $universityId
+     * @param int $sportId
      * @return mixed
      */
-    public function university(int $universityId)
+    public function sport(int $sportId)
     {
-        if (is_null($model = $this->repo->findById($universityId))) {
-            throw new NotFoundException('The university was not found.');
+        if (is_null($model = $this->repo->findById($sportId))) {
+            throw new NotFoundException('The sport was not found.');
         }
 
         return $model;

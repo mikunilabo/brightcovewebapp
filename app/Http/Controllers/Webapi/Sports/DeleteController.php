@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Webapi\Universities;
+namespace App\Http\Controllers\Webapi\Sports;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\UseCases\Universities\DeleteUniversity;
+use App\UseCases\Sports\DeleteSport;
 
 final class DeleteController extends Controller
 {
@@ -13,10 +13,10 @@ final class DeleteController extends Controller
     private $useCase;
 
     /**
-     * @param DeleteUniversity $useCase
+     * @param DeleteSport $useCase
      * @return void
      */
-    public function __construct(DeleteUniversity $useCase)
+    public function __construct(DeleteSport $useCase)
     {
         $this->middleware([
             'authenticate',
@@ -27,18 +27,18 @@ final class DeleteController extends Controller
     }
 
     /**
-     * @param int $universityId
+     * @param int $sportId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(int $universityId)
+    public function __invoke(int $sportId)
     {
-        $league = $this->useCase->university($universityId);
+        $league = $this->useCase->sport($sportId);
 
 //         $this->authorize('delete', $league);// TODO
 
         try {
             return $this->useCase->excute([
-                'id' => $universityId,
+                'id' => $sportId,
             ]);
         } catch (\Exception $e) {
             return [
