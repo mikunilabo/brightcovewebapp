@@ -103,6 +103,20 @@
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
 
+                                    @can ('authorize', 'user-create')
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#leagues-modal">
+                                            <i class="icons icon-tag">@lang ('Leagues')</i>
+                                        </button>
+
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#universities-modal">
+                                            <i class="icons icon-tag">@lang ('Universities')</i>
+                                        </button>
+
+                                        <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#sports-modal">
+                                            <i class="icons icon-tag">@lang ('Sports')</i>
+                                        </button>
+                                    @endcan
+
                                     <button type="submit" class="btn btn-primary">
                                         <i class="icons icon-check"></i> @lang ('Create')
                                     </button>
@@ -114,6 +128,12 @@
             </div>
         </div>
     </main>
+
+    @can ('authorize', 'user-create')
+        @component ('components.modals.masters', ['name' => 'leagues']) @endcomponent
+        @component ('components.modals.masters', ['name' => 'universities']) @endcomponent
+        @component ('components.modals.masters', ['name' => 'sports']) @endcomponent
+    @endcan
 @endsection
 
 @section ('scripts')
@@ -126,6 +146,12 @@
             ta('.ta-leagues', 'leagues');
             ta('.ta-sports', 'sports');
             ta('.ta-universities', 'universities');
+
+            @can ('authorize', 'user-create')
+                window.Common.listMasters('leagues');
+                window.Common.listMasters('universities');
+                window.Common.listMasters('sports');
+            @endcan
         })();
 
         /**

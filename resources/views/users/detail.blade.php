@@ -161,56 +161,12 @@
             ta('.ta-universities', 'universities');
             ta('.ta-sports', 'sports');
 
-            listMasters('leagues');
-            listMasters('universities');
-            // listMasters('sports');
+            @can ('authorize', 'user-create')
+                window.Common.listMasters('leagues');
+                window.Common.listMasters('universities');
+                window.Common.listMasters('sports');
+            @endcan
         })();
-
-        function listMasters(name) {
-          var body = document.getElementById(name + '-modal-body');
-          while (body.firstChild) {
-            body.removeChild(body.firstChild);
-          }
-
-          window.axios.get('/webapi/' + name)
-              .then(response => {
-                  window.Common.overlayOut();
-                  body.innerHtml = '';
-
-                  for (let key of Object.keys(response.data)) {
-                      var input = document.createElement('input');
-                      input.type = 'checkbox';
-                      input.classList.add('form-check-input');
-                      input.addEventListener('change', () => { removeMaster(name, response.data[key].id) }, false);
-
-                      var label = document.createElement('label');
-                      label.classList.add('form-check-label');
-                      label.appendChild(input);
-                      var text = document.createTextNode(response.data[key].name);
-                      label.appendChild(text);
-
-                      var div = document.createElement('div');
-                      div.classList.add('form-check', 'form-check-inline', 'mr-3');
-                      div.appendChild(label);
-
-                      body.appendChild(div);
-                  }
-              }).catch(error => {
-                  window.Common.overlayOut();
-                  console.log(error);
-              });
-        }
-
-        function removeMaster(name, id) {
-            window.Common.overlay();
-            window.axios.post('/webapi/' + name + '/' + id + '/delete')
-                .then(response => {
-                    listMasters(name);
-                }).catch(error => {
-                    window.Common.overlayOut();
-                    console.log(error);
-                });
-        }
 
         /**
          * @param string id
