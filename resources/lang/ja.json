@@ -39,6 +39,7 @@
     "Keywords": "キーワード",
     "ID": "ID",
     "Home": "ホーム",
+    "If checked, it will be deleted immediately and the association with the account will also be cancelled.": "チェックを入れると即座に削除され、アカウントとの関連も解除されます。",
     "If it is not in the list, it will be newly registered.": "リストに無い場合は新規登録されます。",
     "INACTIVE": "無効",
     "Information": "インフォメーション",

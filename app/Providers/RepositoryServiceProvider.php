@@ -6,8 +6,11 @@ namespace App\Providers;
 use App\Http\Views\Composers;
 use App\Repositories\Database\Eloquent;
 use App\Repositories\Vendor\VideoCloud\MediaRepository;
-use App\UseCases\Users;
+use App\UseCases\Leagues;
 use App\UseCases\Media;
+use App\UseCases\Sports;
+use App\UseCases\Universities;
+use App\UseCases\Users;
 use Illuminate\Support\ServiceProvider;
 
 final class RepositoryServiceProvider extends ServiceProvider
@@ -44,11 +47,22 @@ final class RepositoryServiceProvider extends ServiceProvider
             /**
              * Usecases
              */
+            Leagues\DeleteLeague::class,
+            Leagues\GetLeagues::class,
+
+            Sports\DeleteSport::class,
+            Sports\GetSports::class,
+
+            Universities\DeleteUniversity::class,
+            Universities\GetUniversities::class,
+
             Media\CreateMedia::class,
             Media\DeleteMedia::class,
             Media\DeletesMedia::class,
             Media\GetIngestJobs::class,
             Media\GetMedia::class,
+            Media\GetS3Url::class,
+            Media\ingestMedia::class,
             Media\UpdateMedia::class,
 
             Users\CreateUser::class,
@@ -74,6 +88,42 @@ final class RepositoryServiceProvider extends ServiceProvider
         /**
          * Usecases
          */
+        $this->app->bind(Leagues\DeleteLeague::class, function () {
+            return new Leagues\DeleteLeague(
+                app(Eloquent\LeagueRepository::class)
+            );
+        });
+
+        $this->app->bind(Leagues\GetLeagues::class, function () {
+            return new Leagues\GetLeagues(
+                app(Eloquent\LeagueRepository::class)
+            );
+        });
+
+        $this->app->bind(Sports\DeleteSport::class, function () {
+            return new Sports\DeleteSport(
+                app(Eloquent\SportRepository::class)
+            );
+        });
+
+        $this->app->bind(Sports\GetSports::class, function () {
+            return new Sports\GetSports(
+                app(Eloquent\SportRepository::class)
+            );
+        });
+
+        $this->app->bind(Universities\DeleteUniversity::class, function () {
+            return new Universities\DeleteUniversity(
+                app(Eloquent\UniversityRepository::class)
+            );
+        });
+
+        $this->app->bind(Universities\GetUniversities::class, function () {
+            return new Universities\GetUniversities(
+                app(Eloquent\UniversityRepository::class)
+            );
+        });
+
         $this->app->bind(Media\CreateMedia::class, function () {
             return new Media\CreateMedia(
                 app(MediaRepository::class)
@@ -100,6 +150,18 @@ final class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(Media\GetMedia::class, function () {
             return new Media\GetMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\GetS3Url::class, function () {
+            return new Media\GetS3Url(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\ingestMedia::class, function () {
+            return new Media\ingestMedia(
                 app(MediaRepository::class)
             );
         });

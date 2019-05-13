@@ -30,10 +30,10 @@ trait Accessable
 //             ],
             'description' => 'description',// 0 <= 255 ?
             'long_description' => 'some freewords',// 0 <= 5000
-            'schedule' => [
-                'starts_at' => now()->format('c'),// ISO-8601
-                'ends_at' => now()->format('c'),// ISO-8601
-            ],
+//             'schedule' => [
+//                 'starts_at' => now()->format('c'),// ISO-8601
+//                 'ends_at' => now()->format('c'),// ISO-8601
+//             ],
             'state' => 'INACTIVE',// or ACTIVE
             'tags' => [
                 'test',
@@ -50,14 +50,14 @@ trait Accessable
      * @param array $args
      * @return mixed
      */
-    private function ingestRequest(string $videoId, array $args = [])
+    private function dynamicIngest(string $videoId, array $args = [])
     {
         $this->auth();
 
         /** @var ResponseInterface $response */
-        $response = $this->client->ingestRequest($videoId, [
+        $response = $this->client->dynamicIngest($videoId, [
             'master' => [
-                'url' => $args['url'],
+                'url' => $args['master_url'],
             ],
 //             'callbacks' => [],
             'capture-images' => true,// default true
@@ -74,7 +74,7 @@ trait Accessable
      * @param string $sourceName
      * @return mixed
      */
-    private function getS3Url(string $videoId, string $sourceName)
+    private function requestS3Url(string $videoId, string $sourceName)
     {
         $this->auth();
 

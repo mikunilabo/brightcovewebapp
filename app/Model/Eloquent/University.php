@@ -6,12 +6,9 @@ namespace App\Model\Eloquent;
 use App\Contracts\Domain\ModelContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 final class University extends Model implements ModelContract
 {
-    use SoftDeletes;
-
     /**
      * @var array
      */

@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\UseCases\Media;
+namespace App\UseCases\Universities;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
 
-final class CreateMedia implements UseCaseContract
+final class GetUniversities implements UseCaseContract
 {
     /** @var RepositoryContract */
     private $repo;
 
-    /**
+     /**
      * @param RepositoryContract $repo
      * @return void
      */
@@ -26,6 +26,6 @@ final class CreateMedia implements UseCaseContract
      */
     public function excute($args)
     {
-        return $this->repo->createObject($args);
+        return $this->repo->findAll($args['param']);
     }
 }

@@ -38,8 +38,7 @@ Route::prefix('/')->group(function () {
      */
     Route::prefix($prefix = 'media')->name(sprintf('%s.', $prefix))->group(function () {
         Route::get('/', \App\Http\Controllers\Media\IndexController::class)->name('index');
-        Route::get($name = 'upload', sprintf('%s@%s', \App\Http\Controllers\Media\CreateController::class, 'view'))->name($name);
-        Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\CreateController::class, 'create'));
+        Route::get($name = 'upload', \App\Http\Controllers\Media\CreateController::class)->name($name);
 
         Route::prefix('{videoId}')->group(function () {
             Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'view'))->name($name);
@@ -76,10 +75,34 @@ Route::prefix('/')->group(function () {
      */
     Route::prefix($prefix = 'webapi')->name(sprintf('%s.', $prefix))->group(function () {
         Route::prefix($prefix = 'media')->name(sprintf('%s.', $prefix))->group(function () {
+            Route::post($name = 'create', \App\Http\Controllers\Webapi\Media\CreateController::class)->name($name);
             Route::post($name = 'deletes', \App\Http\Controllers\Webapi\Media\DeletesController::class)->name($name);
 
             Route::prefix('{videoId}')->group(function () {
+                Route::post($name = 's3_url', \App\Http\Controllers\Webapi\Media\GetS3UrlController::class)->name($name);
+                Route::post($name = 'ingest', \App\Http\Controllers\Webapi\Media\DynamicIngestController::class)->name($name);
                 Route::get($name = 'ingestjobs', \App\Http\Controllers\Webapi\Media\IngestJobsController::class)->name($name);
+            });
+        });
+
+        Route::prefix($prefix = 'leagues')->name(sprintf('%s.', $prefix))->group(function () {
+            Route::get($name = '/', \App\Http\Controllers\Webapi\Leagues\IndexController::class)->name('index');
+            Route::prefix('{leagueId}')->group(function () {
+                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Leagues\DeleteController::class)->name($name);
+            });
+        });
+
+        Route::prefix($prefix = 'universities')->name(sprintf('%s.', $prefix))->group(function () {
+            Route::get($name = '/', \App\Http\Controllers\Webapi\Universities\IndexController::class)->name('index');
+            Route::prefix('{universityId}')->group(function () {
+                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Universities\DeleteController::class)->name($name);
+            });
+        });
+
+        Route::prefix($prefix = 'sports')->name(sprintf('%s.', $prefix))->group(function () {
+            Route::get($name = '/', \App\Http\Controllers\Webapi\Sports\IndexController::class)->name('index');
+            Route::prefix('{sportId}')->group(function () {
+                Route::post($name = 'delete', \App\Http\Controllers\Webapi\Sports\DeleteController::class)->name($name);
             });
         });
     });
