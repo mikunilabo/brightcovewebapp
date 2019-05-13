@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Webapi\Universities;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Universities\IndexRequest;
+use App\Http\Requests\Webapi\Universities\IndexRequest;
 use App\UseCases\Universities\GetUniversities;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
