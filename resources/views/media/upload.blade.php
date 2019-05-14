@@ -103,13 +103,10 @@
     @parent
 
 <script language="javascript" type="text/javascript" src="/vendor/evaporate/evaporate.js"></script>
-    <script type="text/javascript">
-        (function() {
-            'use strict';
-
-            document.getElementById('submit-btn').addEventListener('click', function () {
-                window.Uploader.process();
-            });
-        })();
-    </script>
+<script type="text/javascript">
+    var URL_WEBAPI_MEDIA_CREATE = "{{ route('webapi.media.create') }}";
+    document.getElementById('submit-btn').addEventListener('click', function () {
+        window.Uploader.process();
+    });
+</script>
 @endsection

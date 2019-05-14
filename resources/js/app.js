@@ -24,11 +24,7 @@ try {
   require("./common");
   require("./Uploader");
 
-  // require('evaporate.js');
   require("crypto");
-  //    require('fs');
-  // require('mime');
-  require("aws-sdk");
 } catch (e) {
   console.log(e);
 }
