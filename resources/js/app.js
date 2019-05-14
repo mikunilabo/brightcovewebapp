@@ -1,6 +1,5 @@
-
-window._ = require('lodash');
-window.Popper = require('popper.js').default;
+window._ = require("lodash");
+window.Popper = require("popper.js").default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -9,27 +8,29 @@ window.Popper = require('popper.js').default;
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require("jquery");
 
-    require('bootstrap');
-    require('pace-progress');
-    require('perfect-scrollbar');
-    require('typeahead.js');
-    require('@coreui/coreui');
-    require('datatables.net-bs4');
-    require('datatables.net-select-bs4');
-//  require('chart.js');
-//  require('./vendor/coreui/colors');
-    require('./vendor/coreui/popovers');
-    require('./vendor/coreui/tooltips');
-    require('./common');
+  require("bootstrap");
+  require("pace-progress");
+  require("perfect-scrollbar");
+  require("typeahead.js");
+  require("@coreui/coreui");
+  require("datatables.net-bs4");
+  require("datatables.net-select-bs4");
+  //  require('chart.js');
+  //  require('./vendor/coreui/colors');
+  require("./vendor/coreui/popovers");
+  require("./vendor/coreui/tooltips");
+  require("./common");
 
-    // require('evaporate.js');
-    require('crypto');
-//    require('fs');
-   // require('mime');
-    require('aws-sdk');
-} catch (e) {}
+  // require('evaporate.js');
+  require("crypto");
+  //    require('fs');
+  // require('mime');
+  require("aws-sdk");
+} catch (e) {
+  console.log(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -37,9 +38,9 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = require("axios");
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -50,9 +51,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error(
+    "CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token",
+  );
 }
 
 /**
