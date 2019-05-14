@@ -22,6 +22,10 @@ mix.webpackConfig({
     }
 });
 
+mix.babelConfig({
+    "plugins": ["@babel/plugin-proposal-class-properties"]
+});
+
 /**
  * JS
  */

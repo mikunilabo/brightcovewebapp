@@ -22,6 +22,7 @@ try {
   require("./vendor/coreui/popovers");
   require("./vendor/coreui/tooltips");
   require("./common");
+  require("./Uploader");
 
   // require('evaporate.js');
   require("crypto");
