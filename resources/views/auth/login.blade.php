@@ -23,7 +23,8 @@
 
                     <div class="input-prepend input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="icon-user"></i>
+                            <span class="input-group-text">
+                                <i class="icon-user"></i>
                             </span>
                         </div>
 
@@ -34,7 +35,8 @@
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="icon-lock"></i>
+                            <span class="input-group-text">
+                                <i class="icon-lock"></i>
                             </span>
                         </div>
 

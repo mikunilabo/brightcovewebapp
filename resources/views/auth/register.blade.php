@@ -23,7 +23,9 @@
 
                     <div class="input-prepend input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="icon-user"></i></span>
+                            <span class="input-group-text">
+                                <i class="icon-user"></i>
+                            </span>
                         </div>
 
                         @set ($attribute, 'name')
@@ -33,8 +35,7 @@
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">@</i>
-                            </span>
+                            <span class="input-group-text">@</span>
                         </div>
 
                         @set ($attribute, 'email')
@@ -44,7 +45,9 @@
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                            <span class="input-group-text">
+                                <i class="icon-lock"></i>
+                            </span>
                         </div>
 
                         @set ($attribute, 'password')
@@ -54,7 +57,9 @@
 
                     <div class="input-prepend input-group mt-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                            <span class="input-group-text">
+                                <i class="icon-lock"></i>
+                            </span>
                         </div>
 
                         @set ($attribute, 'password_confirmation')

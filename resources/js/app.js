@@ -18,6 +18,7 @@ try {
     require('@coreui/coreui');
     require('datatables.net-bs4');
     require('datatables.net-select-bs4');
+    require('flatpickr');
 //  require('chart.js');
 //  require('./vendor/coreui/colors');
     require('./vendor/coreui/popovers');

@@ -34,6 +34,57 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
+
+                                            <div class="input-prepend input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="icons icon-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                                @set ($attribute, 'date')
+                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off" />
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label for="{{ $attribute }}">@lang ('Starts At')</label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="icons icon-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                                @set ($attribute, 'starts_at')
+                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" autocomplete="off" />
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="{{ $attribute }}">@lang ('Ends At')</label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <i class="icons icon-calendar"></i>
+                                                    </span>
+                                                </div>
+
+                                                @set ($attribute, 'ends_at')
+                                                <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" autocomplete="off" />
+                                                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     @if (false)
                                     <div class="row">
                                         <div class="form-group col-md-12">
@@ -102,13 +153,23 @@
 @section ('scripts')
     @parent
 
-<script language="javascript" type="text/javascript" src="/vendor/evaporate/evaporate.js"></script>
+    <script type="text/javascript" src="{{ asset('vendor/rangePlugin.js') }}"></script>
     <script type="text/javascript">
         (function() {
             'use strict';
 
             document.getElementById('submit-btn').addEventListener('click', function () {
                 process();
+            });
+
+            flatpickr('#date', {
+                allowInput: true
+            });
+
+            flatpickr('#starts_at', {
+                allowInput: true,
+                enableTime: true,
+                plugins: [new rangePlugin({ input: '#ends_at'})]
             });
 
 //             ta('.ta-leagues', 'leagues');
