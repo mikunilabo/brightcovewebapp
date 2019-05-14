@@ -15,15 +15,22 @@
         <div class="form-group col-md-6">
             @component ('components.videos.players.videocloud', ['videoId' => $row->id, 'accountId' => config('services.videocloud.account_id')]) @endcomponent
         </div>
+    @endif
+</div>
+
+@if (! empty($row))
+    <div class="row">
         <div class="form-group col-md-6">
             @set ($attribute, 'id')
             <label for="{{ $attribute }}">@lang ('ID')</label>
             <div><code>{{ $row->{$attribute} }}</code></div>
         </div>
-    @endif
-</div>
-
-@if (! empty($row))
+        <div class="form-group col-md-6">
+            @set ($attribute, 'uuid')
+            <label for="{{ $attribute }}">@lang ($attribute)</label>
+            <div><code>{{ ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null }}</code></div>
+        </div>
+    </div>
     <div class="row">
         <div class="form-group col-md-6">
             @set ($attribute, 'state')
