@@ -28,11 +28,7 @@ final class UserPolicy
      */
     public function select(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'user-select')) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -42,11 +38,7 @@ final class UserPolicy
      */
     public function update(User $user, ModelContract $model): bool
     {
-        if ($user->can('authorize', 'user-update')) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
@@ -56,9 +48,7 @@ final class UserPolicy
      */
     public function delete(User $user, ModelContract $model): bool
     {
-        if ($user->id !== $model->id
-            && $user->can('authorize', 'user-delete')
-        ) {
+        if ($user->id !== $model->id) {
             return true;
         }
 

@@ -19,92 +19,7 @@
                                 </div>
                                 <div class="card-body">
                                     @component ('components.messages.alerts') @endcomponent
-
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @component ('components.videos.players.videocloud', ['videoId' => $row->id, 'accountId' => config('services.videocloud.account_id')]) @endcomponent
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'id')
-                                            <label for="{{ $attribute }}">@lang ('ID')</label>
-                                            <div><code>{{ $row->{$attribute} }}</code></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'state')
-                                            <label for="{{ $attribute }}">@lang ('Status')</label>
-                                            @component ('components.labels.videos.state', ['state' => $row->{$attribute}]) @endcomponent
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'ingestjobs')
-                                            <label for="{{ $attribute }}">@lang ('Ingest Status')</label>
-                                            <div class="lead">
-                                                <span id="ingestjobs_result" class="badge badge-light">@lang ('There is no jobs')</span>
-                                                <button type="button" class="btn btn-sm btn-outline-warning" onclick="ingestjobs();">
-                                                    <i class="icons icon-refresh"></i> @lang ('Update')
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @set ($attribute, 'name')
-                                            <label for="{{ $attribute }}">@lang ('Title') <code>*</code></label>
-                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off" required>{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @set ($attribute, 'description')
-                                            <label for="{{ $attribute }}">@lang ('Description')</label>
-                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="5" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @set ($attribute, 'long_description')
-                                            <label for="{{ $attribute }}">@lang ('Keywords')</label>
-                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="3" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @set ($attribute, 'rightholder')
-                                            <label for="{{ $attribute }}">@lang ('Rightholder')</label>
-                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-12">
-                                            @set ($attribute, 'tournament')
-                                            <label for="{{ $attribute }}">@lang ('Tournament')</label>
-                                            <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}</textarea>
-                                            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                                        </div>
-                                    </div>
-
-                                    @foreach (['leagues' => $vc_leagues, 'universities' => $vc_universities, 'sports' => $vc_sports] as $attribute => $items)
-                                        @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : collect($row->tags)->filter(function ($value) use ($items) { return $items->containsStrict('name', $value); })])
-                                        <hr>
-                                    @endforeach
-
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'created_at')
-                                            <label for="{{ $attribute }}">@lang ('Created At')</label>
-                                            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}</div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @set ($attribute, 'updated_at')
-                                            <label for="{{ $attribute }}">@lang ('Updated At')</label>
-                                            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}</div>
-                                        </div>
-                                    </div>
+                                    @include ('media.components.media')
                                 </div>
                                 <div class="card-footer text-center">
                                     @component ('components.buttons.back') @endcomponent
@@ -133,11 +48,22 @@
 @section ('scripts')
     @parent
 
+    <script type="text/javascript" src="{{ asset('vendor/rangePlugin.js') }}"></script>
     <script type="text/javascript">
         (function() {
             'use strict';
 
             ingestjobs();
+
+            flatpickr('#date', {
+                allowInput: true
+            });
+
+            flatpickr('#starts_at', {
+                allowInput: true,
+                enableTime: true,
+                plugins: [new rangePlugin({ input: '#ends_at'})]
+            });
 
             ta('.ta-leagues', 'leagues');
             ta('.ta-sports', 'sports');

@@ -22,6 +22,10 @@ mix.webpackConfig({
     }
 });
 
+mix.babelConfig({
+    "plugins": ["@babel/plugin-proposal-class-properties"]
+});
+
 /**
  * JS
  */
@@ -44,7 +48,9 @@ mix.js('resources/js/app.js', 'public/js')
 /**
  * CSS
  */
-mix.sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css', {
+    implementation: require('node-sass')
+});
 
 /**
  * Source Maps

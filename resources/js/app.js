@@ -9,27 +9,25 @@ window.Popper = require('popper.js').default;
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+  window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
-    require('pace-progress');
-    require('perfect-scrollbar');
-    require('typeahead.js');
-    require('@coreui/coreui');
-    require('datatables.net-bs4');
-    require('datatables.net-select-bs4');
-//  require('chart.js');
-//  require('./vendor/coreui/colors');
-    require('./vendor/coreui/popovers');
-    require('./vendor/coreui/tooltips');
-    require('./common');
-
-    // require('evaporate.js');
-    require('crypto');
-//    require('fs');
-   // require('mime');
-    require('aws-sdk');
-} catch (e) {}
+  require('bootstrap');
+  require('datatables.net-bs4');
+  require('datatables.net-select-bs4');
+  require('flatpickr');
+  require('pace-progress');
+  require('perfect-scrollbar');
+  require('typeahead.js');
+  require('@coreui/coreui');
+  //  require('chart.js');
+  //  require('./vendor/coreui/colors');
+  require('./vendor/coreui/popovers');
+  require('./vendor/coreui/tooltips');
+  require('./common');
+  require('./Uploader');
+} catch (e) {
+  console.log(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

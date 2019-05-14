@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Webapi\Leagues;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Leagues\IndexRequest;
+use App\Http\Requests\Webapi\Leagues\IndexRequest;
 use App\UseCases\Leagues\GetLeagues;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 

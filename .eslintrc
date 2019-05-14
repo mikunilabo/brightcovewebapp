@@ -1,0 +1,30 @@
+{
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "$": true,
+  },
+  "rules": {
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "semi-style": ["error", "last"],
+    "no-console": 0,
+    "comma-dangle": [
+      "error",
+      {
+        "imports": "always-multiline",
+        "objects": "always-multiline",
+        "arrays": "always-multiline",
+        "functions": "always-multiline"
+      }
+    ]
+  }
+}

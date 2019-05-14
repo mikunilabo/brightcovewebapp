@@ -33,7 +33,7 @@ final class IngestJobsController extends Controller
     {
         $media = $this->useCase->media($videoId);
 
-//         $this->authorize('select', $media);// TODO
+        $this->authorize('select', $media);
 
         try {
             return $this->useCase->excute([

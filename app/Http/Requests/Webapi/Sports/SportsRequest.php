@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Requests\Universities;
+namespace App\Http\Requests\Webapi\Sports;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
-abstract class UniversitiesRequest extends FormRequest
+abstract class SportsRequest extends FormRequest
 {
     /**
      * @return bool
