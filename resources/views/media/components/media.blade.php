@@ -6,7 +6,7 @@
             <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
 
             <div>
-                <input type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
+                <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
             </div>
         @else
@@ -28,7 +28,7 @@
                     @component ('components.popovers.informations', ['content' => __('If you want to replace the video file, please select again.')]) @endcomponent
 
                     <div>
-                        <input type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" />
+                        <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
                 </div>

@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data" onsubmit="return false;">
+                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -56,12 +56,14 @@
             plugins: [new rangePlugin({ input: '#ends_at'})]
         });
 
-        document.getElementById('submit-btn').addEventListener('click', function () {
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
             if (validate()) {
                 window.Common.overlay();
 
                 window.VideoCloud.uploadVideoFile = window.Uploader.uploadVideoFile = document.getElementById("video_file").files[0];
                 window.VideoCloud.createObject();
+                const mediaObject = getMediaObject(event.target);
             }
         });
 
@@ -99,6 +101,34 @@
                 limit: 100,
                 source: window.Common.substringMatcher(json)
             });
+        }
+
+        /**
+         * @param HTMLFormElement mediaFormElement
+         * @return object mediaObject
+         */
+        function getMediaObject(mediaFormElement) {
+            const mediaObject = {
+                leagues: [],
+                sports: [],
+                universities: [],
+            };
+
+            [].slice.call(mediaFormElement.elements).forEach(function(input) {
+                if (input.name) {
+                    if (input.type === "file") {
+                        mediaObject[input.name] = input.files[0];
+                    } else if (input.name.split("[").length > 1) {
+                        if (input.value) {
+                            mediaObject[input.name.split("[")[0]].push(input.value);
+                        }
+                    } else {
+                        mediaObject[input.name] = input.value;
+                    }
+                }
+            });
+
+            return mediaObject;
         }
     </script>
 @endsection
