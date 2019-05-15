@@ -60,10 +60,11 @@
             event.preventDefault();
             if (validate()) {
                 window.Common.overlay();
-
-                window.VideoCloud.uploadVideoFile = window.Uploader.uploadVideoFile = document.getElementById("video_file").files[0];
-                window.VideoCloud.createObject();
                 const mediaObject = getMediaObject(event.target);
+                window.VideoCloud.createMediaWithSource(mediaObject, function(media) {
+                    window.Common.overlayOut();
+                    window.location.href = "/media/" + media.id + "/detail";
+                });
             }
         });
 

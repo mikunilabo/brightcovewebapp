@@ -1,26 +1,23 @@
 import AWS from "aws-sdk";
 
 class Uploader {
-  uploadVideoFile = undefined;
-
   constructor() {}
 
-  multiPartUpload = async () => {
+  multiPartUpload = async (uploadFile, s3Url) => {
     const s3 = new AWS.S3({
       region: "us-east-1",
       credentials: {
-        sessionToken: window.s3.session_token,
-        accessKeyId: window.s3.access_key_id,
-        secretAccessKey: window.s3.secret_access_key,
+        sessionToken: s3Url.session_token,
+        accessKeyId: s3Url.access_key_id,
+        secretAccessKey: s3Url.secret_access_key,
       },
     });
-    const file = this.uploadVideoFile;
-    const allSize = file.size;
+    const allSize = uploadFile.size;
     const partSize = 1024 * 1024 * 5; // 5MB/chunk
     const multiPartParams = {
-      ContentType: file.type,
-      Bucket: window.s3.bucket,
-      Key: window.s3.object_key,
+      ContentType: uploadFile.type,
+      Bucket: s3Url.bucket,
+      Key: s3Url.object_key,
     };
 
     const multipartMap = {
@@ -45,20 +42,22 @@ class Uploader {
           resolve(byte);
           fileReader.abort();
         };
-        const blob2 = file.slice(rangeStart, end);
+        const blob2 = uploadFile.slice(rangeStart, end);
         fileReader.readAsArrayBuffer(blob2);
       });
 
-      const progress = end / file.size;
-      console.log(`${progress * 100}%`);
+      const progress = end / uploadFile.size;
+      console.log("%cProgress",  "background: #32F; color: #FFF", `${progress * 100}%`);
 
-      const partUpload = await s3.uploadPart({
-        Body: sendData,
-        PartNumber: String(partNum),
-        UploadId: uploadId,
-        Bucket: multiPartParams.Bucket,
-        Key: multiPartParams.Key,
-      }).promise();
+      const partUpload = await s3
+        .uploadPart({
+          Body: sendData,
+          PartNumber: String(partNum),
+          UploadId: uploadId,
+          Bucket: multiPartParams.Bucket,
+          Key: multiPartParams.Key,
+        })
+        .promise();
 
       multipartMap.Parts[partNum - 1] = {
         ETag: partUpload.ETag,
@@ -66,7 +65,7 @@ class Uploader {
       };
     }
 
-    await s3
+    return await s3
       .completeMultipartUpload({
         Bucket: multiPartParams.Bucket,
         Key: multiPartParams.Key,
@@ -74,7 +73,7 @@ class Uploader {
         UploadId: uploadId,
       })
       .promise()
-      .then(() => window.VideoCloud.dynamicIngest());
+      .then(res => res);
   };
 
   suspend = error => {
