@@ -57,8 +57,24 @@
         });
 
         document.getElementById('submit-btn').addEventListener('click', function () {
-            window.Uploader.process();
+            if (validate()) {
+                window.Common.overlay();
+
+                window.VideoCloud.uploadVideoFile = window.Uploader.uploadVideoFile = document.getElementById("video_file").files[0];
+                window.VideoCloud.createObject();
+            }
         });
+
+        function validate() {
+            // some validates.
+            if (document.getElementById("video_file").files[0] === undefined) {
+                return false;
+            }
+            if (document.getElementById("name").value.length === 0) {
+                return false;
+            }
+            return true;
+        }
 
         /**
          * @param string id
