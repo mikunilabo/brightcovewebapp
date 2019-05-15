@@ -1,21 +1,40 @@
 <div class="row">
-    @if (empty($row))
-        <div class="form-group col-md-6">
-            @set ($attribute, 'video_file')
-            <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
+    @set ($attribute, 'video_file')
 
-            @component ('components.popovers.informations', ['content' => '20MB']) @endcomponent
+    <div class="form-group col-md-6">
+        @if (empty($row))
+            <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
 
             <div>
                 <input type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
                 @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
             </div>
-        </div>
-    @else
-        <div class="form-group col-md-6">
-            @component ('components.videos.players.videocloud', ['videoId' => $row->id, 'accountId' => config('services.videocloud.account_id')]) @endcomponent
-        </div>
-    @endif
+        @else
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#tab-player" role="tab" aria-controls="tab-player">@lang ('Player')</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-upload" role="tab" aria-controls="tab-upload">@lang ('Re upload')</a>
+                </li>
+            </ul>
+
+            <div class="tab-content border-0">
+                <div class="tab-pane p-0 fade show active" id="tab-player" role="tabpanel">
+                    @component ('components.videos.players.videocloud', ['videoId' => $row->id, 'accountId' => config('services.videocloud.account_id')]) @endcomponent
+                </div>
+                <div class="tab-pane p-0 pt-2 fade" id="tab-upload" role="tabpanel">
+                    <label for="{{ $attribute }}">@lang ('Video File')</label>
+                    @component ('components.popovers.informations', ['content' => __('If you want to replace the video file, please select again.')]) @endcomponent
+
+                    <div>
+                        <input type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" />
+                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
 </div>
 
 @if (! empty($row))
@@ -51,26 +70,11 @@
 @endif
 
 <div class="row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-12">
         @set ($attribute, 'name')
         <label for="{{ $attribute }}">@lang ('Title') <code>*</code></label>
-        <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" rows="1" placeholder="" autocomplete="off" required>{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}</textarea>
+        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" required />
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-    </div>
-    <div class="form-group col-md-6">
-        <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
-
-        <div class="input-prepend input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">
-                    <i class="icons icon-calendar"></i>
-                </span>
-            </div>
-
-            @set ($attribute, 'date')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off" />
-            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-        </div>
     </div>
 </div>
 <div class="row">
@@ -88,7 +92,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-3">
         <label for="{{ $attribute }}">@lang ('Starts At')</label>
 
         <div class="input-group">
@@ -103,7 +107,7 @@
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-3">
         <label for="{{ $attribute }}">@lang ('Ends At')</label>
 
         <div class="input-group">
@@ -115,6 +119,21 @@
 
             @set ($attribute, 'ends_at')
             <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" autocomplete="off" />
+            @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
+
+        <div class="input-prepend input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">
+                    <i class="icons icon-calendar"></i>
+                </span>
+            </div>
+
+            @set ($attribute, 'date')
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
