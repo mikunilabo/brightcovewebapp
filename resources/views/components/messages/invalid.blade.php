@@ -1,5 +1,5 @@
-@if ($errors->{$errorBag ?? 'default'}->has($name))
-    <span class="invalid-feedback" role="alert" style="display: block;">
+<span class="invalid-feedback d-block" id="{{ sprintf('invalid-feedback-%s', $name) }}" role="alert">
+    @if ($errors->{$errorBag ?? 'default'}->has($name))
         <strong>{{ $errors->{$errorBag ?? 'default'}->first($name) }}</strong>
-    </span>
-@endif
+    @endif
+</span>

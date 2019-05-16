@@ -80,7 +80,8 @@
         }
 
         /**
-         * @param string id
+         * @param string tag
+         * @param string name
          * @return void
          */
         function ta(tag, name) {

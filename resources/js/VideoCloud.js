@@ -21,23 +21,27 @@ class VideoCloud {
   };
 
   createMedia = async requestData => {
-    try {
-      return await window.axios
-        .post("/webapi/media/create", requestData)
-        .then(response => response.data);
-    } catch (error) {
-      this.suspend(error);
-    }
+    return await window.axios
+      .post("/webapi/media/create", requestData)
+      .then(response => response.data)
+      .catch(error => {
+        if (error.response.status === 422) {
+          this.invalidFeedback(error.response);
+        }
+        this.suspend(error);
+      });
   };
 
   updateMedia = async requestData => {
-    try {
-      return await window.axios
-        .post("/webapi/media/update", requestData)
-        .then(response => response.data);
-    } catch (error) {
-      this.suspend(error);
-    }
+    return await window.axios
+      .post("/webapi/media/update", requestData)
+      .then(response => response.data)
+      .catch(error => {
+        if (error.response.status === 422) {
+          this.invalidFeedback(error.response);
+        }
+        this.suspend(error);
+      });
   };
 
   getS3Url = async (videoId, name) => {
@@ -61,6 +65,18 @@ class VideoCloud {
         .then(response => response.data);
     } catch (error) {
       this.suspend(error);
+    }
+  };
+
+  invalidFeedback = response => {
+    console.log(response.data.errors);
+    for (let key of Object.keys(response.data.errors)) {
+      let span = document.getElementById('invalid-feedback-' + key);
+      window.Common.removeChildren(span);
+      let text = document.createTextNode(response.data.errors[key][0]);
+      let strong = document.createElement("strong");
+      strong.appendChild(text);
+      span.appendChild(strong);
     }
   };
 

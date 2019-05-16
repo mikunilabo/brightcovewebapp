@@ -53,9 +53,7 @@ class Common {
     var button = document.createElement("button");
     button.classList.add("btn", "btn-outline-danger");
     button.type = "button";
-    button.addEventListener(
-      "click",
-      () => {
+    button.addEventListener("click", () => {
         this.removeElement(listId);
       },
       false,
@@ -80,10 +78,18 @@ class Common {
     inputGroup.appendChild(input);
     inputGroup.appendChild(span);
 
+    var span = document.createElement("span");
+    span.classList.add("invalid-feedback", "d-block");
+    span.id = "invalid-feedback-" + name + "." + cnt.value;
+    span.role = "alert";
+    var strong = document.createElement("strong");
+    span.appendChild(strong);
+
     var child = document.createElement("div");
     child.id = listId;
     child.classList.add("form-group", "col-md-6");
     child.appendChild(inputGroup);
+    child.appendChild(span);
 
     var parent = document.getElementById(name + "-area");
     var target = document.getElementById(name + "-add-btn-area");
@@ -144,9 +150,7 @@ class Common {
    */
   listMasters(name) {
     var body = document.getElementById(name + "-modal-body");
-    while (body.firstChild) {
-      body.removeChild(body.firstChild);
-    }
+    this.removeChildren(body);
 
     window.axios
       .get("/webapi/" + name)
@@ -202,6 +206,16 @@ class Common {
         this.overlayOut();
         console.log(error);
       });
+  }
+
+  /**
+   * @param [DOM object] element
+   * @return void
+   */
+  removeChildren(element) {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
   }
 }
 

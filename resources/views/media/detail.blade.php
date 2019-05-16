@@ -71,10 +71,11 @@
         })();
 
         /**
-         * @param string id
+         * @param string tag
+         * @param string name
          * @return void
          */
-        function ta(tag, name) {
+         function ta(tag, name) {
             if (name === 'leagues') {
                 var json = @json ($vc_leagues->pluck('name'));
             } else if (name === 'sports') {
