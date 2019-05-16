@@ -11,11 +11,25 @@ final class ProfileRequest extends UsersRequest
     public function rules(): array
     {
         return [
-            'name'         => 'required|string|max:255',
-            'company'      => 'nullable|string|max:255',
-            'password'     => 'nullable|string|min:8|max:16|confirmed',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'company' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'password' => [
+                'nullable',
+                'string',
+                'min:8',
+                'max:16',
+                'confirmed',
+            ],
 
-            'leagues'      => [
+            'leagues' => [
                 'nullable',
                 $this->user()->cant('authorize', 'user-create') ? 'exists:leagues,name' : '',
                 'string',
@@ -27,12 +41,16 @@ final class ProfileRequest extends UsersRequest
                 'string',
                 'max:255',
             ],
-            'sports'       => 'sometimes|array',
-            'sports.*'     => [
+            'sports' => [
+                'sometimes',
+                'array',
+            ],
+            'sports.*' => [
                 'sometimes',
                 'required',
                 $this->user()->cant('authorize', 'user-create') ? 'exists:sports,name' : '',
                 'string',
+                'distinct',
                 'max:255',
             ]
         ];
