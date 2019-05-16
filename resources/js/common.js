@@ -56,7 +56,7 @@ class Common {
     button.addEventListener(
       "click",
       () => {
-        window.Common.removeElement(listId);
+        this.removeElement(listId);
       },
       false,
     );
@@ -129,9 +129,6 @@ class Common {
    */
   overlay() {
     $("#overlay").fadeIn(500);
-    //        setTimeout(function(){
-    //            $("#overlay").fadeOut(500);
-    //        },3000);
   }
 
   /**
@@ -154,7 +151,7 @@ class Common {
     window.axios
       .get("/webapi/" + name)
       .then(response => {
-        window.Common.overlayOut();
+        this.overlayOut();
         body.innerHtml = "";
 
         for (let key of Object.keys(response.data)) {
@@ -164,7 +161,7 @@ class Common {
           input.addEventListener(
             "change",
             () => {
-              window.Common.removeMaster(name, response.data[key].id);
+              this.removeMaster(name, response.data[key].id);
             },
             false,
           );
@@ -183,7 +180,7 @@ class Common {
         }
       })
       .catch(error => {
-        window.Common.overlayOut();
+        this.overlayOut();
         console.log(error);
       });
   }
@@ -194,15 +191,15 @@ class Common {
    * @return void
    */
   removeMaster(name, id) {
-    window.Common.overlay();
+    this.overlay();
     window.axios
       .post("/webapi/" + name + "/" + id + "/delete")
       .then((response) => {
         console.log(response);
-        window.Common.listMasters(name);
+        this.listMasters(name);
       })
       .catch(error => {
-        window.Common.overlayOut();
+        this.overlayOut();
         console.log(error);
       });
   }

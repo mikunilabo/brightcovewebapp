@@ -23,8 +23,9 @@ try {
   //  require('./vendor/coreui/colors');
   require('./vendor/coreui/popovers');
   require('./vendor/coreui/tooltips');
-  require('./common');
+  require('./Common');
   require('./Uploader');
+  require('./VideoCloud');
 } catch (e) {
   console.log(e);
 }

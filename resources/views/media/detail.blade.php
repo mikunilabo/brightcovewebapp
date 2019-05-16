@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('media.detail', $row->id) }}" method="POST" onsubmit="window.Common.overlay();">
+                            <form action="{{ route('media.detail', $row->id) }}" method="POST" onsubmit="return false;">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
