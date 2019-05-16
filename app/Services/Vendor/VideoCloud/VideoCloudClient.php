@@ -81,6 +81,23 @@ final class VideoCloudClient
 
     /**
      * @param string $videoId
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function updateVideo(string $videoId, array $args = []): ResponseInterface
+    {
+        return $this->client->patch(sprintf('%s/v1/accounts/%s/videos/%s', self::CMS_URL, $this->accountId, $videoId), [
+            'headers' => [
+                'Authorization' => sprintf('Bearer %s', $this->accessToken),
+                'Content-Type' => 'application/json',
+            ],
+            'http_errors' => false,
+            'json' => $args,
+        ]);
+    }
+
+    /**
+     * @param string $videoId
      * @param string $sourceName
      * @return ResponseInterface
      */

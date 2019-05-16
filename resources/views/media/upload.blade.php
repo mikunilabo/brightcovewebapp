@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form id="upload-form" action="{{ route('media.upload') }}" method="POST" enctype="multipart/form-data">
+                            <form id="upload-form">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -58,18 +58,21 @@
 
         document.getElementById('upload-form').addEventListener('submit', function (event) {
             event.preventDefault();
-            if (validate()) {
-                window.Common.overlay();
-                const mediaObject = getMediaObject(event.target);
-                window.VideoCloud.createMediaWithSource(mediaObject, function(media) {
-                    window.Common.overlayOut();
-                    window.location.href = "/media/" + media.id + "/detail";
-                });
-            }
+
+            if (! validate()) return;
+
+            window.Common.overlay();
+            const mediaObject = getMediaObject(event.target);
+
+            window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
+                window.location.href = "/media/" + media.id + "/detail";
+            });
         });
 
+        /**
+         * @return bool
+         */
         function validate() {
-            // some validates.
             if (document.getElementById("video_file").files[0] === undefined) {
                 return false;
             }
@@ -80,7 +83,8 @@
         }
 
         /**
-         * @param string id
+         * @param string tag
+         * @param string name
          * @return void
          */
         function ta(tag, name) {
@@ -118,11 +122,10 @@
             [].slice.call(mediaFormElement.elements).forEach(function(input) {
                 if (input.name) {
                     if (input.type === "file") {
-                        mediaObject[input.name] = input.files[0];
-                    } else if (input.name.split("[").length > 1) {
-                        if (input.value) {
-                            mediaObject[input.name.split("[")[0]].push(input.value);
-                        }
+                        window.VideoCloud.source = input.files[0];
+                    } else if (input.name.split("[").length > 1) {// array
+                        let str = input.name.split("[");
+                        mediaObject[str[0]][str[1].split("]")[0]] = input.value;
                     } else {
                         mediaObject[input.name] = input.value;
                     }

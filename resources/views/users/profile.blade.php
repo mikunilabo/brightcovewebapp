@@ -31,13 +31,13 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'name')
                                             <label for="{{ $attribute }}">@lang ('Name') <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" required autofocus />
+                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" required autofocus />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'company')
                                             <label for="{{ $attribute }}">@lang ('Company')</label>
-                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
@@ -45,7 +45,7 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'email')
                                             <label for="{{ $attribute }}">@lang ('E-Mail')</label>
-                                            <input name="{{ $attribute }}" type="email" value="{{ $row->{$attribute} }}" class="form-control" placeholder="" disabled />
+                                            <input name="{{ $attribute }}" type="email" value="{{ $row->{$attribute} }}" class="form-control" maxlength="255" placeholder="" disabled />
                                         </div>
 
                                         @can ('authorize', 'user-create')
@@ -64,14 +64,14 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password')
                                             <label for="{{ $attribute }}">@lang ('Password')</label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please enter only when changing.')" />
+                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please enter only when changing.')" />
                                             <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password_confirmation')
                                             <label for="{{ $attribute }}">@lang ('Reset Password')</label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please re-enter to confirm.')" />
+                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please re-enter to confirm.')" />
                                         </div>
                                     </div>
                                     <div class="row">

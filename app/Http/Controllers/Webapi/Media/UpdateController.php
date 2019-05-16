@@ -5,24 +5,24 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\CreateRequest;
-use App\UseCases\Media\CreateMedia;
+use App\Http\Requests\Media\UpdateRequest;
+use App\UseCases\Media\UpdateMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
-final class CreateController extends Controller
+final class UpdateController extends Controller
 {
     /** @var UseCaseContract */
     private $useCase;
 
     /**
-     * @param CreateMedia $useCase
+     * @param UpdateMedia $useCase
      * @return void
      */
-    public function __construct(CreateMedia $useCase)
+    public function __construct(UpdateMedia $useCase)
     {
         $this->middleware([
             'authenticate',
-            'authorize:media-create',
+            'authorize:media-update',
         ]);
 
         $this->useCase = $useCase;
@@ -30,15 +30,20 @@ final class CreateController extends Controller
 
     /**
      * @param ValidatesWhenResolved $request
+     * @param string $videoId
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function __invoke(CreateRequest $request)
+    public function __invoke(UpdateRequest $request, string $videoId)
     {
+        $media = $this->useCase->media($videoId);
+
+        $this->authorize('update', $media);
+
         $args = $request->validated();
-        $args['uuid'] = $request->user()->id;
 
         try {
             return $this->useCase->excute([
+                'id' => $videoId,
                 'param' => $args,
             ]);
         } catch (\Exception $e) {

@@ -40,13 +40,6 @@ final class UpdateMedia implements UseCaseContract
      */
     public function excute($args)
     {
-//         $entity = $args['entity'];
-//         $param = $args['param'];
-
-//         $entity->sync($related = 'leagues', empty($param[$related]) ? [] : [$param[$related]]);
-//         $entity->sync($related = 'sports', empty($param[$related]) ? [] : $param[$related]);
-//         $entity->sync($related = 'universities', empty($param[$related]) ? [] : [$param[$related]]);
-
-//         return $entity->update($param);
+        return $this->repo->updateObject($args);
     }
 }

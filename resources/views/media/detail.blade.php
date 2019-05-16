@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('media.detail', $row->id) }}" method="POST" onsubmit="return false;">
+                            <form id="upload-form">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -50,31 +50,52 @@
 
     <script type="text/javascript" src="{{ asset('vendor/rangePlugin.js') }}"></script>
     <script type="text/javascript">
-        (function() {
-            'use strict';
+        ingestjobs();
 
-            ingestjobs();
+        ta('.ta-leagues', 'leagues');
+        ta('.ta-sports', 'sports');
+        ta('.ta-universities', 'universities');
 
-            flatpickr('#date', {
-                allowInput: true
+        flatpickr('#date', {
+            allowInput: true
+        });
+
+        flatpickr('#starts_at', {
+            allowInput: true,
+            enableTime: true,
+            plugins: [new rangePlugin({ input: '#ends_at'})]
+        });
+
+        document.getElementById('upload-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (! validate()) return;
+
+            window.Common.overlay();
+            const mediaObject = getMediaObject(event.target);
+
+            window.VideoCloud.mediaId = {{ $row->id }};
+            window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
+                window.location.reload();
             });
-
-            flatpickr('#starts_at', {
-                allowInput: true,
-                enableTime: true,
-                plugins: [new rangePlugin({ input: '#ends_at'})]
-            });
-
-            ta('.ta-leagues', 'leagues');
-            ta('.ta-sports', 'sports');
-            ta('.ta-universities', 'universities');
-        })();
+        });
 
         /**
-         * @param string id
+         * @return bool
+         */
+        function validate() {
+            if (document.getElementById("name").value.length === 0) {
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * @param string tag
+         * @param string name
          * @return void
          */
-        function ta(tag, name) {
+         function ta(tag, name) {
             if (name === 'leagues') {
                 var json = @json ($vc_leagues->pluck('name'));
             } else if (name === 'sports') {
@@ -115,6 +136,33 @@
                     window.Common.overlayOut();
                     console.log(error);
                 });
+        }
+
+        /**
+         * @param HTMLFormElement mediaFormElement
+         * @return object mediaObject
+         */
+        function getMediaObject(mediaFormElement) {
+            const mediaObject = {
+                leagues: [],
+                sports: [],
+                universities: [],
+            };
+
+            [].slice.call(mediaFormElement.elements).forEach(function(input) {
+                if (input.name) {
+                    if (input.type === "file") {
+                        window.VideoCloud.source = input.files[0];
+                    } else if (input.name.split("[").length > 1) {// array
+                        let str = input.name.split("[");
+                        mediaObject[str[0]][str[1].split("]")[0]] = input.value;
+                    } else {
+                        mediaObject[input.name] = input.value;
+                    }
+                }
+            });
+
+            return mediaObject;
         }
     </script>
 @endsection
