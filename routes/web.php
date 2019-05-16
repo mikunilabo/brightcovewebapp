@@ -83,6 +83,7 @@ Route::prefix('/')->group(function () {
             Route::post($name = 'deletes', \App\Http\Controllers\Webapi\Media\DeletesController::class)->name($name);
 
             Route::prefix('{videoId}')->group(function () {
+                Route::post($name = 'update', \App\Http\Controllers\Webapi\Media\UpdateController::class)->name($name);
                 Route::post($name = 's3_url', \App\Http\Controllers\Webapi\Media\GetS3UrlController::class)->name($name);
                 Route::post($name = 'ingest', \App\Http\Controllers\Webapi\Media\DynamicIngestController::class)->name($name);
                 Route::get($name = 'ingestjobs', \App\Http\Controllers\Webapi\Media\IngestJobsController::class)->name($name);

@@ -77,6 +77,15 @@ final class MediaRepository implements RepositoryContract
      * @param array $args
      * @return mixed
      */
+    public function updateObject(array $args)
+    {
+        return $this->updateVideo($args['id'], $args['param']);
+    }
+
+    /**
+     * @param array $args
+     * @return mixed
+     */
     public function getS3Url(array $args)
     {
         return $this->requestS3Url($args['id'], $args['param']['source']);

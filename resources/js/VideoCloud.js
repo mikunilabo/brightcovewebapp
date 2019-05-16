@@ -1,21 +1,29 @@
 class VideoCloud {
+  mediaId = null;
+  source = null;
+
   constructor() {}
 
-  createMediaWithSource = async (mediaObject, callback) => {
-    const media = await this.createMedia(mediaObject);
-    console.log("%cMedia Created", "background: #F90; color: #FFF", media);
+  operationMediaWithSource = async (mediaObject, callback) => {
+    if (this.mediaId) {
+      var media = await this.updateMedia(mediaObject);
+      console.log("%cMedia Updated", "background: #F90; color: #FFF", media);
+    } else {
+      var media = await this.createMedia(mediaObject);
+      this.mediaId = media.id;
+      console.log("%cMedia Created", "background: #F90; color: #FFF", media);
+    }
 
-    const s3Url = await this.getS3Url(media.id, mediaObject.video_file.name);
-    console.log("%cS3 URL Fetched", "background: #990; color: #FFF", s3Url);
+    if (this.source) {
+      const s3Url = await this.getS3Url(this.mediaId, this.source.name);
+      console.log("%cS3 URL Fetched", "background: #990; color: #FFF", s3Url);
 
-    const uploadResponse = await window.Uploader.multiPartUpload(
-      mediaObject.video_file,
-      s3Url,
-    );
-    console.log("%cFile Uploaded", "background: #99F; color: #FFF", uploadResponse);
+      const uploadResponse = await window.Uploader.multiPartUpload(this.source, s3Url);
+      console.log("%cFile Uploaded", "background: #99F; color: #FFF", uploadResponse);
 
-    const ingestResponse = await this.dynamicIngest(media.id, s3Url.api_request_url);
-    console.log("%cIngest Started", "background: #F0F; color: #FFF", ingestResponse);
+      const ingestResponse = await this.dynamicIngest(this.mediaId, s3Url.api_request_url);
+      console.log("%cIngest Started", "background: #F0F; color: #FFF", ingestResponse);
+    }
 
     callback(media);
   };
@@ -34,7 +42,7 @@ class VideoCloud {
 
   updateMedia = async requestData => {
     return await window.axios
-      .post("/webapi/media/update", requestData)
+      .post("/webapi/media/" + this.mediaId + "/update", requestData)
       .then(response => response.data)
       .catch(error => {
         if (error.response.status === 422) {

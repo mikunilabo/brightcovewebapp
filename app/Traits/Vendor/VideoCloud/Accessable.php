@@ -31,6 +31,25 @@ trait Accessable
     }
 
     /**
+     * @param string $videoId
+     * @param array $args
+     * @return mixed
+     */
+    private function updateVideo(string $videoId, array $args = [])
+    {
+        $this->auth();
+
+        $params = $this->cmsParams($args);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->updateVideo($videoId, $params);
+
+        $this->httpStatusCode($response, [200]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      *
      * @param array $args
      * @return array
@@ -39,9 +58,6 @@ trait Accessable
     {
         $params = [
             'name' => $args['name'],// required, 1 <= 255
-            'custom_fields' => [
-                'uuid' => $args['uuid'],
-            ],
             'state' => 'INACTIVE',
         ];
 
@@ -49,7 +65,7 @@ trait Accessable
          * General
          */
         if (! empty($args[$key = 'description'])) {
-            $params[$key] = $args[$key];// 0 <= 255 ?
+            $params[$key] = $args[$key];// 0 <= 248
         }
 
         if (! empty($args[$key = 'long_description'])) {
@@ -72,6 +88,10 @@ trait Accessable
         }
 
         if (! empty($args[$key = 'tournament'])) {
+            $params['custom_fields'][$key] = $args[$key];
+        }
+
+        if (! empty($args[$key = 'uuid'])) {
             $params['custom_fields'][$key] = $args[$key];
         }
 
