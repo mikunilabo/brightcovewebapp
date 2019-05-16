@@ -36,7 +36,6 @@ final class CreateController extends Controller
     {
         $args = $request->validated();
         $args['uuid'] = $request->user()->id;
-        $args['name'] = 'Upload test.';
 
         try {
             return $this->useCase->excute([

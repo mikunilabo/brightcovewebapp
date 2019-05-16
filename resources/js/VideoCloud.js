@@ -70,9 +70,16 @@ class VideoCloud {
 
   invalidFeedback = response => {
     console.log(response.data.errors);
+
+    [].slice.call(document.getElementsByClassName('invalid-feedback')).forEach(function(span) {
+      window.Common.removeChildren(span);
+    });
+
     for (let key of Object.keys(response.data.errors)) {
       let span = document.getElementById('invalid-feedback-' + key);
-      window.Common.removeChildren(span);
+
+      if (! span) continue;
+
       let text = document.createTextNode(response.data.errors[key][0]);
       let strong = document.createElement("strong");
       strong.appendChild(text);

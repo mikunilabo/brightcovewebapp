@@ -7,6 +7,7 @@ use App\Exceptions\Domain\UnexpectedResponseException;
 use Aws\Exception\MultipartUploadException;
 use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
+use Illuminate\Support\Carbon;
 use Psr\Http\Message\ResponseInterface;
 
 trait Accessable
@@ -19,30 +20,81 @@ trait Accessable
     {
         $this->auth();
 
+        $params = $this->cmsParams($args);
+
         /** @var ResponseInterface $response */
-        $response = $this->client->createVideo([
-            'name' => $args['name'],// required, 1 <= 255
-            'custom_fields' => [
-                'date' => now()->format('Y-m-d'),// YYYY-MM-DD
-                'rightholder' => 'hoge',
-                'tournament' => 'fuga',
-                'uuid' => $args['uuid'],
-            ],
-            'description' => 'description',// 0 <= 255 ?
-            'long_description' => 'some freewords',// 0 <= 5000
-            'schedule' => [
-                'starts_at' => now()->format('c'),// ISO-8601
-                'ends_at' => now()->copy()->addMonth(1)->format('c'),// ISO-8601
-            ],
-            'state' => 'INACTIVE',// or ACTIVE
-            'tags' => [
-                'test',
-            ],
-        ]);
+        $response = $this->client->createVideo($params);
 
         $this->httpStatusCode($response, [201]);
 
         return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     *
+     * @param array $args
+     * @return array
+     */
+    private function cmsParams(array $args = []): array
+    {
+        $params = [
+            'name' => $args['name'],// required, 1 <= 255
+            'custom_fields' => [
+                'uuid' => $args['uuid'],
+            ],
+            'state' => 'INACTIVE',
+        ];
+
+        /**
+         * General
+         */
+        if (! empty($args[$key = 'description'])) {
+            $params[$key] = $args[$key];// 0 <= 255 ?
+        }
+
+        if (! empty($args[$key = 'long_description'])) {
+            $params[$key] = $args[$key];// 0 <= 5000
+        }
+
+        if (! empty($args[$key = 'state'])) {
+            $params[$key] = $args[$key];// ACTIVE or INACTIVE
+        }
+
+        /**
+         * Custom Fields
+         */
+        if (! empty($args[$key = 'date'])) {
+            $params['custom_fields'][$key] = $args[$key];// YYYY-MM-DD
+        }
+
+        if (! empty($args[$key = 'rightholder'])) {
+            $params['custom_fields'][$key] = $args[$key];
+        }
+
+        if (! empty($args[$key = 'tournament'])) {
+            $params['custom_fields'][$key] = $args[$key];
+        }
+
+        /**
+         * Schedules
+         */
+        if (! empty($args[$key = 'starts_at'])) {
+            $params['schedule'][$key] = Carbon::parse($args[$key])->format('c');// ISO-8601
+        }
+
+        if (! empty($args[$key = 'ends_at'])) {
+            $params['schedule'][$key] = Carbon::parse($args[$key])->format('c');// ISO-8601
+        }
+
+        /**
+         * Tags
+         */
+        $leagues = empty($args['leagues']) ? [] : $args['leagues'];
+        $universities = empty($args['universities']) ? [] : $args['universities'];
+        $sports = empty($args['sports']) ? [] : $args['sports'];
+        $params['tags'] = array_values(array_filter(array_merge($leagues, $universities, $sports), 'strlen'));
+
+        return $params;
     }
 
     /**
@@ -222,7 +274,9 @@ trait Accessable
     private function httpStatusCode(ResponseInterface $response, array $allows = []): void
     {
         if (! in_array($response->getStatusCode(), $allows, true)) {
-            throw new UnexpectedResponseException(sprintf('API response status code is unexpected. [allowd: %s] [returned: %s]', implode(',', $allows), $response->getStatusCode()));
+            $message = sprintf('API response status code is unexpected. [allowd: %s] [returned: %s]', implode(',', $allows), $response->getStatusCode());
+            logger()->error($message, json_decode($response->getBody()->getContents(), true));
+            throw new UnexpectedResponseException($message);
         }
     }
 

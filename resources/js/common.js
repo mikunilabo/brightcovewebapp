@@ -71,6 +71,7 @@ class Common {
     input.name = name + "[" + cnt.value + "]";
     input.type = "text";
     input.value = "";
+    input.maxLength = 255;
     input.autocomplete = "off";
 
     var inputGroup = document.createElement("div");
@@ -162,9 +163,7 @@ class Common {
           var input = document.createElement("input");
           input.type = "checkbox";
           input.classList.add("form-check-input");
-          input.addEventListener(
-            "change",
-            () => {
+          input.addEventListener("change", () => {
               this.removeMaster(name, response.data[key].id);
             },
             false,
@@ -213,6 +212,8 @@ class Common {
    * @return void
    */
   removeChildren(element) {
+    if (! element) return;
+
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }

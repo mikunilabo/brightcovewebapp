@@ -120,10 +120,9 @@
                 if (input.name) {
                     if (input.type === "file") {
                         mediaObject[input.name] = input.files[0];
-                    } else if (input.name.split("[").length > 1) {
-                        if (input.value) {
-                            mediaObject[input.name.split("[")[0]].push(input.value);
-                        }
+                    } else if (input.name.split("[").length > 1) {// array
+                        let str = input.name.split("[");
+                        mediaObject[str[0]][str[1].split("]")[0]] = input.value;
                     } else {
                         mediaObject[input.name] = input.value;
                     }
