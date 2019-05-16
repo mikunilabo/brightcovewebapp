@@ -29,7 +29,7 @@
                         </div>
 
                         @set ($attribute, 'email')
-                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('E-Mail')" required autofocus />
+                        <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="@lang ('E-Mail')" required autofocus />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
@@ -41,7 +41,7 @@
                         </div>
 
                         @set ($attribute, 'password')
-                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Password')" required />
+                        <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="@lang ('Password')" required />
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
