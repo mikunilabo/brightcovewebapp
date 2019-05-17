@@ -23,7 +23,7 @@
                 <div class="tab-pane p-0 fade show active" id="tab-player" role="tabpanel">
                     @component ('components.videos.players.videocloud', ['videoId' => $row->id, 'accountId' => config('services.videocloud.account_id')]) @endcomponent
                 </div>
-                <div class="tab-pane p-0 pt-2 fade" id="tab-upload" role="tabpanel">
+                <div class="tab-pane p-0 pt-3 fade" id="tab-upload" role="tabpanel">
                     <label for="{{ $attribute }}">@lang ('Video File')</label>
                     @component ('components.popovers.informations', ['content' => __('If you want to replace the video file, please select again.')]) @endcomponent
 
