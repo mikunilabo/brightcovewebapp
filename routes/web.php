@@ -80,6 +80,7 @@ Route::prefix('/')->group(function () {
 
         Route::prefix($prefix = 'media')->name(sprintf('%s.', $prefix))->group(function () {
             Route::post($name = 'create', \App\Http\Controllers\Webapi\Media\CreateController::class)->name($name);
+            Route::post($name = 'activates', \App\Http\Controllers\Webapi\Media\ActivatesController::class)->name($name);
             Route::post($name = 'deletes', \App\Http\Controllers\Webapi\Media\DeletesController::class)->name($name);
 
             Route::prefix('{videoId}')->group(function () {

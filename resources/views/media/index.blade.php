@@ -197,7 +197,19 @@
                     return false;
                 }
 
-                alert("@lang ('Not implemented')");
+                window.Common.overlay();
+                var ids = table.rows('.selected').ids();
+
+                window.axios.post("{{ route('webapi.media.activates') }}", {
+                    ids: ids.toArray()
+                })
+                .then(response => {
+                    // console.log(response.data);
+                    window.location.reload();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
             });
 
             deactivateBtn.addEventListener('click', function () {

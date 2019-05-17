@@ -56,6 +56,7 @@ final class RepositoryServiceProvider extends ServiceProvider
             Universities\DeleteUniversity::class,
             Universities\GetUniversities::class,
 
+            Media\ActivatesMedia::class,
             Media\CreateMedia::class,
             Media\DeleteMedia::class,
             Media\DeletesMedia::class,
@@ -122,6 +123,12 @@ final class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(Universities\GetUniversities::class, function () {
             return new Universities\GetUniversities(
                 app(Eloquent\UniversityRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\ActivatesMedia::class, function () {
+            return new Media\ActivatesMedia(
+                app(MediaRepository::class)
             );
         });
 
