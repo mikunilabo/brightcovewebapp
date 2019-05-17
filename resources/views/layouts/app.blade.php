@@ -30,6 +30,7 @@
     @component ('components.overlay.loading') @endcomponent
 
     @section ('scripts')
+        @stack ('scripts.const')
         @stack ('scripts.app')
         @stack ('scripts.resources')
     @show

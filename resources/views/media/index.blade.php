@@ -25,9 +25,9 @@
 
                                 <table class="table table-responsive-sm table-striped table-hover" id="media-table">
                                     <colgroup>
-                                        <col style="width: 8%;">
+                                        <col style="width: 11%;">
                                         <col style="width: 5%;">
-                                        <col style="width: 57%;">
+                                        <col style="width: 54%;">
                                         <col style="width: 6%;">
                                         <col style="width: 12%;">
                                         <col style="width: 12%;">

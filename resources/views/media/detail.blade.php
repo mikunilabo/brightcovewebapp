@@ -66,6 +66,20 @@
             plugins: [new rangePlugin({ input: '#ends_at'})]
         });
 
+        document.getElementById('video_file').addEventListener('change', function (event) {
+            let span = document.getElementById('invalid-feedback-video_file');
+            window.Common.removeChildren(span);
+
+            window.VideoCloud.source = event.target.files[0];
+
+            if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
+
+            let text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
+            let strong = document.createElement("strong");
+            strong.appendChild(text);
+            span.appendChild(strong);
+        });
+
         document.getElementById('upload-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -84,6 +98,10 @@
          * @return bool
          */
         function validate() {
+            let file = document.getElementById("video_file").files[0];
+            if (file && file.size > VALID_VIDEO_FILE_SIZE) {
+                return false;
+            }
             if (document.getElementById("name").value.length === 0) {
                 return false;
             }
@@ -152,8 +170,8 @@
             [].slice.call(mediaFormElement.elements).forEach(function(input) {
                 if (input.name) {
                     if (input.type === "file") {
-                        window.VideoCloud.source = input.files[0];
-                    } else if (input.name.split("[").length > 1) {// array
+                        return;
+                    } else if (input.name.split("[").length > 1) {// If array
                         let str = input.name.split("[");
                         mediaObject[str[0]][str[1].split("]")[0]] = input.value;
                     } else if (input.name === 'state' && input.checked === false) {
@@ -163,7 +181,6 @@
                     }
                 }
             });
-
             return mediaObject;
         }
     </script>
