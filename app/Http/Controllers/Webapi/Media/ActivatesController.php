@@ -5,24 +5,24 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\CreateRequest;
-use App\UseCases\Media\CreateMedia;
+use App\Http\Requests\Webapi\Media\ActivatesRequest;
+use App\UseCases\Media\ActivatesMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
-final class CreateController extends Controller
+final class ActivatesController extends Controller
 {
     /** @var UseCaseContract */
     private $useCase;
 
     /**
-     * @param CreateMedia $useCase
+     * @param ActivatesMedia $useCase
      * @return void
      */
-    public function __construct(CreateMedia $useCase)
+    public function __construct(ActivatesMedia $useCase)
     {
         $this->middleware([
             'authenticate',
-            'authorize:media-create',
+            'authorize:media-update',
         ]);
 
         $this->useCase = $useCase;
@@ -30,17 +30,21 @@ final class CreateController extends Controller
 
     /**
      * @param ValidatesWhenResolved $request
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(CreateRequest $request)
+    public function __invoke(ActivatesRequest $request)
     {
         $args = $request->validated();
-        $args['uuid'] = $request->user()->id;
-        $args['state'] = 'INACTIVE';
+
+        $media = $this->useCase->media($args);
+
+        $filtered = $media->filter(function ($item) use ($request) {
+            return $request->user()->can('update', $item);
+        });
 
         try {
             return $this->useCase->excute([
-                'param' => $args,
+                'ids' => $filtered->pluck('id')->all(),
             ]);
         } catch (\Exception $e) {
             return [

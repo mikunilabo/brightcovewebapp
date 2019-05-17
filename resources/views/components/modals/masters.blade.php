@@ -4,7 +4,6 @@
             <div class="modal-header">
                 <h4 class="modal-title">
                     @lang (ucfirst($name))
-                    @component ('components.popovers.informations', ['content' => __('If checked, it will be deleted immediately and the association with the account will also be cancelled.')]) @endcomponent
                 </h4>
                 <button class="close" type="button" data-dismiss="modal"
                     aria-label="Close">

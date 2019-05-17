@@ -25,15 +25,17 @@
 
                                 <table class="table table-responsive-sm table-striped table-hover" id="media-table">
                                     <colgroup>
-                                        <col style="width: 15%;">
-                                        <col style="width: 40%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 15%;">
+                                        <col style="width: 11%;">
+                                        <col style="width: 5%;">
+                                        <col style="width: 54%;">
+                                        <col style="width: 6%;">
+                                        <col style="width: 12%;">
+                                        <col style="width: 12%;">
                                     </colgroup>
                                     <thead>
                                         <tr>
                                             <th class="text-nowrap">@lang ('ID')</th>
+                                            <th class="text-nowrap">@lang ('Thumbnail')</th>
                                             <th class="text-nowrap">@lang ('Title')</th>
                                             <th class="text-nowrap">@lang ('Status')</th>
                                             <th class="text-nowrap">@lang ('Created At')</th>
@@ -45,9 +47,14 @@
                                             <tr id="{{ $row->id }}">
                                                 <td><code>{{ $row->id }}</code></td>
                                                 <td>
-                                                    <a href="{{ route('media.detail', $row->id) }}">{{ $row->name }}</a>
+                                                    @if (! empty($row->images['thumbnail']['src']))
+                                                        <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded" width="54" height="36">
+                                                    @endif
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
+                                                    <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120, '...') }}</a>
+                                                </td>
+                                                <td>
                                                     @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
                                                 </td>
                                                 <td>
@@ -134,7 +141,10 @@
             var deleteBtn = document.getElementById('delete-btn');
 
             var table = $('#media-table').DataTable({
-                columnDefs: [],
+                columnDefs: [
+                    { targets: 1, sortable: false },
+                    { targets: 3, sortable: false }
+                ],
                 displayLength: 20,
                 'drawCallback': function () {
                     window.Common.overlayOut();
@@ -144,7 +154,7 @@
                 lengthChange: true,
                 lengthMenu: [10, 20, 30, 50],
                 order: [
-                    [3, 'desc'],
+                    [4, 'desc'],
                 ],
                 ordering: true,
                 paging: true,
@@ -197,7 +207,19 @@
                     return false;
                 }
 
-                alert("@lang ('Not implemented')");
+                window.Common.overlay();
+                var ids = table.rows('.selected').ids();
+
+                window.axios.post("{{ route('webapi.media.activates') }}", {
+                    ids: ids.toArray()
+                })
+                .then(response => {
+                    // console.log(response.data);
+                    window.location.reload();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
             });
 
             deactivateBtn.addEventListener('click', function () {
@@ -205,7 +227,19 @@
                     return false;
                 }
 
-                alert("@lang ('Not implemented')");
+                window.Common.overlay();
+                var ids = table.rows('.selected').ids();
+
+                window.axios.post("{{ route('webapi.media.deactivates') }}", {
+                    ids: ids.toArray()
+                })
+                .then(response => {
+                    // console.log(response.data);
+                    window.location.reload();
+                }).catch(error => {
+                    window.Common.overlayOut();
+                    console.log(error);
+                });
             });
 
             deleteBtn.addEventListener('click', function () {

@@ -58,7 +58,6 @@ trait Accessable
     {
         $params = [
             'name' => $args['name'],// required, 1 <= 255
-            'state' => 'INACTIVE',
         ];
 
         /**
@@ -202,6 +201,42 @@ trait Accessable
 
         /** @var ResponseInterface $response */
         $response = $this->client->getStatusOfIngestJobs($videoId);
+
+        $this->httpStatusCode($response, [200]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param string $videoId
+     * @return mixed
+     */
+    private function activateVideo($videoId)
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->updateVideo($videoId, [
+            'state' => 'ACTIVE',
+        ]);
+
+        $this->httpStatusCode($response, [200]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * @param string $videoId
+     * @return mixed
+     */
+    private function deactivateVideo($videoId)
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->updateVideo($videoId, [
+            'state' => 'INACTIVE',
+        ]);
 
         $this->httpStatusCode($response, [200]);
 

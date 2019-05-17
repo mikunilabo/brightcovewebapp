@@ -56,7 +56,9 @@ final class RepositoryServiceProvider extends ServiceProvider
             Universities\DeleteUniversity::class,
             Universities\GetUniversities::class,
 
+            Media\ActivatesMedia::class,
             Media\CreateMedia::class,
+            Media\DeactivatesMedia::class,
             Media\DeleteMedia::class,
             Media\DeletesMedia::class,
             Media\GetIngestJobs::class,
@@ -125,8 +127,20 @@ final class RepositoryServiceProvider extends ServiceProvider
             );
         });
 
+        $this->app->bind(Media\ActivatesMedia::class, function () {
+            return new Media\ActivatesMedia(
+                app(MediaRepository::class)
+            );
+        });
+
         $this->app->bind(Media\CreateMedia::class, function () {
             return new Media\CreateMedia(
+                app(MediaRepository::class)
+            );
+        });
+
+        $this->app->bind(Media\DeactivatesMedia::class, function () {
+            return new Media\DeactivatesMedia(
                 app(MediaRepository::class)
             );
         });

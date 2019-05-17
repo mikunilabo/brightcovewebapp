@@ -15,6 +15,7 @@ try {
   require('datatables.net-bs4');
   require('datatables.net-select-bs4');
   require('flatpickr');
+  const FLATPICKR_JA = require('flatpickr/dist/l10n/ja.js').default.ja;
   require('pace-progress');
   require('perfect-scrollbar');
   require('typeahead.js');
@@ -26,9 +27,17 @@ try {
   require('./Common');
   require('./Uploader');
   require('./VideoCloud');
+
+  flatpickr.localize(FLATPICKR_JA);
 } catch (e) {
   console.log(e);
 }
+
+/**
+ * flatpickr Plugins.
+ */
+
+window.flatpickr.rangePlugin = require('flatpickr/dist/plugins/rangePlugin.js');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

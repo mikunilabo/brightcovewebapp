@@ -150,7 +150,7 @@ class Common {
    * @return void
    */
   listMasters(name) {
-    var body = document.getElementById(name + "-modal-body");
+    let body = document.getElementById(name + "-modal-body");
     this.removeChildren(body);
 
     window.axios
@@ -160,26 +160,25 @@ class Common {
         body.innerHtml = "";
 
         for (let key of Object.keys(response.data)) {
-          var input = document.createElement("input");
-          input.type = "checkbox";
-          input.classList.add("form-check-input");
-          input.addEventListener("change", () => {
+          let i = document.createElement("i");
+          i.classList.add("icons", "icon-trash");
+
+          let text = document.createTextNode(" " + response.data[key].name);
+
+          let button = document.createElement("button");
+          button.classList.add("btn", "btn-sm", "btn-outline-danger", "mr-2", "mb-2");
+          button.type = "button";
+          button.addEventListener("click", () => {
+              if (! confirm(`${response.data[key].name}を削除しますか？
+同時にアカウントとの関連も解除されます。`)) return;
               this.removeMaster(name, response.data[key].id);
             },
             false,
           );
 
-          var label = document.createElement("label");
-          label.classList.add("form-check-label");
-          label.appendChild(input);
-          var text = document.createTextNode(response.data[key].name);
-          label.appendChild(text);
-
-          var div = document.createElement("div");
-          div.classList.add("form-check", "form-check-inline", "mr-3");
-          div.appendChild(label);
-
-          body.appendChild(div);
+          button.appendChild(i);
+          button.appendChild(text);
+          body.appendChild(button);
         }
       })
       .catch(error => {

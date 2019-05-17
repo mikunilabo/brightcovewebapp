@@ -4,6 +4,12 @@
     <script type="text/javascript" src="{{ asset(mix('js/app.js')) }}"></script>
 @endpush
 
+@push ('scripts.const')
+    <script type="text/javascript">
+        const VALID_VIDEO_FILE_SIZE = 10737418240;// 10GB
+    </script>
+@endpush
+
 @push ('scripts.csrf')
     <script>
         window.Laravel = @json(['csrfToken' => csrf_token()]);
