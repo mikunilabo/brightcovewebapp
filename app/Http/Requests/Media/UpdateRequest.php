@@ -79,6 +79,10 @@ final class UpdateRequest extends MediaRequest
                 'distinct',
                 'exists:sports,name',
             ],
+            'state' => [
+                'required',
+                'in:ACTIVE,INACTIVE',
+            ],
         ];
     }
 }

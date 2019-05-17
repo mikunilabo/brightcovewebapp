@@ -156,6 +156,8 @@
                     } else if (input.name.split("[").length > 1) {// array
                         let str = input.name.split("[");
                         mediaObject[str[0]][str[1].split("]")[0]] = input.value;
+                    } else if (input.name === 'state' && input.checked === false) {
+                        return;
                     } else {
                         mediaObject[input.name] = input.value;
                     }

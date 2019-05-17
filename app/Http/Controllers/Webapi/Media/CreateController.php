@@ -36,6 +36,7 @@ final class CreateController extends Controller
     {
         $args = $request->validated();
         $args['uuid'] = $request->user()->id;
+        $args['state'] = 'INACTIVE';
 
         try {
             return $this->useCase->excute([

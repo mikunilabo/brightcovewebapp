@@ -58,7 +58,6 @@ trait Accessable
     {
         $params = [
             'name' => $args['name'],// required, 1 <= 255
-            'state' => 'INACTIVE',
         ];
 
         /**

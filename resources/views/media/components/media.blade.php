@@ -54,7 +54,13 @@
         <div class="form-group col-md-6">
             @set ($attribute, 'state')
             <label for="{{ $attribute }}">@lang ('Status')</label>
-            @component ('components.labels.videos.state', ['state' => $row->{$attribute}]) @endcomponent
+            <div>
+                <label class="switch switch-label switch-pill switch-success">
+                    <input name="{{ $attribute }}" type="hidden" value="INACTIVE" checked />
+                    <input name="{{ $attribute }}" type="checkbox" value="ACTIVE" class="switch-input" {{ $row->{$attribute} === 'ACTIVE' ? 'checked' : '' }} />
+                    <span class="switch-slider" data-checked="@lang ('ACTIVE')" data-unchecked="@lang ('INACTIVE')"></span>
+                </label>
+            </div>
         </div>
         <div class="form-group col-md-6">
             @set ($attribute, 'ingestjobs')
