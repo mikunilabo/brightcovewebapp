@@ -134,6 +134,17 @@ final class MediaRepository implements RepositoryContract
      * @param array $ids
      * @return void
      */
+    public function deactivates($ids = []): void
+    {
+        foreach ($ids as $id) {
+            $this->deactivateVideo($id);
+        }
+    }
+
+    /**
+     * @param array $ids
+     * @return void
+     */
     public function deletes($ids = []): void
     {
         $this->deleteVideos($ids);
