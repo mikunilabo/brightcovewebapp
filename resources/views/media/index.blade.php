@@ -25,9 +25,9 @@
 
                                 <table class="table table-responsive-sm table-striped table-hover" id="media-table">
                                     <colgroup>
-                                        <col style="width: 15%;">
-                                        <col style="width: 40%;">
-                                        <col style="width: 15%;">
+                                        <col style="width: 10%;">
+                                        <col style="width: 52%;">
+                                        <col style="width: 8%;">
                                         <col style="width: 15%;">
                                         <col style="width: 15%;">
                                     </colgroup>
@@ -45,9 +45,9 @@
                                             <tr id="{{ $row->id }}">
                                                 <td><code>{{ $row->id }}</code></td>
                                                 <td>
-                                                    <a href="{{ route('media.detail', $row->id) }}">{{ $row->name }}</a>
+                                                    <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 100, '...') }}</a>
                                                 </td>
-                                                <td class="text-center">
+                                                <td>
                                                     @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
                                                 </td>
                                                 <td>
