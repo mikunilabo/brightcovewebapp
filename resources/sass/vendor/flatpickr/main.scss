@@ -389,6 +389,13 @@
       -ms-flex: 1;
           flex: 1;
 }
+.flatpickr-weekdaycontainer > .flatpickr-weekday:nth-child(1){
+  color: #f86c6b;
+}
+
+.flatpickr-weekdaycontainer > .flatpickr-weekday:nth-child(7){
+  color: #569ff7;
+}
 span.flatpickr-weekday {
   cursor: default;
   font-size: 90%;

@@ -40,7 +40,6 @@
 @section ('scripts')
     @parent
 
-    <script type="text/javascript" src="{{ asset('vendor/rangePlugin.js') }}"></script>
     <script type="text/javascript">
         ta('.ta-leagues', 'leagues');
         ta('.ta-sports', 'sports');
@@ -53,7 +52,7 @@
         flatpickr('#starts_at', {
             allowInput: true,
             enableTime: true,
-            plugins: [new rangePlugin({ input: '#ends_at'})]
+            plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
         });
 
         document.getElementById('video_file').addEventListener('change', function (event) {
