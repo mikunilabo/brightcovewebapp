@@ -3,36 +3,17 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{{ route('home') }}">
-        <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="145" height="auto" alt="{{ config('app.name') }}">
-        <img class="navbar-brand-minimized" src="{{ asset('images/brand/logo.png') }}" width="25" height="25" alt="">
+        <img src="{{ config('resources.images.logo_full') }}" class="navbar-brand-full" width="145" height="auto" alt="{{ config('app.name') }}">
+        <img src="{{ config('resources.images.logo') }}" class="navbar-brand-minimized" width="25" height="25" alt="{{ config('app.name') }}">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    @if (false)
-        <ul class="nav navbar-nav d-md-down-none">
-            <li class="nav-item px-3">
-                <a class="nav-link" href="#">Menu</a>
-            </li>
-        </ul>
-    @endif
-
     <ul class="nav navbar-nav ml-auto">
-        @if (false)
-            <li class="nav-item d-md-down-none">
-                <a class="nav-link" href="#">
-                    <i class="icon-bell"></i>
-                    <span class="badge badge-pill badge-danger">5</span>
-                </a>
-            </li>
-        @endif
-
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
-
-                @if (false)<img class="img-avatar" src="{{ asset('img/avatars/6.jpg') }}" alt="">@endif
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
