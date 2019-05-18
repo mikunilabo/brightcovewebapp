@@ -21,7 +21,6 @@ final class IndexController extends Controller
     public function __construct(GetMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-select',
         ]);
 

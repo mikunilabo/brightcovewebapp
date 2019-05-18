@@ -12,7 +12,7 @@ declare(strict_types=1);
 |
 */
 
-Route::prefix('/')->group(function () {
+Route::prefix('/')->middleware('authenticate')->group(function () {
     Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 //     Route::get($name = 'settings', )->name($name);
 
@@ -45,29 +45,6 @@ Route::prefix('/')->group(function () {
             Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'update'));
             Route::post($name = 'delete', \App\Http\Controllers\Media\DeleteController::class)->name($name);
         });
-    });
-
-    /**
-     * Authentication
-     */
-    Route::get($name = 'login', sprintf('%s@showLoginForm', \App\Http\Controllers\Auth\LoginController::class))->name($name);
-    Route::post($name,  sprintf('%s@%s', \App\Http\Controllers\Auth\LoginController::class, $name));
-    Route::post($name = 'logout', sprintf('%s@%s', \App\Http\Controllers\Auth\LoginController::class, $name))->name($name);
-
-    /**
-     * Registration
-     */
-//     Route::get($name = 'register', sprintf('%s@showRegistrationForm', \App\Http\Controllers\Auth\RegisterController::class))->name($name);
-//     Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Auth\RegisterController::class, $name));
-
-    /**
-     * Password Reset
-     */
-    Route::prefix($prefix = 'password')->name(sprintf('%s.', $prefix))->group(function () {
-        Route::post($name = 'email', sprintf('%s@sendResetLinkEmail', \App\Http\Controllers\Auth\Password\ForgotController::class))->name($name);
-        Route::get($name = 'reset', sprintf('%s@showLinkRequestForm', \App\Http\Controllers\Auth\Password\ForgotController::class))->name('request');
-        Route::get(sprintf('%s/{token}', $name), sprintf('%s@showResetForm', \App\Http\Controllers\Auth\Password\ResetController::class))->name($name);
-        Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Auth\Password\ResetController::class, $name));
     });
 
     /**
@@ -113,4 +90,27 @@ Route::prefix('/')->group(function () {
             });
         });
     });
+});
+
+/**
+ * Authentication
+ */
+Route::get($name = 'login', sprintf('%s@showLoginForm', \App\Http\Controllers\Auth\LoginController::class))->name($name);
+Route::post($name,  sprintf('%s@%s', \App\Http\Controllers\Auth\LoginController::class, $name));
+Route::post($name = 'logout', sprintf('%s@%s', \App\Http\Controllers\Auth\LoginController::class, $name))->name($name);
+
+/**
+ * Registration
+ */
+// Route::get($name = 'register', sprintf('%s@showRegistrationForm', \App\Http\Controllers\Auth\RegisterController::class))->name($name);
+// Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Auth\RegisterController::class, $name));
+
+/**
+ * Password Reset
+ */
+Route::prefix($prefix = 'password')->name(sprintf('%s.', $prefix))->group(function () {
+    Route::post($name = 'email', sprintf('%s@sendResetLinkEmail', \App\Http\Controllers\Auth\Password\ForgotController::class))->name($name);
+    Route::get($name = 'reset', sprintf('%s@showLinkRequestForm', \App\Http\Controllers\Auth\Password\ForgotController::class))->name('request');
+    Route::get(sprintf('%s/{token}', $name), sprintf('%s@showResetForm', \App\Http\Controllers\Auth\Password\ResetController::class))->name($name);
+    Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Auth\Password\ResetController::class, $name));
 });

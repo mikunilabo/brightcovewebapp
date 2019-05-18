@@ -21,7 +21,6 @@ final class ActivatesController extends Controller
     public function __construct(ActivatesMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-update',
         ]);
 

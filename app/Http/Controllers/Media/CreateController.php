@@ -13,7 +13,6 @@ final class CreateController extends Controller
     public function __construct()
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-create',
         ]);
     }

@@ -21,7 +21,6 @@ final class IndexController extends Controller
     public function __construct(GetUsers $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:user-select',
         ]);
 

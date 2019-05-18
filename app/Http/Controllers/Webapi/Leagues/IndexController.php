@@ -20,10 +20,6 @@ final class IndexController extends Controller
      */
     public function __construct(GetLeagues $useCase)
     {
-        $this->middleware([
-            'authenticate',
-        ]);
-
         $this->useCase = $useCase;
     }
 

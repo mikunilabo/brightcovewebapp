@@ -21,7 +21,6 @@ final class DeletesController extends Controller
     public function __construct(DeletesUsers $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:user-delete',
         ]);
 
