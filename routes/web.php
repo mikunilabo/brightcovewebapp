@@ -73,7 +73,7 @@ Route::prefix('/')->group(function () {
     /**
      * WebAPI
      */
-    Route::prefix($prefix = 'webapi')->name(sprintf('%s.', $prefix))->group(function () {
+    Route::prefix($prefix = 'webapi')->middleware('ajax')->name(sprintf('%s.', $prefix))->group(function () {
         Route::prefix($prefix = 'accounts')->name(sprintf('%s.', $prefix))->group(function () {
             Route::post($name = 'deletes', \App\Http\Controllers\Webapi\Users\DeletesController::class)->name($name);
         });

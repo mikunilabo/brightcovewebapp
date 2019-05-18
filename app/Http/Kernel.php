@@ -52,6 +52,7 @@ final class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        'ajax' => \App\Http\Middleware\AssertAjax::class,
         'authenticate' => \Illuminate\Auth\Middleware\Authenticate::class,
         'authenticate.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'authorize'    => \App\Http\Middleware\Authorize::class,
