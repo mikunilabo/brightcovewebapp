@@ -8,7 +8,7 @@
             <div class="col-md-5">
                 <div class="clearfix">
                     <div>
-                        <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="100%" height="auto" alt="{{ config('app.name') }}">
+                        <img class="navbar-brand-full" src="{{ config('resources.images.logo_full') }}" width="100%" height="auto" alt="{{ config('app.name') }}">
                     </div>
                     <h2 class="text-center mt-3">
                         <i class="icons icon-user-follow"></i> @lang ('Sign Up')

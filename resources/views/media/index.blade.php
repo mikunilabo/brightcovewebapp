@@ -48,7 +48,9 @@
                                                 <td><code>{{ $row->id }}</code></td>
                                                 <td>
                                                     @if (! empty($row->images['thumbnail']['src']))
-                                                        <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded" width="54" height="36">
+                                                        <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded mx-auto d-block" width="54" height="36">
+                                                    @else
+                                                        <img src="{{ config('resources.images.no_picture') }}" class="mx-auto d-block" width="36" height="36">
                                                     @endif
                                                 </td>
                                                 <td>

@@ -24,7 +24,7 @@
                 </div>
                 <hr>
                 <div class="clearfix mt-3">
-                    <img class="navbar-brand-full" src="{{ asset('images/brand/logo_full.png') }}" width="145" height="auto" alt="{{ config('app.name') }}">
+                    <img src="{{ config('resources.images.logo_full') }}" class="navbar-brand-full" width="145" height="auto" alt="{{ config('app.name') }}">
                 </div>
                 <div class="clearfix mt-3">
                     <small>
