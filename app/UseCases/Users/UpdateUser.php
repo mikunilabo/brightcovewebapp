@@ -5,6 +5,7 @@ namespace App\UseCases\Users;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
+use App\Exceptions\Domain\NotFoundException;
 use App\Traits\Database\Transactionable;
 
 final class UpdateUser implements UseCaseContract
@@ -29,11 +30,11 @@ final class UpdateUser implements UseCaseContract
      */
     public function user(string $userId)
     {
-        /**
-         * TODO Not found exception
-         */
+        if (is_null($model = $this->repo->findById($userId))) {
+            throw new NotFoundException('The account was not found.');
+        }
 
-        return $this->repo->findById($userId);
+        return $model;
     }
 
     /**
