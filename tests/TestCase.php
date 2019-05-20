@@ -45,10 +45,16 @@ abstract class TestCase extends BaseTestCase
     private function users()
     {
         $this->admin = factory(User::class)->create([
+            'name' => 'admin',
+            'company' => 'Admin, Inc.',
+            'email' => 'admin@example.com',
             'role_id' => 1,
         ]);
 
         $this->user = factory(User::class)->create([
+            'name' => 'user',
+            'company' => 'User, Inc.',
+            'email' => 'user@example.com',
             'role_id' => 2,
         ]);
     }
