@@ -34,36 +34,36 @@
                                     </colgroup>
                                     <thead>
                                         <tr>
-                                            <th class="text-nowrap">@lang ('ID')</th>
-                                            <th class="text-nowrap">@lang ('Thumbnail')</th>
-                                            <th class="text-nowrap">@lang ('Title')</th>
-                                            <th class="text-nowrap">@lang ('Status')</th>
-                                            <th class="text-nowrap">@lang ('Created At')</th>
-                                            <th class="text-nowrap">@lang ('Updated At')</th>
+                                            <th class="align-middle text-nowrap">@lang ('ID')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Thumbnail')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Title')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Status')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Created At')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Updated At')</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody" class="d-none">
                                         @foreach ($rows as $row)
                                             <tr id="{{ $row->id }}">
-                                                <td><code>{{ $row->id }}</code></td>
-                                                <td>
+                                                <td class="align-middle"><code>{{ $row->id }}</code></td>
+                                                <td class="align-middle">
                                                     @if (! empty($row->images['thumbnail']['src']))
                                                         <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded mx-auto d-block" width="54" height="36">
                                                     @else
                                                         <img src="{{ config('resources.images.no_picture') }}" class="mx-auto d-block" width="36" height="36">
                                                     @endif
                                                 </td>
-                                                <td>
+                                                <td class="align-middle">
                                                     <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120, '...') }}</a>
                                                 </td>
-                                                <td>
+                                                <td class="align-middle">
                                                     @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
                                                 </td>
-                                                <td>
+                                                <td class="align-middle">
                                                     @set ($attribute, 'created_at')
                                                     {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
                                                 </td>
-                                                <td>
+                                                <td class="align-middle">
                                                     @set ($attribute, 'updated_at')
                                                     {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
                                                 </td>

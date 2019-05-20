@@ -35,35 +35,35 @@
                                     </colgroup>
                                     <thead>
                                         <tr>
-                                            <th class="text-nowrap">@lang ('Name')</th>
-                                            <th class="text-nowrap">@lang ('ID')</th>
-                                            <th class="text-nowrap">@lang ('Company')</th>
-                                            <th class="text-nowrap">@lang ('Role')</th>
-                                            <th class="text-nowrap">@lang ('E-Mail')</th>
-                                            <th class="text-nowrap">@lang ('Last login')</th>
-                                            <th class="text-nowrap">@lang ('Created At')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Name')</th>
+                                            <th class="align-middle text-nowrap">@lang ('ID')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Company')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Role')</th>
+                                            <th class="align-middle text-nowrap">@lang ('E-Mail')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Last login')</th>
+                                            <th class="align-middle text-nowrap">@lang ('Created At')</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody" class="d-none">
                                         @foreach ($rows as $row)
                                             <tr id="{{ $row->id }}">
-                                                <td>
+                                                <td class="align-middle">
                                                     <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25, '...') }}</a>
                                                 </td>
-                                                <td><code>{{ $row->id }}</code></td>
-                                                <td>{{ str_limit($row->company, 25, '...') }}</td>
-                                                <td>
+                                                <td class="align-middle"><code>{{ $row->id }}</code></td>
+                                                <td class="align-middle">{{ str_limit($row->company, 25, '...') }}</td>
+                                                <td class="align-middle">
                                                     <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
                                                 </td>
-                                                <td>
+                                                <td class="align-middle">
                                                     <a href="{{ route('accounts.detail', $row->id) }}">
                                                         <code>{{ str_limit($row->email, 30, '...') }}</code>
                                                     </a>
                                                 </td>
-                                                <td class="text-center">
+                                                <td class="align-middle">
                                                     {{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}
                                                 </td>
-                                                <td>{{ $row->created_at }}</td>
+                                                <td class="align-middle">{{ $row->created_at }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
