@@ -15,11 +15,11 @@
         <div class="form-group col-md-6" id="{{ $id = sprintf('%s-list-%s', $attribute, $key) }}">
             <div class="input-group">
                 <input name="{{ sprintf('%s[%s]', $attribute, $key) }}" type="text" value="{{ $value }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has(sprintf('%s.%s', $attribute, $key)) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
-                <span class="input-group-append">
-                    <button class="btn btn-outline-danger" type="button" onclick="window.Common.removeElement('{{ $id }}')">
+                <div class="input-group-append">
+                    <button class="input-group-text btn btn-outline-danger" type="button" onclick="window.Common.removeElement('{{ $id }}')">
                         <i class="icons icon-close"></i>
                     </button>
-                </span>
+                </div>
             </div>
             @component ('components.messages.invalid', ['name' => sprintf('%s.%s', $attribute, $key)]) @endcomponent
         </div>
