@@ -3,7 +3,7 @@
 @section ('title', __('Reset Password'))
 
 @section ('content')
-    <div class="container">
+    <div class="container-fluid animated fadeIn">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="clearfix">
@@ -23,9 +23,7 @@
 
                     <div class="input-prepend input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="icon-user"></i>
-                            </span>
+                            <span class="input-group-text">@</span>
                         </div>
 
                         @set ($attribute, 'email')

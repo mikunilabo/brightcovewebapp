@@ -6,100 +6,98 @@
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Accounts list') => route('accounts.index')]]) @endcomponent
 
-        <div class="container-fluid">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="fa fa-align-justify"></i>@lang ('Accounts list')
+        <div class="container-fluid animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>@lang ('Accounts list')
 
-                                @can ('authorize', 'user-create')
-                                    <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
-                                        <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
-                                    </a>
-                                @endcan
-                            </div>
-                            <div class="card-body">
-                                @component ('components.messages.alerts') @endcomponent
+                            @can ('authorize', 'user-create')
+                                <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
+                                    <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
+                                </a>
+                            @endcan
+                        </div>
+                        <div class="card-body">
+                            @component ('components.messages.alerts') @endcomponent
 
-                                <table class="table table-responsive-sm table-striped table-hover" id="users-table">
-                                    <colgroup>
-                                        <col style="width: 15%;">
-                                        <col style="width: 20%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 10%;">
-                                        <col style="width: 20%;">
-                                        <col style="width: 8%;">
-                                        <col style="width: 12%;">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th class="align-middle text-nowrap">@lang ('Name')</th>
-                                            <th class="align-middle text-nowrap">@lang ('ID')</th>
-                                            <th class="align-middle text-nowrap">@lang ('Company')</th>
-                                            <th class="align-middle text-nowrap">@lang ('Role')</th>
-                                            <th class="align-middle text-nowrap">@lang ('E-Mail')</th>
-                                            <th class="align-middle text-nowrap">@lang ('Last login')</th>
-                                            <th class="align-middle text-nowrap">@lang ('Created At')</th>
+                            <table class="table table-responsive-sm table-striped table-hover" id="users-table">
+                                <colgroup>
+                                    <col style="width: 15%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: 15%;">
+                                    <col style="width: 10%;">
+                                    <col style="width: 20%;">
+                                    <col style="width: 8%;">
+                                    <col style="width: 12%;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle text-nowrap">@lang ('Name')</th>
+                                        <th class="align-middle text-nowrap">@lang ('ID')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Company')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Role')</th>
+                                        <th class="align-middle text-nowrap">@lang ('E-Mail')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Last login')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Created At')</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody" class="d-none">
+                                    @foreach ($rows as $row)
+                                        <tr id="{{ $row->id }}">
+                                            <td class="align-middle">
+                                                <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25, '...') }}</a>
+                                            </td>
+                                            <td class="align-middle"><code>{{ $row->id }}</code></td>
+                                            <td class="align-middle">{{ str_limit($row->company, 25, '...') }}</td>
+                                            <td class="align-middle">
+                                                <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
+                                            </td>
+                                            <td class="align-middle">
+                                                <a href="{{ route('accounts.detail', $row->id) }}">
+                                                    <code>{{ str_limit($row->email, 30, '...') }}</code>
+                                                </a>
+                                            </td>
+                                            <td class="align-middle">
+                                                {{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}
+                                            </td>
+                                            <td class="align-middle">{{ $row->created_at }}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody id="tbody" class="d-none">
-                                        @foreach ($rows as $row)
-                                            <tr id="{{ $row->id }}">
-                                                <td class="align-middle">
-                                                    <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25, '...') }}</a>
-                                                </td>
-                                                <td class="align-middle"><code>{{ $row->id }}</code></td>
-                                                <td class="align-middle">{{ str_limit($row->company, 25, '...') }}</td>
-                                                <td class="align-middle">
-                                                    <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
-                                                </td>
-                                                <td class="align-middle">
-                                                    <a href="{{ route('accounts.detail', $row->id) }}">
-                                                        <code>{{ str_limit($row->email, 30, '...') }}</code>
-                                                    </a>
-                                                </td>
-                                                <td class="align-middle">
-                                                    {{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}
-                                                </td>
-                                                <td class="align-middle">{{ $row->created_at }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer">
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            @can ('authorize', 'user-delete')
+                                <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @lang ('Batch operation')
+                                </a>
+                            @endcan
+
+                            <div class="dropdown-menu">
+                                <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
+                                    <i class="icons icon-check"></i>@lang ('Select all')
+                                </a>
+
+                                <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                    <i class="icons icon-close"></i>@lang ('Deselect all')
+                                </a>
+
                                 @can ('authorize', 'user-delete')
-                                    <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        @lang ('Batch operation')
-                                    </a>
-                                @endcan
+                                    <div class="dropdown-divider"></div>
 
-                                <div class="dropdown-menu">
-                                    <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
-                                        <i class="icons icon-check"></i>@lang ('Select all')
-                                    </a>
-
-                                    <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
-                                        <i class="icons icon-close"></i>@lang ('Deselect all')
-                                    </a>
-
-                                    @can ('authorize', 'user-delete')
-                                        <div class="dropdown-divider"></div>
-
-                                        <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
-                                            <i class="icons icon-trash text-danger"></i>@lang ('Delete')
-                                        </a>
-                                    @endcan
-                                </div>
-
-                                @can ('authorize', 'user-create')
-                                    <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
-                                        <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
+                                    <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-trash text-danger"></i>@lang ('Delete')
                                     </a>
                                 @endcan
                             </div>
+
+                            @can ('authorize', 'user-create')
+                                <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
+                                    <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>
