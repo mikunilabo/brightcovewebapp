@@ -4,11 +4,7 @@
     <div class="form-group col-md-6">
         @if (empty($row))
             <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
-
-            <div>
-                <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
-                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-            </div>
+            @component ('components.inputs.video_file', ['attribute' => $attribute, 'required' => true]) @endcomponent
         @else
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -26,11 +22,7 @@
                 <div class="tab-pane p-0 pt-3 fade" id="tab-upload" role="tabpanel">
                     <label for="{{ $attribute }}">@lang ('Video File')</label>
                     @component ('components.popovers.informations', ['content' => __('If you want to replace the video file, please select again.')]) @endcomponent
-
-                    <div>
-                        <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" />
-                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                    </div>
+                    @component ('components.inputs.video_file', ['attribute' => $attribute, 'required' => false]) @endcomponent
                 </div>
             </div>
         @endif
@@ -131,7 +123,7 @@
     <div class="form-group col-md-3">
         <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
 
-        <div class="input-prepend input-group">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="icons icon-calendar"></i>

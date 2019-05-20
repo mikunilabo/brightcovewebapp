@@ -61,6 +61,9 @@
 
             window.VideoCloud.source = event.target.files[0];
 
+            let label = document.getElementById('custom-file-label');
+            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
+
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 
             let text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
