@@ -20,6 +20,10 @@ final class UpdateController extends Controller
      */
     public function __construct(UpdateMedia $useCase)
     {
+        $this->middleware([
+            'authorize:media-select|media-update',
+        ]);
+
         $this->useCase = $useCase;
     }
 

@@ -20,6 +20,10 @@ final class UpdateController extends Controller
      */
     public function __construct(UpdateUser $useCase)
     {
+        $this->middleware([
+            'authorize:user-select|user-update',
+        ]);
+
         $this->useCase = $useCase;
     }
 
