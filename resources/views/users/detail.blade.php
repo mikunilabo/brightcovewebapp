@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.detail', $row->id) }}" method="POST" onsubmit="window.Common.overlay();">
+                            <form action="{{ route('accounts.detail', $row->id) }}" method="POST" autocomplete="off" onsubmit="window.Common.overlay();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -31,13 +31,13 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'name')
                                             <label for="{{ $attribute }}">@lang ('Name') <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" required autofocus />
+                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" required autofocus />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'company')
                                             <label for="{{ $attribute }}">@lang ('Company')</label>
-                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
+                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
@@ -68,7 +68,7 @@
                                             ]) @endcomponent
 
                                             <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
                                             </div>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -82,7 +82,7 @@
                                             ]) @endcomponent
 
                                             <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
                                             </div>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>

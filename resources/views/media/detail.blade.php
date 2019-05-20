@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form id="upload-form">
+                            <form id="upload-form" autocomplete="off">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">

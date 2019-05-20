@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
-                            <form action="{{ route('accounts.profile') }}" method="POST" onsubmit="window.Common.overlay();">
+                            <form action="{{ route('accounts.profile') }}" method="POST" autocomplete="off" onsubmit="window.Common.overlay();">
                                 {{ csrf_field() }}
 
                                 <div class="card-header">
@@ -31,13 +31,13 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'name')
                                             <label for="{{ $attribute }}">@lang ('Name') <code>*</code></label>
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" required autofocus />
+                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" required autofocus />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'company')
                                             <label for="{{ $attribute }}">@lang ('Company')</label>
-                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
+                                            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" />
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
@@ -64,14 +64,16 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password')
                                             <label for="{{ $attribute }}">@lang ('Password')</label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please enter only when changing.')" />
+                                            <input name="dummypassword" type="password" class="d-none" />
+                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please enter only when changing.')" autocomplete="new-password" onfocus="this.removeAttribute('readonly');" {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? '' : 'readonly' }} />
                                             <span class="form-text text-muted">@lang ('Please enter characters that are hard to guess by others among 8 to 16 characters.')</span>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'password_confirmation')
                                             <label for="{{ $attribute }}">@lang ('Reset Password')</label>
-                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please re-enter to confirm.')" />
+                                            <input name="dummypassword" type="password" class="d-none" />
+                                            <input name="{{ $attribute }}" type="password" value class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="@lang ('Please re-enter to confirm.')" autocomplete="new-password" onfocus="this.removeAttribute('readonly');" {{ $errors->{$errorBag ?? 'default'}->has('password') ? '' : 'readonly' }} />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -85,7 +87,7 @@
                                             ]) @endcomponent
 
                                             <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
                                             </div>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
@@ -99,14 +101,14 @@
                                             ]) @endcomponent
 
                                             <div class="input-group">
-                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" autocomplete="off" />
+                                                <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
                                             </div>
                                             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                         </div>
                                     </div>
 
                                     @set ($attribute, 'sports')
-                                    @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')])
+                                    @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : $row->{$attribute}->pluck('name')])
 
                                     <hr>
 

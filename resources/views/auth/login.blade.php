@@ -18,7 +18,7 @@
 
                 @component ('components.messages.alerts') @endcomponent
 
-                <form action="{{ route('login') }}" method="POST" onsubmit="window.Common.overlay();">
+                <form action="{{ route('login') }}" method="POST" autocomplete="off" onsubmit="window.Common.overlay();">
                     {{ csrf_field() }}
 
                     <div class="input-prepend input-group">
