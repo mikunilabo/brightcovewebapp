@@ -60,11 +60,11 @@
                                             </td>
                                             <td class="align-middle">
                                                 @set ($attribute, 'created_at')
-                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
+                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone'))->format('Y/m/d H:i') }}
                                             </td>
                                             <td class="align-middle">
                                                 @set ($attribute, 'updated_at')
-                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
+                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone'))->format('Y/m/d H:i') }}
                                             </td>
                                         </tr>
                                     @endforeach

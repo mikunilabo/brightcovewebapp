@@ -13,6 +13,7 @@ class CarbonServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+//         $this->extends();
         $this->macro();
     }
 
@@ -20,6 +21,14 @@ class CarbonServiceProvider extends ServiceProvider
      * @return void
      */
     public function register(): void
+    {
+        //
+    }
+
+    /**
+     * @return void
+     */
+    private function extends(): void
     {
         //
     }

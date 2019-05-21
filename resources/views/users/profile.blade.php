@@ -113,16 +113,14 @@
 
                                 <div class="row">
                                     <div class="form-group col-sm-6">
-                                        @set ($attribute, 'created_at')
-                                        <label for="{{ $attribute }}">@lang ('Created At')</label>
-                                        <div>{{ $row->{$attribute} }}</div>
+                                        <label>@lang ('Created At')</label>
+                                        <div>{{ $row->created_at->format('Y/m/d H:i') }}</div>
                                     </div>
                                     <div class="form-group col-sm-6">
-                                        @set ($attribute, 'updated_at')
-                                        <label for="{{ $attribute }}">@lang ('Updated At')</label>
-                                        <div>{{ $row->{$attribute} }}</div>
+                                        <label>@lang ('Updated At')</label>
+                                        <div>{{ $row->updated_at->format('Y/m/d H:i') }}</div>
                                     </div>
-                                    </div>
+                                </div>
                             </div>
                             <div class="card-footer text-center">
                                 @component ('components.buttons.back') @endcomponent
