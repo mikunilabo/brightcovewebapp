@@ -60,9 +60,9 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                {{ is_null($createdAt = optional($row->loginHistories->first())->created_at) ? '-' : $createdAt->fuzzy() }}
+                                                {{ is_null($dt = optional($row->loginHistories->first())->created_at) ? '-' : $dt->fuzzy() }}
                                             </td>
-                                            <td class="align-middle">{{ $row->created_at }}</td>
+                                            <td class="align-middle">{{ $row->created_at->format('Y/m/d H:i') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

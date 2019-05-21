@@ -166,12 +166,12 @@
         <div class="form-group col-md-6">
             @set ($attribute, 'created_at')
             <label for="{{ $attribute }}">@lang ('Created At')</label>
-            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}</div>
+            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone'))->format('Y/m/d H:i') }}</div>
         </div>
         <div class="form-group col-md-6">
             @set ($attribute, 'updated_at')
             <label for="{{ $attribute }}">@lang ('Updated At')</label>
-            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}</div>
+            <div>{{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone'))->format('Y/m/d H:i') }}</div>
         </div>
     </div>
 @endif

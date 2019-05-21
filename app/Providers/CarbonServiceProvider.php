@@ -13,7 +13,7 @@ class CarbonServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->extends();
+//         $this->extends();
         $this->macro();
     }
 
@@ -30,7 +30,7 @@ class CarbonServiceProvider extends ServiceProvider
      */
     private function extends(): void
     {
-        Carbon::setToStringFormat('Y/m/d H:i');
+        //
     }
 
     /**
