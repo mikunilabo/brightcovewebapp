@@ -101,7 +101,7 @@
             </div>
 
             @set ($attribute, 'starts_at')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY/MM/DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
@@ -116,7 +116,7 @@
             </div>
 
             @set ($attribute, 'ends_at')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY/MM/DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
@@ -131,7 +131,7 @@
             </div>
 
             @set ($attribute, 'date')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY/MM/DD" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>

@@ -44,11 +44,13 @@
         ta('.ta-universities', 'universities');
 
         flatpickr('#date', {
-            allowInput: true
+            allowInput: true,
+            dateFormat: "Y/m/d",
         });
 
         flatpickr('#starts_at', {
             allowInput: true,
+            dateFormat: "Y/m/d H:i",
             enableTime: true,
             plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
         });

@@ -26,17 +26,17 @@ final class CreateRequest extends MediaRequest
             'starts_at' => [
                 'nullable',
                 'max:16',
-                'date_format:Y-m-d H:i',
+                'date_format:Y/m/d H:i',
             ],
             'ends_at' => [
                 'nullable',
                 'max:16',
-                'date_format:Y-m-d H:i',
+                'date_format:Y/m/d H:i',
             ],
             'date' => [
                 'nullable',
                 'max:10',
-                'date_format:Y-m-d',
+                'date_format:Y/m/d',
             ],
             'rightholder' => [
                 'nullable',

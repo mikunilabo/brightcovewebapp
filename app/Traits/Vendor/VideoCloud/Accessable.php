@@ -79,7 +79,7 @@ trait Accessable
          * Custom Fields
          */
         if (! empty($args[$key = 'date'])) {
-            $params['custom_fields'][$key] = $args[$key];// YYYY-MM-DD
+            $params['custom_fields'][$key] = $args[$key];// YYYY/MM/DD
         }
 
         if (! empty($args[$key = 'rightholder'])) {
