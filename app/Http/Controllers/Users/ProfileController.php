@@ -21,10 +21,6 @@ final class ProfileController extends Controller
      */
     public function __construct(UpdateProfile $useCase)
     {
-        $this->middleware([
-            'authenticate',
-        ]);
-
         $this->useCase = $useCase;
     }
 

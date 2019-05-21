@@ -21,7 +21,6 @@ final class DeactivatesController extends Controller
     public function __construct(DeactivatesMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-update',
         ]);
 

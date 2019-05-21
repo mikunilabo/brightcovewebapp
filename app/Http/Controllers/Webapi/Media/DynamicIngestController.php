@@ -21,7 +21,6 @@ final class DynamicIngestController extends Controller
     public function __construct(ingestMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-create',
         ]);
 

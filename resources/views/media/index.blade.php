@@ -6,115 +6,113 @@
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Media list') => route('media.index')]]) @endcomponent
 
-        <div class="container-fluid">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <i class="fa fa-align-justify"></i>@lang ('Media list')
+        <div class="container-fluid animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa fa-align-justify"></i>@lang ('Media list')
 
-                                @can ('authorize', 'media-create')
-                                    <a class="btn btn-primary btn-sm float-right" href="{{ route('media.upload') }}">
-                                        <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
-                                    </a>
-                                @endcan
-                            </div>
-                            <div class="card-body">
-                                @component ('components.messages.alerts') @endcomponent
+                            @can ('authorize', 'media-create')
+                                <a class="btn btn-primary btn-sm float-right" href="{{ route('media.upload') }}">
+                                    <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
+                                </a>
+                            @endcan
+                        </div>
+                        <div class="card-body">
+                            @component ('components.messages.alerts') @endcomponent
 
-                                <table class="table table-responsive-sm table-striped table-hover" id="media-table">
-                                    <colgroup>
-                                        <col style="width: 11%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 54%;">
-                                        <col style="width: 6%;">
-                                        <col style="width: 12%;">
-                                        <col style="width: 12%;">
-                                    </colgroup>
-                                    <thead>
-                                        <tr>
-                                            <th class="text-nowrap">@lang ('ID')</th>
-                                            <th class="text-nowrap">@lang ('Thumbnail')</th>
-                                            <th class="text-nowrap">@lang ('Title')</th>
-                                            <th class="text-nowrap">@lang ('Status')</th>
-                                            <th class="text-nowrap">@lang ('Created At')</th>
-                                            <th class="text-nowrap">@lang ('Updated At')</th>
+                            <table class="table table-responsive-sm table-striped table-hover" id="media-table">
+                                <colgroup>
+                                    <col style="width: 11%;">
+                                    <col style="width: 5%;">
+                                    <col style="width: 54%;">
+                                    <col style="width: 6%;">
+                                    <col style="width: 12%;">
+                                    <col style="width: 12%;">
+                                </colgroup>
+                                <thead>
+                                    <tr>
+                                        <th class="align-middle text-nowrap">@lang ('ID')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Thumbnail')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Title')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Status')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Created At')</th>
+                                        <th class="align-middle text-nowrap">@lang ('Updated At')</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody" class="d-none">
+                                    @foreach ($rows as $row)
+                                        <tr id="{{ $row->id }}">
+                                            <td class="align-middle"><code>{{ $row->id }}</code></td>
+                                            <td class="align-middle">
+                                                @if (! empty($row->images['thumbnail']['src']))
+                                                    <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded mx-auto d-block" width="54" height="36">
+                                                @else
+                                                    <img src="{{ config('resources.images.no_picture') }}" class="mx-auto d-block" width="36" height="36">
+                                                @endif
+                                            </td>
+                                            <td class="align-middle">
+                                                <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120, '...') }}</a>
+                                            </td>
+                                            <td class="align-middle">
+                                                @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
+                                            </td>
+                                            <td class="align-middle">
+                                                @set ($attribute, 'created_at')
+                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
+                                            </td>
+                                            <td class="align-middle">
+                                                @set ($attribute, 'updated_at')
+                                                {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody id="tbody" class="d-none">
-                                        @foreach ($rows as $row)
-                                            <tr id="{{ $row->id }}">
-                                                <td><code>{{ $row->id }}</code></td>
-                                                <td>
-                                                    @if (! empty($row->images['thumbnail']['src']))
-                                                        <img src="{{ $row->images['thumbnail']['src'] }}" class="rounded mx-auto d-block" width="54" height="36">
-                                                    @else
-                                                        <img src="{{ config('resources.images.no_picture') }}" class="mx-auto d-block" width="36" height="36">
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120, '...') }}</a>
-                                                </td>
-                                                <td>
-                                                    @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent
-                                                </td>
-                                                <td>
-                                                    @set ($attribute, 'created_at')
-                                                    {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
-                                                </td>
-                                                <td>
-                                                    @set ($attribute, 'updated_at')
-                                                    {{ is_null($row->{$attribute}) ? null : now()->parse($row->{$attribute})->setTimezone(config('app.timezone')) }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer">
-                                @can ('authorize', ['media-delete', 'media-update'])
-                                    <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        @lang ('Batch operation')
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            @can ('authorize', ['media-delete', 'media-update'])
+                                <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    @lang ('Batch operation')
+                                </a>
+                            @endcan
+
+                            <div class="dropdown-menu">
+                                @can ('authorize', 'media-update')
+                                    <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-share text-success"></i>@lang ('Activate')
                                     </a>
                                 @endcan
 
-                                <div class="dropdown-menu">
-                                    @can ('authorize', 'media-update')
-                                        <a href="#" id="activate-btn" class="dropdown-item text-success disabled" onclick="event.preventDefault();">
-                                            <i class="icons icon-share text-success"></i>@lang ('Activate')
-                                        </a>
-                                    @endcan
-
-                                    @can ('authorize', 'media-update')
-                                        <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
-                                            <i class="icons icon-ban"></i>@lang ('Deactivate')
-                                        </a>
-                                    @endcan
-
-                                    <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
-                                        <i class="icons icon-check"></i>@lang ('Select all')
+                                @can ('authorize', 'media-update')
+                                    <a href="#" id="deactivate-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-ban"></i>@lang ('Deactivate')
                                     </a>
+                                @endcan
 
-                                    <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
-                                        <i class="icons icon-close"></i>@lang ('Deselect all')
-                                    </a>
+                                <a href="#" id="select-all-btn" class="dropdown-item" onclick="event.preventDefault();">
+                                    <i class="icons icon-check"></i>@lang ('Select all')
+                                </a>
 
-                                    <div class="dropdown-divider"></div>
+                                <a href="#" id="deselect-all-btn" class="dropdown-item disabled" onclick="event.preventDefault();">
+                                    <i class="icons icon-close"></i>@lang ('Deselect all')
+                                </a>
 
-                                    @can ('authorize', 'media-delete')
-                                        <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
-                                            <i class="icons icon-trash text-danger"></i>@lang ('Delete')
-                                        </a>
-                                    @endcan
-                                </div>
+                                <div class="dropdown-divider"></div>
 
-                                @can ('authorize', 'media-create')
-                                    <a href="{{ route('media.upload') }}" class="btn btn-primary btn-sm float-right">
-                                        <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
+                                @can ('authorize', 'media-delete')
+                                    <a href="#" id="delete-btn" class="dropdown-item text-danger disabled" onclick="event.preventDefault();">
+                                        <i class="icons icon-trash text-danger"></i>@lang ('Delete')
                                     </a>
                                 @endcan
                             </div>
+
+                            @can ('authorize', 'media-create')
+                                <a href="{{ route('media.upload') }}" class="btn btn-primary btn-sm float-right">
+                                    <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>

@@ -4,11 +4,7 @@
     <div class="form-group col-md-6">
         @if (empty($row))
             <label for="{{ $attribute }}">@lang ('Video File') <code>*</code></label>
-
-            <div>
-                <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required />
-                @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-            </div>
+            @component ('components.inputs.video_file', ['attribute' => $attribute, 'required' => true]) @endcomponent
         @else
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
@@ -26,11 +22,7 @@
                 <div class="tab-pane p-0 pt-3 fade" id="tab-upload" role="tabpanel">
                     <label for="{{ $attribute }}">@lang ('Video File')</label>
                     @component ('components.popovers.informations', ['content' => __('If you want to replace the video file, please select again.')]) @endcomponent
-
-                    <div>
-                        <input name="{{ $attribute }}" type="file" id="{{ $attribute }}" class="{{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" />
-                        @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
-                    </div>
+                    @component ('components.inputs.video_file', ['attribute' => $attribute, 'required' => false]) @endcomponent
                 </div>
             </div>
         @endif
@@ -79,7 +71,7 @@
     <div class="form-group col-md-12">
         @set ($attribute, 'name')
         <label for="{{ $attribute }}">@lang ('Title') <code>*</code></label>
-        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" required />
+        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" required autofocus />
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
     </div>
 </div>
@@ -87,13 +79,13 @@
     <div class="form-group col-md-6">
         @set ($attribute, 'description')
         <label for="{{ $attribute }}">@lang ('Description')</label>
-        <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="248" rows="4" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}</textarea>
+        <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="248" rows="4" placeholder="">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}</textarea>
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
     </div>
     <div class="form-group col-md-6">
         @set ($attribute, 'long_description')
         <label for="{{ $attribute }}">@lang ('Keywords')</label>
-        <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="5000" rows="4" placeholder="" autocomplete="off">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}</textarea>
+        <textarea name="{{ $attribute }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="5000" rows="4" placeholder="">{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute} ?? null }}</textarea>
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
     </div>
 </div>
@@ -109,7 +101,7 @@
             </div>
 
             @set ($attribute, 'starts_at')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" autocomplete="off" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
@@ -124,14 +116,14 @@
             </div>
 
             @set ($attribute, 'ends_at')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" autocomplete="off" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone')) : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY-MM-DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
     <div class="form-group col-md-3">
         <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
 
-        <div class="input-prepend input-group">
+        <div class="input-group">
             <div class="input-group-prepend">
                 <span class="input-group-text">
                     <i class="icons icon-calendar"></i>
@@ -139,7 +131,7 @@
             </div>
 
             @set ($attribute, 'date')
-            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" autocomplete="off" />
+            <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY-MM-DD" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
@@ -148,13 +140,13 @@
     <div class="form-group col-md-6">
         @set ($attribute, 'rightholder')
         <label for="{{ $attribute }}">@lang ('Rightholder')</label>
-        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
+        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" />
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
     </div>
     <div class="form-group col-md-6">
         @set ($attribute, 'tournament')
         <label for="{{ $attribute }}">@lang ('Tournament')</label>
-        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" autocomplete="off" />
+        <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" />
         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
     </div>
 </div>

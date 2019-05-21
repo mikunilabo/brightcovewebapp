@@ -3,7 +3,7 @@
 @section ('title', __('Create Account'))
 
 @section ('content')
-    <div class="container">
+    <div class="container-fluid animated fadeIn">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 <div class="clearfix">
@@ -18,7 +18,7 @@
 
                 @component ('components.messages.alerts') @endcomponent
 
-                <form action="{{ route('register') }}" method="POST" onsubmit="window.Common.overlay();">
+                <form action="{{ route('register') }}" method="POST" autocomplete="off" onsubmit="window.Common.overlay();">
                     {{ csrf_field() }}
 
                     <div class="input-prepend input-group">

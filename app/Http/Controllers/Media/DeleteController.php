@@ -19,7 +19,6 @@ final class DeleteController extends Controller
     public function __construct(DeleteMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-delete',
         ]);
 

@@ -21,7 +21,6 @@ final class CreateController extends Controller
     public function __construct(CreateUser $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:user-create',
         ]);
 

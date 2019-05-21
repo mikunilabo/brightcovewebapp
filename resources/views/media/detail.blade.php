@@ -6,38 +6,36 @@
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Media detail') => route('accounts.detail', $row->id)]]) @endcomponent
 
-        <div class="container-fluid">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            <form id="upload-form">
-                                {{ csrf_field() }}
+        <div class="container-fluid animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <form id="upload-form" autocomplete="off">
+                            {{ csrf_field() }}
 
-                                <div class="card-header">
-                                    <i class="fa fa-align-justify"></i>@lang ('Media detail')
-                                </div>
-                                <div class="card-body">
-                                    @component ('components.messages.alerts') @endcomponent
-                                    @include ('media.components.media')
-                                </div>
-                                <div class="card-footer text-center">
-                                    @component ('components.buttons.back') @endcomponent
+                            <div class="card-header">
+                                <i class="fa fa-align-justify"></i>@lang ('Media detail')
+                            </div>
+                            <div class="card-body">
+                                @component ('components.messages.alerts') @endcomponent
+                                @include ('media.components.media')
+                            </div>
+                            <div class="card-footer text-center">
+                                @component ('components.buttons.back') @endcomponent
 
-                                    @can ('update', $row)
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="icons icon-check"></i> @lang ('Update')
-                                        </button>
-                                    @endcan
+                                @can ('update', $row)
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="icons icon-check"></i> @lang ('Update')
+                                    </button>
+                                @endcan
 
-                                    @can ('delete', $row)
-                                        <a class="btn btn-danger btn-sm float-right" href="{{ route('media.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Media')])')) { window.Common.submitForm('{{ route('media.delete', $row->id) }}'); } return false;">
-                                            <i class="icons icon-trash"></i> @lang ('Delete media')
-                                        </a>
-                                    @endcan
-                                </div>
-                            </form>
-                        </div>
+                                @can ('delete', $row)
+                                    <a class="btn btn-danger btn-sm float-right" href="{{ route('media.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Media')])')) { window.Common.submitForm('{{ route('media.delete', $row->id) }}'); } return false;">
+                                        <i class="icons icon-trash"></i> @lang ('Delete media')
+                                    </a>
+                                @endcan
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -70,6 +68,9 @@
             window.Common.removeChildren(span);
 
             window.VideoCloud.source = event.target.files[0];
+
+            let label = document.getElementById('custom-file-label');
+            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
 
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 

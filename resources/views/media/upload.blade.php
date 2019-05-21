@@ -6,30 +6,28 @@
     <main class="main">
         @component ('layouts.breadcrumb', ['lists' => [__('Media Upload') => route('media.upload')]]) @endcomponent
 
-        <div class="container-fluid">
-            <div class="animated fadeIn">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="card">
-                            <form id="upload-form">
-                                {{ csrf_field() }}
+        <div class="container-fluid animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <form id="upload-form" autocomplete="off">
+                            {{ csrf_field() }}
 
-                                <div class="card-header">
-                                    <i class="fa fa-align-justify"></i>@lang ('Media Upload')
-                                </div>
-                                <div class="card-body">
-                                    @component ('components.messages.alerts') @endcomponent
-                                    @include ('media.components.media')
-                                </div>
-                                <div class="card-footer text-center">
-                                    @component ('components.buttons.back') @endcomponent
+                            <div class="card-header">
+                                <i class="fa fa-align-justify"></i>@lang ('Media Upload')
+                            </div>
+                            <div class="card-body">
+                                @component ('components.messages.alerts') @endcomponent
+                                @include ('media.components.media')
+                            </div>
+                            <div class="card-footer text-center">
+                                @component ('components.buttons.back') @endcomponent
 
-                                    <button type="submit" class="btn btn-primary" id="submit-btn">
-                                        <i class="icons icon-check"></i> @lang ('Upload')
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                                <button type="submit" class="btn btn-primary" id="submit-btn">
+                                    <i class="icons icon-check"></i> @lang ('Upload')
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -60,6 +58,9 @@
             window.Common.removeChildren(span);
 
             window.VideoCloud.source = event.target.files[0];
+
+            let label = document.getElementById('custom-file-label');
+            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
 
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 

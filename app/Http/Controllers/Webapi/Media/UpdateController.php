@@ -21,7 +21,6 @@ final class UpdateController extends Controller
     public function __construct(UpdateMedia $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-update',
         ]);
 

@@ -21,7 +21,6 @@ final class GetS3UrlController extends Controller
     public function __construct(GetS3Url $useCase)
     {
         $this->middleware([
-            'authenticate',
             'authorize:media-create',
         ]);
 

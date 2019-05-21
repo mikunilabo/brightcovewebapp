@@ -19,7 +19,7 @@ final class IngestJobsController extends Controller
     public function __construct(GetIngestJobs $useCase)
     {
         $this->middleware([
-            'authenticate',
+            'authorize:media-select',
         ]);
 
         $this->useCase = $useCase;

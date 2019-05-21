@@ -51,7 +51,7 @@ class Common {
     i.classList.add("icons", "icon-close");
 
     var button = document.createElement("button");
-    button.classList.add("btn", "btn-outline-danger");
+    button.classList.add("btn", "btn-outline-danger", "input-group-text");
     button.type = "button";
     button.addEventListener("click", () => {
         this.removeElement(listId);
@@ -60,9 +60,9 @@ class Common {
     );
     button.appendChild(i);
 
-    var span = document.createElement("span");
-    span.classList.add("input-group-append");
-    span.appendChild(button);
+    var div = document.createElement("div");
+    div.classList.add("input-group-append");
+    div.appendChild(button);
 
     var input = document.createElement("input");
     var inputId = "ta-" + name + "-" + cnt.value;
@@ -77,7 +77,7 @@ class Common {
     var inputGroup = document.createElement("div");
     inputGroup.classList.add("input-group");
     inputGroup.appendChild(input);
-    inputGroup.appendChild(span);
+    inputGroup.appendChild(div);
 
     var span = document.createElement("span");
     span.classList.add("invalid-feedback", "d-block");
