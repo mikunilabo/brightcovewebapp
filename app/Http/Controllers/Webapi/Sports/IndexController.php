@@ -20,6 +20,10 @@ final class IndexController extends Controller
      */
     public function __construct(GetSports $useCase)
     {
+        $this->middleware([
+            'authorize:user-create',
+        ]);
+
         $this->useCase = $useCase;
     }
 

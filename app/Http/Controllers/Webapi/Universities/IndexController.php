@@ -20,6 +20,10 @@ final class IndexController extends Controller
      */
     public function __construct(GetUniversities $useCase)
     {
+        $this->middleware([
+            'authorize:user-create',
+        ]);
+
         $this->useCase = $useCase;
     }
 
