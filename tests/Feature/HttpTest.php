@@ -57,7 +57,7 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
-    public function 認証済Adminアカウント()
+    public function 認証済Adminアカウント管理()
     {
         $this->actingAs($this->admin)->get(route('home'))->assertSuccessful();
 
@@ -175,7 +175,7 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
-    public function 認証済Userアカウント()
+    public function 認証済Userアカウント管理()
     {
         $this->actingAs($this->user)->get(route('home'))->assertSuccessful();
 
@@ -238,5 +238,112 @@ final class HttpTest extends TestCase
         $this->post(route('login'))->assertRedirect(route('home'));
         $this->get(route('logout'))->assertStatus(405);
         $this->post(route('logout'))->assertRedirect(route('login'));
+    }
+
+    /**
+     * @test
+     */
+    public function 認証済Userメディア管理()
+    {
+        $this->actingAs($this->user);
+
+        $videoData = collect([
+            'name'             => 'Feature test',
+            'description'      => 'test',
+            'long_description' => 'test',
+            'state'            => 'ACTIVE',
+            'rightholder'      => 'test',
+            'tournament'       => 'test',
+            'starts_at'        => '2019/08/01 12:00',
+            'ends_at'          => '2019/08/31 18:00',
+            'date'             => '2019/08/16',
+            'leagues'          => ['全日本大学野球連盟'],
+            'sports'           => ['野球'],
+            'universities'     => ['早稲田大学'],
+        ]);
+
+        $failureVideoData = collect([
+            'name'             => str_random(256),
+            'description'      => str_random(249),
+            'long_description' => str_random(5001),
+            'state'            => 'test',
+            'rightholder'      => str_random(256),
+            'tournament'       => str_random(256),
+            'starts_at'        => '2019-08-01 12:00',
+            'ends_at'          => '2019-08-31 18:00',
+            'date'             => '2019-08-16',
+            'leagues'          => ['test連盟'],
+            'sports'           => ['testスポーツ'],
+            'universities'     => ['test大学'],
+        ]);
+
+        /**
+         * Media
+         */
+        $this->get(route('media.index'))->assertSuccessful();
+        $this->post(route('media.index'))->assertStatus(405);
+
+        $this->get(route('media.upload'))->assertSuccessful();
+        $this->post(route('media.upload'))->assertStatus(405);
+
+        $this->get(route('webapi.media.create'))->assertStatus(405);
+        $this->post(route('webapi.media.create'))->assertStatus(403);
+
+        $this->get(route('media.detail', 'test'))->assertStatus(404);
+        $this->post(route('media.detail', 'test'))->assertStatus(405);
+
+        $this->get(route('media.delete', 'test'))->assertStatus(405);
+        $this->post(route('media.delete', 'test'))->assertStatus(404);
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->post(route('webapi.media.create'))->assertJsonValidationErrors(['name']);
+        $this->post(route('webapi.media.create'), $failureVideoData->all())->assertJsonValidationErrors($failureVideoData->forget(['state', 'leagues', 'sports', 'universities'])->keys()->merge(['leagues.0', 'sports.0', 'universities.0'])->all());
+        $response = $this->post(route('webapi.media.create'), $videoData->all())->assertSuccessful();
+        $videoId = $response->getData()->id;
+
+        $this->withHeaders([]);
+
+        $this->get(route('media.detail', $videoId))->assertSuccessful();
+        $this->post(route('media.detail', $videoId))->assertStatus(405);
+        $this->post(route('media.delete', $videoId))->assertRedirect(route('media.index'));
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $response = $this->post(route('webapi.media.create'), $videoData->all())->assertSuccessful();
+        $videoId = $response->getData()->id;
+
+        $this->post(route('webapi.media.ingestjobs', $videoId))->assertStatus(405);
+        $response = $this->get(route('webapi.media.ingestjobs', $videoId))->assertSuccessful();
+        $this->assertSame(0, count($response->getData()));
+
+        $this->get(route('webapi.media.update', $videoId))->assertStatus(405);
+        $this->post(route('webapi.media.update', $videoId))->assertJsonValidationErrors(['name', 'state']);
+        $this->post(route('webapi.media.update', $videoId), ['name' => 'Update test.', 'state' => 'test'])->assertJsonValidationErrors(['state']);
+        $this->post(route('webapi.media.update', $videoId), $videoData->all())->assertSuccessful();
+
+        $this->get(route('webapi.media.s3_url', $videoId))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', $videoId))->assertJsonValidationErrors(['source']);
+        $response = $this->post(route('webapi.media.s3_url', $videoId), ['source' => 'example.mp4'])->assertSuccessful();
+        $masterUrl = $response->getData()->api_request_url;
+
+        $this->get(route('webapi.media.ingest', $videoId))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', $videoId))->assertJsonValidationErrors(['master_url']);
+        $this->post(route('webapi.media.ingest', $videoId), ['master_url' => $masterUrl])->assertSuccessful();
+
+        $response = $this->get(route('webapi.media.ingestjobs', $videoId))->assertSuccessful();
+        $this->assertTrue(count($response->getData()) > 0);
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertJsonValidationErrors(['ids']);
+        $this->post(route('webapi.media.activates'), ['ids' => [$videoId]])->assertSuccessful();
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertJsonValidationErrors(['ids']);
+        $this->post(route('webapi.media.deactivates'), ['ids' => [$videoId]])->assertSuccessful();
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertJsonValidationErrors(['ids']);
+        $this->post(route('webapi.media.deletes'), ['ids' => [$videoId]])->assertSuccessful();
     }
 }
