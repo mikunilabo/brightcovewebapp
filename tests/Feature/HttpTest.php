@@ -243,6 +243,58 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
+    public function 認証済Adminメディア管理()
+    {
+        $this->actingAs($this->admin);
+
+        /**
+         * Media
+         */
+        $this->get(route('media.index'))->assertStatus(403);
+        $this->post(route('media.index'))->assertStatus(405);
+
+        $this->get(route('media.upload'))->assertStatus(403);
+        $this->post(route('media.upload'))->assertStatus(405);
+
+        $this->get(route('media.detail', 'test'))->assertStatus(403);
+        $this->post(route('media.detail', 'test'))->assertStatus(405);
+
+        $this->get(route('media.delete', 'test'))->assertStatus(405);
+        $this->post(route('media.delete', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.create'))->assertStatus(405);
+        $this->post(route('webapi.media.create'))->assertStatus(403);
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->post(route('webapi.media.create'))->assertStatus(403);
+
+        $response = $this->post(route('webapi.media.create'))->assertStatus(403);
+        $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
+        $this->get(route('webapi.media.ingestjobs', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.update', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.update', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.s3_url', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.ingest', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
     public function 認証済Userメディア管理()
     {
         $this->actingAs($this->user);
@@ -286,14 +338,14 @@ final class HttpTest extends TestCase
         $this->get(route('media.upload'))->assertSuccessful();
         $this->post(route('media.upload'))->assertStatus(405);
 
-        $this->get(route('webapi.media.create'))->assertStatus(405);
-        $this->post(route('webapi.media.create'))->assertStatus(403);
-
         $this->get(route('media.detail', 'test'))->assertStatus(404);
         $this->post(route('media.detail', 'test'))->assertStatus(405);
 
         $this->get(route('media.delete', 'test'))->assertStatus(405);
         $this->post(route('media.delete', 'test'))->assertStatus(404);
+
+        $this->get(route('webapi.media.create'))->assertStatus(405);
+        $this->post(route('webapi.media.create'))->assertStatus(403);
 
         $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
 
