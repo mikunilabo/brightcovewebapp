@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\GetS3UrlRequest;
+use App\Http\Requests\Webapi\Media\GetS3UrlRequest;
 use App\UseCases\Media\GetS3Url;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 

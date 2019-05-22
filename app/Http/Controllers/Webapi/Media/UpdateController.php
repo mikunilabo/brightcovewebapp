@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\UpdateRequest;
+use App\Http\Requests\Webapi\Media\UpdateRequest;
 use App\UseCases\Media\UpdateMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 
