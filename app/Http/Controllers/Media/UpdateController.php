@@ -21,7 +21,7 @@ final class UpdateController extends Controller
     public function __construct(UpdateMedia $useCase)
     {
         $this->middleware([
-            'authorize:media-select|media-update',
+            'authorize:media-select',
         ]);
 
         $this->useCase = $useCase;
@@ -31,7 +31,7 @@ final class UpdateController extends Controller
      * @param string $videoId
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
      */
-    public function view(string $videoId)
+    public function __invoke(string $videoId)
     {
         $media = $this->useCase->media($videoId);
 
@@ -40,36 +40,5 @@ final class UpdateController extends Controller
         return view('media.detail', [
             'row' => $media,
         ]);
-    }
-
-    /**
-     * @param ValidatesWhenResolved $request
-     * @param string $videoId
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
-     */
-    public function update(UpdateRequest $request, string $videoId)
-    {
-        $media = $this->useCase->media($videoId);
-
-        $this->authorize('update', $media);
-
-        $args = $request->validated();
-
-        $callback = function () use ($videoId, $args) {
-            $this->useCase->excute([
-                'id' => $videoId,
-                'param'  => $args,
-            ]);
-        };
-
-        if (! is_null(rescue($callback, false))) {
-            return back()
-                ->with('alerts.danger', [__('An internal server error has occurred. Please contact the administrator.')])
-                ->withInput();
-        }
-
-        return redirect()
-            ->route('media.detail', $videoId)
-            ->with('alerts.success', [__('The :name information was :action.', ['name' => __('Media'), 'action' => __('Update')])]);
     }
 }
