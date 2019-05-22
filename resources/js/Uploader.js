@@ -77,7 +77,7 @@ class Uploader {
   };
 
   suspend = error => {
-    console.log(error, error.stack);
+    console.error(error, error.stack);
     window.Common.overlayOut();
   };
 }

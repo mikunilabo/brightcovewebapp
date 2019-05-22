@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Webapi\Media;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Media\DynamicIngestRequest;
+use App\Http\Requests\Webapi\Media\DynamicIngestRequest;
 use App\UseCases\Media\ingestMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 

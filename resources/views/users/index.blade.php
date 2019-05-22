@@ -194,7 +194,7 @@
                     window.location.reload();
                 }).catch(error => {
                     window.Common.overlayOut();
-                    console.log(error);
+                    console.error(error);
                 });
             });
         });

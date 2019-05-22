@@ -183,7 +183,7 @@ class Common {
       })
       .catch(error => {
         this.overlayOut();
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -197,12 +197,12 @@ class Common {
     window.axios
       .post("/webapi/" + name + "/" + id + "/delete")
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         this.listMasters(name);
       })
       .catch(error => {
         this.overlayOut();
-        console.log(error);
+        console.error(error);
       });
   }
 

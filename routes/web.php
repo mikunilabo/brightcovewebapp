@@ -41,8 +41,7 @@ Route::prefix('/')->middleware('authenticate')->group(function () {
         Route::get($name = 'upload', \App\Http\Controllers\Media\CreateController::class)->name($name);
 
         Route::prefix('{videoId}')->group(function () {
-            Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'view'))->name($name);
-            Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Media\UpdateController::class, 'update'));
+            Route::get($name = 'detail', \App\Http\Controllers\Media\UpdateController::class)->name($name);
             Route::post($name = 'delete', \App\Http\Controllers\Media\DeleteController::class)->name($name);
         });
     });

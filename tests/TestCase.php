@@ -11,6 +11,10 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    const XML_HTTP_REQUEST_HEADER = [
+        'X-Requested-With' => 'XMLHttpRequest',
+    ];
+
     /** @var User */
     protected $admin;
 
