@@ -14,22 +14,10 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
-    public function 未認証アカウント()
+    public function 未認証アカウント認証処理()
     {
+        $this->withHeaders([]);
         $this->get(route('home'))->assertRedirect(route('login'));
-
-        /**
-         * Accounts
-         */
-        $this->get(route('accounts.index'))->assertRedirect(route('login'));
-        $this->get(route('accounts.create'))->assertRedirect(route('login'));
-        $this->post(route('accounts.create'))->assertRedirect(route('login'));
-        $this->get(route('accounts.profile'))->assertRedirect(route('login'));
-        $this->post(route('accounts.profile'))->assertRedirect(route('login'));
-        $this->get(route('accounts.detail', $this->user->id))->assertRedirect(route('login'));
-        $this->post(route('accounts.detail', $this->user->id))->assertRedirect(route('login'));
-        $this->get(route('accounts.delete', $this->user->id))->assertStatus(405);
-        $this->post(route('accounts.delete', $this->user->id))->assertRedirect(route('login'));
 
         /**
          * Password Reset
@@ -57,9 +45,180 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
+    public function 未認証アカウントアカウント管理()
+    {
+        $this->withHeaders([]);
+
+        /**
+         * Accounts
+         */
+        $this->get(route('accounts.index'))->assertRedirect(route('login'));
+        $this->get(route('accounts.create'))->assertRedirect(route('login'));
+        $this->post(route('accounts.create'))->assertRedirect(route('login'));
+        $this->get(route('accounts.profile'))->assertRedirect(route('login'));
+        $this->post(route('accounts.profile'))->assertRedirect(route('login'));
+        $this->get(route('accounts.detail', $this->user->id))->assertRedirect(route('login'));
+        $this->post(route('accounts.detail', $this->user->id))->assertRedirect(route('login'));
+        $this->get(route('accounts.delete', $this->user->id))->assertStatus(405);
+        $this->post(route('accounts.delete', $this->user->id))->assertRedirect(route('login'));
+
+        /**
+         * WebAPI
+         */
+        $this->get(route('webapi.accounts.deletes'))->assertStatus(405);
+        $this->post(route('webapi.accounts.deletes'), ['ids' => ['test']])->assertRedirect(route('login'));
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->post(route('webapi.accounts.deletes'), ['ids' => ['test']])->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
+    public function 未認証アカウントマスタ管理()
+    {
+        $this->withHeaders([]);
+
+        /**
+         * WebAPI
+         */
+         $this->get(route('webapi.leagues.index'))->assertRedirect(route('login'));
+         $this->post(route('webapi.leagues.index'))->assertStatus(405);
+         $this->get(route('webapi.leagues.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.leagues.delete', 'test'))->assertRedirect(route('login'));
+
+         $this->get(route('webapi.universities.index'))->assertRedirect(route('login'));
+         $this->post(route('webapi.universities.index'))->assertStatus(405);
+         $this->get(route('webapi.universities.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.universities.delete', 'test'))->assertRedirect(route('login'));
+
+         $this->get(route('webapi.sports.index'))->assertRedirect(route('login'));
+         $this->post(route('webapi.sports.index'))->assertStatus(405);
+         $this->get(route('webapi.sports.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.sports.delete', 'test'))->assertRedirect(route('login'));
+
+         $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+         $this->get(route('webapi.leagues.index'))->assertStatus(401);
+         $this->post(route('webapi.leagues.index'))->assertStatus(405);
+         $this->get(route('webapi.leagues.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.leagues.delete', 'test'))->assertStatus(401);
+
+         $this->get(route('webapi.universities.index'))->assertStatus(401);
+         $this->post(route('webapi.universities.index'))->assertStatus(405);
+         $this->get(route('webapi.universities.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.universities.delete', 'test'))->assertStatus(401);
+
+         $this->get(route('webapi.sports.index'))->assertStatus(401);
+         $this->post(route('webapi.sports.index'))->assertStatus(405);
+         $this->get(route('webapi.sports.delete', 'test'))->assertStatus(405);
+         $this->post(route('webapi.sports.delete', 'test'))->assertStatus(401);
+     }
+
+    /**
+     * @test
+     */
+    public function 未認証アカウントメディア管理()
+    {
+        $this->withHeaders([]);
+
+        /**
+         * Media
+         */
+        $this->get(route('media.index'))->assertRedirect(route('login'));
+        $this->post(route('media.index'))->assertStatus(405);
+
+        $this->get(route('media.upload'))->assertRedirect(route('login'));
+        $this->post(route('media.upload'))->assertStatus(405);
+
+        $this->get(route('media.detail', 'test'))->assertRedirect(route('login'));
+        $this->post(route('media.detail', 'test'))->assertStatus(405);
+
+        $this->get(route('media.delete', 'test'))->assertStatus(405);
+        $this->post(route('media.delete', 'test'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.create'))->assertStatus(405);
+        $this->post(route('webapi.media.create'))->assertRedirect(route('login'));
+        $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
+        $this->get(route('webapi.media.ingestjobs', 'test'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.update', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.update', 'test'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.s3_url', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', 'test'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.ingest', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', 'test'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertRedirect(route('login'));
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertRedirect(route('login'));
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->get(route('webapi.media.create'))->assertStatus(405);
+        $this->post(route('webapi.media.create'))->assertStatus(401);
+        $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
+        $this->get(route('webapi.media.ingestjobs', 'test'))->assertStatus(401);
+
+        $this->get(route('webapi.media.update', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.update', 'test'))->assertStatus(401);
+
+        $this->get(route('webapi.media.s3_url', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', 'test'))->assertStatus(401);
+
+        $this->get(route('webapi.media.ingest', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', 'test'))->assertStatus(401);
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertStatus(401);
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertStatus(401);
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertStatus(401);
+    }
+
+    /**
+     * @test
+     */
+    public function 認証済Admin認証処理()
+    {
+        $this->withHeaders([]);
+        $this->actingAs($this->admin)->get(route('home'))->assertSuccessful();
+
+        /**
+         * Password Reset
+         */
+        $this->get(route('password.request'))->assertRedirect(route('home'));
+        $this->post(route('password.email'))->assertRedirect(route('home'));
+        $this->get(route('password.reset', ['token' => 'abc']))->assertRedirect(route('home'));
+        $this->post(route('password.request'))->assertRedirect(route('home'));
+
+        /**
+         * Authentication
+         */
+        $this->get(route('login'))->assertRedirect(route('home'));
+        $this->post(route('login'))->assertRedirect(route('home'));
+        $this->get(route('logout'))->assertStatus(405);
+        $this->post(route('logout'))->assertRedirect(route('login'));
+    }
+
+    /**
+     * @test
+     */
     public function 認証済Adminアカウント管理()
     {
-        $this->actingAs($this->admin)->get(route('home'))->assertSuccessful();
+        $this->withHeaders([]);
+        $this->actingAs($this->admin);
 
         $createUserData = collect([
             'name' => 'created',
@@ -152,92 +311,69 @@ final class HttpTest extends TestCase
         $this->get(route('accounts.delete', 'test'))->assertStatus(405);
         $this->post(route('accounts.delete', 'test'))->assertStatus(404);
         $this->get(route('accounts.delete', $this->admin->id))->assertStatus(405);
-        $this->post(route('accounts.delete', $user->id))->assertRedirect(route('accounts.index'));// 削除成功
+        $this->post(route('accounts.delete', $user->id))->assertRedirect(route('accounts.index'));// 論理削除成功
+        $this->assertFalse(is_null(User::where('id', $user->id)->whereNotNull('deleted_at')));
         $this->post(route('accounts.delete', $this->admin->id))->assertStatus(403);// 自身のIDは削除不可
 
         /**
-         * Password Reset
+         * WebAPI
          */
-        $this->get(route('password.request'))->assertRedirect(route('home'));
-        $this->post(route('password.email'))->assertRedirect(route('home'));
-        $this->get(route('password.reset', ['token' => 'abc']))->assertRedirect(route('home'));
-        $this->post(route('password.request'))->assertRedirect(route('home'));
+        $user2 = factory(User::class)->create();
+        $this->get(route('webapi.accounts.deletes'))->assertStatus(405);
+        $this->post(route('webapi.accounts.deletes'), ['ids' => [$user2->id]])->assertStatus(403);
 
-        /**
-         * Authentication
-         */
-        $this->get(route('login'))->assertRedirect(route('home'));
-        $this->post(route('login'))->assertRedirect(route('home'));
-        $this->get(route('logout'))->assertStatus(405);
-        $this->post(route('logout'))->assertRedirect(route('login'));
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->post(route('webapi.accounts.deletes'))->assertJsonValidationErrors(['ids']);
+        $this->post(route('webapi.accounts.deletes'), ['ids' => [$user2->id]])->assertSuccessful();
     }
 
     /**
      * @test
      */
-    public function 認証済Userアカウント管理()
+    public function 認証済Adminマスタ管理()
     {
-        $this->actingAs($this->user)->get(route('home'))->assertSuccessful();
+        $this->withHeaders([]);
+        $this->actingAs($this->admin);
 
-        $modifyProfileData = collect([
-            'name' => 'modified',
-            'company' => 'test company2',
-            'password' => 'testtest',
-            'password_confirmation' => 'testtest',
-            'leagues' => 'test',
-            'sports' => ['test'],
-            'universities' => 'test',
-        ]);
+        $league = League::create(['name' => 'test4']);
+        $sport = Sport::create(['name' => 'test4']);
+        $university = University::create(['name' => 'test4']);
 
         /**
-         * Accounts
+         * WebAPI
          */
-        $this->get(route('accounts.index'))->assertStatus(403);
-        $this->get(route('accounts.create'))->assertStatus(403);
-        $this->post(route('accounts.create'))->assertStatus(403);
-        $this->get(route('accounts.detail', $this->admin->id))->assertStatus(403);
-        $this->post(route('accounts.detail', $this->admin->id))->assertStatus(403);
+        $this->get(route('webapi.leagues.index'))->assertStatus(403);
+        $this->post(route('webapi.leagues.index'))->assertStatus(405);
+        $this->get(route('webapi.leagues.delete', $league))->assertStatus(405);
+        $this->post(route('webapi.leagues.delete', $league))->assertStatus(403);
 
-        $this->get(route('accounts.profile'))->assertSuccessful();
-        $this->post(route('accounts.profile'))
-            ->assertSessionHasErrors(['name'])
-            ->assertRedirect(route('accounts.profile'));
+        $this->get(route('webapi.universities.index'))->assertStatus(403);
+        $this->post(route('webapi.universities.index'))->assertStatus(405);
+        $this->get(route('webapi.universities.delete', $university))->assertStatus(405);
+        $this->post(route('webapi.universities.delete', $university))->assertStatus(403);
 
-//         $this->post(route('accounts.profile'), $modifyProfileData->all())
-//             ->assertSessionHasErrors(['leagues', 'sports', 'universities'])// マスタが存在しないためバリデートエラー
-//             ->assertRedirect(route('accounts.profile'));
+        $this->get(route('webapi.sports.index'))->assertStatus(403);
+        $this->post(route('webapi.sports.index'))->assertStatus(405);
+        $this->get(route('webapi.sports.delete', $sport))->assertStatus(405);
+        $this->post(route('webapi.sports.delete', $sport))->assertStatus(403);
 
-        $league = League::create(['name' => 'test']);
-        $sport = Sport::create(['name' => 'test']);
-        $university = University::create(['name' => 'test']);
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
 
-        $this->post(route('accounts.profile'), $modifyProfileData->all())->assertRedirect(route('accounts.profile'));// 更新成功
+        $this->get(route('webapi.leagues.index'))->assertSuccessful();
+        $this->post(route('webapi.leagues.index'))->assertStatus(405);
+        $this->get(route('webapi.leagues.delete', $league))->assertStatus(405);
+        $this->post(route('webapi.leagues.delete', $league))->assertSuccessful();
 
-        $this->user = User::where('email', 'user@example.com')->first();
-        $this->assertDatabaseHas('league_user', ['league_id' => $league->id, 'user_id' => $this->user->id]);
-        $this->assertDatabaseHas('sport_user', ['sport_id' => $sport->id, 'user_id' => $this->user->id]);
-        $this->assertDatabaseHas('university_user', ['university_id' => $university->id, 'user_id' => $this->user->id]);
+        $this->get(route('webapi.universities.index'))->assertSuccessful();
+        $this->post(route('webapi.universities.index'))->assertStatus(405);
+        $this->get(route('webapi.universities.delete', $university))->assertStatus(405);
+        $this->post(route('webapi.universities.delete', $university))->assertSuccessful();
 
-        $this->get(route('accounts.delete', 'test'))->assertStatus(405);
-        $this->post(route('accounts.delete', 'test'))->assertStatus(403);
-        $this->get(route('accounts.delete', $this->admin->id))->assertStatus(405);
-        $this->post(route('accounts.delete', $this->admin->id))->assertStatus(403);
-
-        /**
-         * Password Reset
-         */
-        $this->get(route('password.request'))->assertRedirect(route('home'));
-        $this->post(route('password.email'))->assertRedirect(route('home'));
-        $this->get(route('password.reset', ['token' => 'abc']))->assertRedirect(route('home'));
-        $this->post(route('password.request'))->assertRedirect(route('home'));
-
-        /**
-         * Authentication
-         */
-        $this->get(route('login'))->assertRedirect(route('home'));
-        $this->post(route('login'))->assertRedirect(route('home'));
-        $this->get(route('logout'))->assertStatus(405);
-        $this->post(route('logout'))->assertRedirect(route('login'));
+        $this->get(route('webapi.sports.index'))->assertSuccessful();
+        $this->post(route('webapi.sports.index'))->assertStatus(405);
+        $this->get(route('webapi.sports.delete', $sport))->assertStatus(405);
+        $this->post(route('webapi.sports.delete', $sport))->assertSuccessful();
     }
 
     /**
@@ -245,6 +381,7 @@ final class HttpTest extends TestCase
      */
     public function 認証済Adminメディア管理()
     {
+        $this->withHeaders([]);
         $this->actingAs($this->admin);
 
         /**
@@ -264,12 +401,31 @@ final class HttpTest extends TestCase
 
         $this->get(route('webapi.media.create'))->assertStatus(405);
         $this->post(route('webapi.media.create'))->assertStatus(403);
+        $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
+        $this->get(route('webapi.media.ingestjobs', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.update', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.update', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.s3_url', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.ingest', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertStatus(403);
 
         $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
 
+        $this->get(route('webapi.media.create'))->assertStatus(405);
         $this->post(route('webapi.media.create'))->assertStatus(403);
-
-        $response = $this->post(route('webapi.media.create'))->assertStatus(403);
         $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
         $this->get(route('webapi.media.ingestjobs', 'test'))->assertStatus(403);
 
@@ -295,8 +451,142 @@ final class HttpTest extends TestCase
     /**
      * @test
      */
+    public function 認証済User認証処理()
+    {
+        $this->withHeaders([]);
+        $this->actingAs($this->user)->get(route('home'))->assertSuccessful();
+
+        /**
+         * Password Reset
+         */
+        $this->get(route('password.request'))->assertRedirect(route('home'));
+        $this->post(route('password.email'))->assertRedirect(route('home'));
+        $this->get(route('password.reset', ['token' => 'abc']))->assertRedirect(route('home'));
+        $this->post(route('password.request'))->assertRedirect(route('home'));
+
+        /**
+         * Authentication
+         */
+        $this->get(route('login'))->assertRedirect(route('home'));
+        $this->post(route('login'))->assertRedirect(route('home'));
+        $this->get(route('logout'))->assertStatus(405);
+        $this->post(route('logout'))->assertRedirect(route('login'));
+    }
+
+    /**
+     * @test
+     */
+    public function 認証済Userアカウント管理()
+    {
+        $this->withHeaders([]);
+        $this->actingAs($this->user);
+
+        $modifyProfileData = collect([
+            'name' => 'modified',
+            'company' => 'test company2',
+            'password' => 'testtest',
+            'password_confirmation' => 'testtest',
+            'leagues' => 'test',
+            'sports' => ['test'],
+            'universities' => 'test',
+        ]);
+
+        /**
+         * Accounts
+         */
+        $this->get(route('accounts.index'))->assertStatus(403);
+        $this->get(route('accounts.create'))->assertStatus(403);
+        $this->post(route('accounts.create'))->assertStatus(403);
+        $this->get(route('accounts.detail', $this->admin->id))->assertStatus(403);
+        $this->post(route('accounts.detail', $this->admin->id))->assertStatus(403);
+
+        $this->get(route('accounts.profile'))->assertSuccessful();
+        $this->post(route('accounts.profile'))->assertSessionHasErrors(['name'])->assertRedirect(route('accounts.profile'));
+
+        $this->post(route('accounts.profile'), $modifyProfileData->all())
+            ->assertSessionHasErrors(['leagues', 'sports.0', 'universities'])// マスタが存在しないためバリデートエラー
+            ->assertRedirect(route('accounts.profile'));
+
+        $league = League::create(['name' => 'test']);
+        $sport = Sport::create(['name' => 'test']);
+        $university = University::create(['name' => 'test']);
+
+        $this->post(route('accounts.profile'), $modifyProfileData->all())->assertRedirect(route('accounts.profile'));// 更新成功
+
+        $this->user = User::where('email', 'user@example.com')->first();
+        $this->assertDatabaseHas('league_user', ['league_id' => $league->id, 'user_id' => $this->user->id]);
+        $this->assertDatabaseHas('sport_user', ['sport_id' => $sport->id, 'user_id' => $this->user->id]);
+        $this->assertDatabaseHas('university_user', ['university_id' => $university->id, 'user_id' => $this->user->id]);
+
+        $this->get(route('accounts.delete', 'test'))->assertStatus(405);
+        $this->post(route('accounts.delete', 'test'))->assertStatus(403);
+        $this->get(route('accounts.delete', $this->admin->id))->assertStatus(405);
+        $this->post(route('accounts.delete', $this->admin->id))->assertStatus(403);
+
+        /**
+         * WebAPI
+         */
+        $this->get(route('webapi.accounts.deletes'))->assertStatus(405);
+        $this->post(route('webapi.accounts.deletes'), ['ids' => ['test']])->assertStatus(403);
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+
+        $this->post(route('webapi.accounts.deletes'), ['ids' => ['test']])->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
+    public function 認証済Userマスタ管理()
+    {
+        $this->withHeaders([]);
+        $this->actingAs($this->user);
+
+        $league = League::create(['name' => 'test5']);
+        $sport = Sport::create(['name' => 'test5']);
+        $university = University::create(['name' => 'test5']);
+
+        /**
+         * WebAPI
+         */
+        $this->get(route('webapi.leagues.index'))->assertStatus(403);
+        $this->post(route('webapi.leagues.index'))->assertStatus(405);
+        $this->get(route('webapi.leagues.delete', $league))->assertStatus(405);
+        $this->post(route('webapi.leagues.delete', $league))->assertStatus(403);
+
+        $this->get(route('webapi.universities.index'))->assertStatus(403);
+        $this->post(route('webapi.universities.index'))->assertStatus(405);
+        $this->get(route('webapi.universities.delete', $university))->assertStatus(405);
+        $this->post(route('webapi.universities.delete', $university))->assertStatus(403);
+
+        $this->get(route('webapi.sports.index'))->assertStatus(403);
+        $this->post(route('webapi.sports.index'))->assertStatus(405);
+        $this->get(route('webapi.sports.delete', $sport))->assertStatus(405);
+        $this->post(route('webapi.sports.delete', $sport))->assertStatus(403);
+
+        $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
+        $this->get(route('webapi.leagues.index'))->assertStatus(403);
+        $this->post(route('webapi.leagues.index'))->assertStatus(405);
+        $this->get(route('webapi.leagues.delete', $league))->assertStatus(405);
+        $this->post(route('webapi.leagues.delete', $league))->assertStatus(403);
+
+        $this->get(route('webapi.universities.index'))->assertStatus(403);
+        $this->post(route('webapi.universities.index'))->assertStatus(405);
+        $this->get(route('webapi.universities.delete', $university))->assertStatus(405);
+        $this->post(route('webapi.universities.delete', $university))->assertStatus(403);
+
+        $this->get(route('webapi.sports.index'))->assertStatus(403);
+        $this->post(route('webapi.sports.index'))->assertStatus(405);
+        $this->get(route('webapi.sports.delete', $sport))->assertStatus(405);
+        $this->post(route('webapi.sports.delete', $sport))->assertStatus(403);
+    }
+
+    /**
+     * @test
+     */
     public function 認証済Userメディア管理()
     {
+        $this->withHeaders([]);
         $this->actingAs($this->user);
 
         $videoData = collect([
@@ -346,6 +636,27 @@ final class HttpTest extends TestCase
 
         $this->get(route('webapi.media.create'))->assertStatus(405);
         $this->post(route('webapi.media.create'))->assertStatus(403);
+
+        $this->get(route('webapi.media.update', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.update', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.s3_url', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.s3_url', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.ingest', 'test'))->assertStatus(405);
+        $this->post(route('webapi.media.ingest', 'test'))->assertStatus(403);
+
+        $this->post(route('webapi.media.ingestjobs', 'test'))->assertStatus(405);
+        $this->get(route('webapi.media.ingestjobs', 'test'))->assertStatus(403);
+
+        $this->get(route('webapi.media.activates'))->assertStatus(405);
+        $this->post(route('webapi.media.activates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deactivates'))->assertStatus(405);
+        $this->post(route('webapi.media.deactivates'))->assertStatus(403);
+
+        $this->get(route('webapi.media.deletes'))->assertStatus(405);
+        $this->post(route('webapi.media.deletes'))->assertStatus(403);
 
         $this->withHeaders(self::XML_HTTP_REQUEST_HEADER);
 
