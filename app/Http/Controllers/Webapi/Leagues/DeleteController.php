@@ -33,7 +33,7 @@ final class DeleteController extends Controller
     {
         $league = $this->useCase->league($leagueId);
 
-//         $this->authorize('delete', $league);// TODO
+        $this->authorize('delete', $league);
 
         try {
             return $this->useCase->excute([
