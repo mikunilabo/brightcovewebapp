@@ -60,7 +60,7 @@
                                                 </a>
                                             </td>
                                             <td class="align-middle">
-                                                {{ is_null($dt = optional($row->loginHistories->first())->created_at) ? '-' : $dt->fuzzy() }}
+                                                {{ is_null($history = $row->loginHistories->sortByDesc('created_at')->first()) ? '-' : $history->created_at->fuzzy() }}
                                             </td>
                                             <td class="align-middle">{{ $row->created_at->format('Y/m/d H:i') }}</td>
                                         </tr>

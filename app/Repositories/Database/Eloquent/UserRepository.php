@@ -24,9 +24,7 @@ final class UserRepository extends EloquentRepository
     {
         $builder->with([
             'role',
-            'loginHistories' => function ($query) {
-                $query->latest()->limit(1);
-            },
+            'loginHistories',
         ]);
 
         $builder->latest();
