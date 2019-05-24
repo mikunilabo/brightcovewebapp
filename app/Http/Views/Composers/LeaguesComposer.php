@@ -44,7 +44,8 @@ final class LeaguesComposer
      */
     private function excute(View $view)
     {
-        $view->with('vc_leagues', $this->repo->findAll());
+        $view->with('vc_leagues', $this->repo->findAll([
+            'select' => 'name',
+        ]));
     }
-
 }

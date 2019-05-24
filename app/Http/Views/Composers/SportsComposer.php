@@ -44,7 +44,8 @@ final class SportsComposer
      */
     private function excute(View $view)
     {
-        $view->with('vc_sports', $this->repo->findAll());
+        $view->with('vc_sports', $this->repo->findAll([
+            'select' => 'name',
+        ]));
     }
-
 }

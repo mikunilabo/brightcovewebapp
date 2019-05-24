@@ -33,20 +33,18 @@ final class IndexController extends Controller
      */
     public function __invoke(IndexRequest $request)
     {
-        $args = [
-            'param' => array_merge($request->validated(), [
-                'orders' => [
-                    'latest' => 'created_at',
-                ],
-                'with' => [
-                    'role:id,name,slug',
-                    'loginHistories:id,user_id,created_at',
-                ],
-            ]),
-        ];
+        $args = array_merge($request->validated(), [
+            'orders' => [
+                'latest' => 'created_at',
+            ],
+            'with' => [
+                'role:id,name,slug',
+                'loginHistories:id,user_id,created_at',
+            ],
+        ]);
 
         return view('users.index', [
-            'rows' => $this->useCase->excute($args),
+            'rows' => $this->useCase->excute(['param' => $args]),
         ]);
     }
 }
