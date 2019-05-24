@@ -26,7 +26,6 @@ final class GetUsers implements UseCaseContract
      */
     public function excute($args)
     {
-//         return $this->repo->findAll($args['param'], true);
         return $this->repo->findAll($args['param']);
     }
 }

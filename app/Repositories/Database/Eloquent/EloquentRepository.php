@@ -27,6 +27,16 @@ abstract class EloquentRepository implements RepositoryContract
      */
     public function build($builder, $args = [])
     {
+        if (array_key_exists($key = 'with', $args)) {
+            $builder->with($args[$key]);
+        }
+
+        if (array_key_exists($key = 'orders', $args)) {
+            if (array_key_exists($key2 = 'latest', $args[$key])) {
+                $builder->latest($args[$key][$key2]);
+            }
+        }
+
         return $builder;
     }
 
