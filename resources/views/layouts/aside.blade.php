@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <small class="text-muted">
-                        {{ is_null($dt = optional(Auth::user()->loginHistories()->latest()->skip(1)->limit(1)->first())->created_at) ? '-' : $dt->format('Y/m/d H:i') }}
+                        {{ is_null($history = Auth::user()->loginHistories->sortByDesc('created_at')->slice(1)->first()) ? '-' : $history->created_at->format('Y/m/d H:i') }}
                     </small>
                 </div>
                 <hr>
