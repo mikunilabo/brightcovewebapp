@@ -11,6 +11,11 @@ final class Refresh extends Command
     /**
      * @var string
      */
+    protected $description = 'Execute the refresh commands.';
+
+    /**
+     * @var string
+     */
     protected $signature = 'refresh
                         {--c|cache : Cache again after deleting.}
                         {--d|dumpautoload : Perform autoloading with composer.}
@@ -18,32 +23,10 @@ final class Refresh extends Command
                         {--i|info : Output the processing contents.}';
 
     /**
-     * @var string
-     */
-    protected $description = 'Execute the refresh commands.';
-
-    /**
-     * @var Composer
-     */
-    private $composer;
-
-    /**
      * @param Composer $composer
-     * @return void
-     */
-    public function __construct(Composer $composer)
-    {
-        parent::__construct();
-
-        $this->composer = $composer;
-    }
-
-    /**
-     * Execute the console command.
-     *
      * @return mixed
      */
-    public function handle()
+    public function handle(Composer $composer)
     {
         $jobs = 5;
 
@@ -102,7 +85,7 @@ final class Refresh extends Command
 
         if ($isDump) {
             $isInfo ? $this->info('Class autoload files dumping...') : null;
-            $this->composer->dumpAutoloads();
+            $composer->dumpAutoloads();
             $isInfo ? $this->info('Done dumping!') : null;
             $progress->advance();
         }
