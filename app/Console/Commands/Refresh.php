@@ -13,7 +13,9 @@ final class Refresh extends Command
      */
     protected $signature = 'refresh
                         {--c|cache : Cache again after deleting.}
-                        {--d|dumpautoload : Perform autoloading with composer.}';
+                        {--d|dumpautoload : Perform autoloading with composer.}
+                        {--f|force : Force without confirmation.}
+                        {--i|info : Output the processing contents.}';
 
     /**
      * @var string
@@ -43,47 +45,70 @@ final class Refresh extends Command
      */
     public function handle()
     {
-        $jobs = 7;
-        $jobs += $this->option('dumpautoload') ? 1 : 0;
+        $jobs = 5;
+
+        $isChache = false;
+        if ($this->option('cache')
+            || (! $this->option('force') && $this->confirm('Do you want to cache configuration files? (y/n) or'))
+        ) {
+            $isChache = true;
+        }
+
+        $isDump = false;
+        if ($this->option('dumpautoload')
+            || (! $this->option('force') && $this->confirm('Do you want to execute class autoloading?'))
+        ) {
+            $isDump = true;
+            $jobs += 1;
+        }
+
         $progress = $this->output->createProgressBar($jobs);
 
+        $isInfo = $this->option('info');
+        $call = $isInfo ? 'call' : 'callSilent';
+
         $this->comment('Refreshing...');
+        $this->{$call}('down');
 
-        $this->callSilent('down');
+        $this->{$call}('clear-compiled');
         $progress->advance();
+        $isInfo ? $this->line('') : null;
 
-        $this->callSilent('clear-compiled');
+        $this->{$call}('cache:clear');
         $progress->advance();
+        $isInfo ? $this->line('') : null;
 
-        $this->callSilent('cache:clear');
+        $this->{$call}('view:clear');
         $progress->advance();
+        $isInfo ? $this->line('') : null;
 
-        $this->callSilent('view:clear');
-        $progress->advance();
-
-        if ($this->option('cache')) {
-            $this->callSilent('config:cache');
+        if ($isChache) {
+            $this->{$call}('config:cache');
             $progress->advance();
+            $isInfo ? $this->line('') : null;
 
-            $this->callSilent('route:cache');
+            $this->{$call}('route:cache');
             $progress->advance();
+            $isInfo ? $this->line('') : null;
         } else {
-            $this->callSilent('config:clear');
+            $this->{$call}('config:clear');
             $progress->advance();
+            $isInfo ? $this->line('') : null;
 
-            $this->callSilent('route:clear');
+            $this->{$call}('route:clear');
             $progress->advance();
+            $isInfo ? $this->line('') : null;
         }
 
-        if ($this->option('dumpautoload')) {
+        if ($isDump) {
+            $isInfo ? $this->info('Class autoload files dumping...') : null;
             $this->composer->dumpAutoloads();
+            $isInfo ? $this->info('Done dumping!') : null;
             $progress->advance();
         }
 
-        $this->callSilent('up');
-        $progress->finish();
-
-        $this->line('');
+        $this->info('');
+        $this->{$call}('up');
         $this->comment('Some refresh commands are executed!');
     }
 }
