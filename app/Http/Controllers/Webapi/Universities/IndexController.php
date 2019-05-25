@@ -20,6 +20,10 @@ final class IndexController extends Controller
      */
     public function __construct(GetUniversities $useCase)
     {
+        $this->middleware([
+            'authorize:user-create',
+        ]);
+
         $this->useCase = $useCase;
     }
 
@@ -29,7 +33,15 @@ final class IndexController extends Controller
      */
     public function __invoke(IndexRequest $request)
     {
-        $args = $request->validated();
+        $args =  array_merge($request->validated(), [
+            'select' => [
+                'id',
+                'name',
+            ],
+            'orders' => [
+                'latest' => 'created_at',
+            ],
+        ]);
 
         try {
             return $this->useCase->excute([

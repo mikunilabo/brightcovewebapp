@@ -44,6 +44,8 @@
                                     <div class="form-group col-sm-6">
                                         @set ($attribute, 'email')
                                         <label for="{{ $attribute }}">@lang ('E-Mail')</label>
+                                        @component ('components.popovers.informations', ['content' => __('You can not change the :name.', ['name' => __('E-Mail')])]) @endcomponent
+
                                         <input name="{{ $attribute }}" type="email" value="{{ $row->{$attribute} }}" class="form-control" maxlength="255" placeholder="" disabled />
                                     </div>
 
@@ -51,6 +53,8 @@
                                         <div class="form-group col-sm-6">
                                             @set ($attribute, 'role_id')
                                             <label for="{{ $attribute }}">@lang ('Role')</label>
+                                            @component ('components.popovers.informations', ['content' => __('You can not change the :name.', ['name' => __('Role')])]) @endcomponent
+
                                             <select name="{{ $attribute }}" class="form-control" disabled>
                                                 @foreach ($vc_roles->pluck('name', 'id') as $key => $value)
                                                     <option value="{{ $key }}" {{ $row->{$attribute} === (int)$key ? 'selected' : '' }}>{{ $value }}</option>
@@ -112,13 +116,17 @@
                                 <hr>
 
                                 <div class="row">
-                                    <div class="form-group col-sm-6">
+                                    <div class="form-group col-sm-3">
                                         <label>@lang ('Created At')</label>
                                         <div>{{ $row->created_at->format('Y/m/d H:i') }}</div>
                                     </div>
-                                    <div class="form-group col-sm-6">
+                                    <div class="form-group col-sm-3">
                                         <label>@lang ('Updated At')</label>
                                         <div>{{ $row->updated_at->format('Y/m/d H:i') }}</div>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>@lang ('Last login')</label>
+                                        <div>{{ is_null($history = $row->loginHistories->sortByDesc('created_at')->first()) ? '-' : $history->created_at->format('Y/m/d H:i') }}</div>
                                     </div>
                                 </div>
                             </div>

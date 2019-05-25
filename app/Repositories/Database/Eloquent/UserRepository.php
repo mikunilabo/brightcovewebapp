@@ -14,23 +14,4 @@ final class UserRepository extends EloquentRepository
     {
         $this->eloquent = $eloquent;
     }
-
-    /**
-     * @param mixed $builder
-     * @param array $args
-     * @return mixed
-     */
-    public function build($builder, $args = [])
-    {
-        $builder->with([
-            'role',
-            'loginHistories' => function ($query) {
-                $query->latest()->limit(1);
-            },
-        ]);
-
-        $builder->latest();
-
-        return $builder;
-    }
 }

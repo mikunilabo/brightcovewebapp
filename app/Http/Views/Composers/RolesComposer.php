@@ -44,7 +44,11 @@ final class RolesComposer
      */
     private function excute(View $view)
     {
-        $view->with('vc_roles', $this->repo->findAll());
+        $view->with('vc_roles', $this->repo->findAll([
+            'select' => [
+                'id',
+                'name',
+            ],
+        ]));
     }
-
 }

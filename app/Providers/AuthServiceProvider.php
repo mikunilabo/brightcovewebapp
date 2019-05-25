@@ -16,8 +16,11 @@ final class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        Media::class => Policies\MediaPolicy::class,
+        Eloquent\League::class => Policies\LeaguePolicy::class,
+        Eloquent\Sport::class => Policies\SportPolicy::class,
+        Eloquent\University::class => Policies\UniversityPolicy::class,
         Eloquent\User::class => Policies\UserPolicy::class,
+        Media::class => Policies\MediaPolicy::class,
     ];
 
     /**

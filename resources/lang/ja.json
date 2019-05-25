@@ -121,5 +121,6 @@
     "User": "ユーザー",
     "Version": "バージョン",
     "Video File": "動画ファイル",
+    "You can not change the :name.": ":nameは変更出来ません。",
     "You do not have access.": "アクセス権限がありません。"
 }

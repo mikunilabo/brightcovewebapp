@@ -37,12 +37,16 @@
                                     <div class="form-group col-sm-6">
                                         @set ($attribute, 'email')
                                         <label for="{{ $attribute }}">@lang ('E-Mail') <code>*</code></label>
+                                        @component ('components.popovers.informations', ['content' => __('You can not change the :name.', ['name' => __('E-Mail')])]) @endcomponent
+
                                         <input name="{{ $attribute }}" type="email" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : null }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="255" placeholder="" required />
                                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                     </div>
                                     <div class="form-group col-sm-6">
                                         @set ($attribute, 'role_id')
                                         <label for="{{ $attribute }}">@lang ('Role') <code>*</code></label>
+                                        @component ('components.popovers.informations', ['content' => __('You can not change the :name.', ['name' => __('Role')])]) @endcomponent
+
                                         <select name="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" required>
                                             @foreach ($vc_roles->pluck('name', 'id') as $key => $value)
                                                 <option value="{{ $key }}" {{ (int)($errors->{$errorBag ?? 'default'}->any() ? old($attribute) : 2) === (int)$key ? 'selected' : '' }}>{{ $value }}</option>

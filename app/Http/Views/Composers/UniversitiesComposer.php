@@ -44,7 +44,8 @@ final class UniversitiesComposer
      */
     private function excute(View $view)
     {
-        $view->with('vc_universities', $this->repo->findAll());
+        $view->with('vc_universities', $this->repo->findAll([
+            'select' => 'name',
+        ]));
     }
-
 }
