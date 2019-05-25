@@ -10,7 +10,7 @@
     <!-- Tab panes-->
     <div class="tab-content">
         <div class="tab-pane active p-3" id="information" role="tabpanel">
-            <h6>@lang ('Information')</h6>
+            <h6>@lang ('Informations')</h6>
             <div class="aside-options">
                 <div class="clearfix mt-3">
                     <small>
