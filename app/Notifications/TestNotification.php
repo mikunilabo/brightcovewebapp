@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Notifications;
 
+use App\Notifications\Channels\DatabaseChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 
@@ -19,14 +21,26 @@ class TestNotification extends Notification implements ShouldQueue
     public $type = 'test';
 
     /**
+     * @var mixed
+     */
+    public $resource;
+
+    /**
+     * @param mixed $resource
+     * @return void
+     */
+    public function __construct($resource = null)
+    {
+        $this->resource = $resource;
+    }
+
+    /**
      * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable): array
     {
-        return [
-            'slack',
-        ];
+        return $notifiable instanceof AnonymousNotifiable ? ['slack'] : [DatabaseChannel::class];
     }
 
     /**
@@ -36,7 +50,10 @@ class TestNotification extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [
-            //
+            'resource_id' => $this->resource->id,
+            'resource_type' => 'league',
+            'subject' => 'subject',
+            'content' => 'content',
         ];
     }
 
