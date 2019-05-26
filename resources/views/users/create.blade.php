@@ -14,7 +14,7 @@
                             {{ csrf_field() }}
 
                             <div class="card-header">
-                                <i class="fa fa-align-justify"></i>@lang ('Create Account')
+                                <i class="icons icon-user-follow"></i>@lang ('Create Account')
                             </div>
                             <div class="card-body">
                                 @component ('components.messages.alerts') @endcomponent

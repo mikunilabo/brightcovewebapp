@@ -11,7 +11,7 @@
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i>@lang ('Media list')
+                            <i class="icons icon-list"></i>@lang ('Media list')
 
                             @can ('authorize', 'media-create')
                                 <a class="btn btn-primary btn-sm float-right" href="{{ route('media.upload') }}">
