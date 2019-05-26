@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Monolog\Logger;
+
 return [
 
     /*
@@ -41,6 +43,19 @@ return [
         'client_id'     => env('VIDEOCLOUD_CLIENT_ID'),
         'client_secret' => env('VIDEOCLOUD_CLIENT_SECRET'),
         'video_profile' => env('VIDEOCLOUD_VIDEO_PROFILE'),
+    ],
+
+    'slack' => [
+        'webhook_url'               => env('SLACK_WEBHOOK_URL'),
+        'channel'                   => null,
+        'username'                  => sprintf('%s Bot [%s]', env('APP_NAME', 'Laravel'), env('APP_ENV', 'local')),
+        'use_attachment'            => true,
+        'icon_emoji'                => null,
+        'use_short_attachment'      => true,
+        'include_context_and_extra' => true,
+        'level'                     => env('SLACK_LOG_LEVEL', env('APP_LOG_LEVEL', Logger::EMERGENCY)),
+        'bubble'                    => true,
+        'exclude_fields'            => [],
     ],
 
 ];
