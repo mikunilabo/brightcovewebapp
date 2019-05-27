@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Ramsey\Uuid\Uuid;
+use Util;
 
 final class User extends Authenticatable implements ModelContract
 {
@@ -90,7 +90,7 @@ final class User extends Authenticatable implements ModelContract
     public function generateUuid4(): void
     {
         do {
-            $this->id = Uuid::uuid4()->toString();
+            $this->id = Util::orderedUuid();
         } while ($this->find($this->id));
     }
 

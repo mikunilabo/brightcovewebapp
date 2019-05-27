@@ -10,7 +10,7 @@ final class AppServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }
@@ -18,8 +18,20 @@ final class AppServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->registerProviders();
+    }
+
+    /**
+     * @return void
+     */
+    private function registerProviders(): void
+    {
+        foreach (config('providers') as $provider => $options) {
+            if (! $options['enable']) continue;
+
+            $this->app->register($options['provider']);
+        }
     }
 }

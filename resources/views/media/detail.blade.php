@@ -14,7 +14,7 @@
                             {{ csrf_field() }}
 
                             <div class="card-header">
-                                <i class="fa fa-align-justify"></i>@lang ('Media detail')
+                                <i class="icons icon-note"></i>@lang ('Media detail')
                             </div>
                             <div class="card-body">
                                 @component ('components.messages.alerts') @endcomponent

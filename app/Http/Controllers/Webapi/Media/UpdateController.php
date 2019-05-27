@@ -30,7 +30,7 @@ final class UpdateController extends Controller
     /**
      * @param ValidatesWhenResolved $request
      * @param string $videoId
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(UpdateRequest $request, string $videoId)
     {

@@ -196,7 +196,7 @@ return [
         App\Providers\DatabaseServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\FacadeServiceProvider::class,
-        App\Providers\LocalServiceProvider::class,
+        // App\Providers\RelationServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\UrlServiceProvider::class,
