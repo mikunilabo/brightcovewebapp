@@ -6,7 +6,7 @@ namespace App\Providers;
 use App\Services\UtilitiesService;
 use Illuminate\Support\ServiceProvider;
 
-class FacadeServiceProvider extends ServiceProvider
+final class FacadeServiceProvider extends ServiceProvider
 {
     /**
      * @var bool
