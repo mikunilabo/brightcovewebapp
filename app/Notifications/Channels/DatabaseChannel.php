@@ -24,8 +24,8 @@ final class DatabaseChannel extends BaseChannel
             ->create([
                 'id' => $notification->id,
                 'name' => $notification->type,
-                'resource_id' => $data['resource_id'],
-                'resource_type' => $data['resource_type'],
+                'resource_id' => $data['resource_id'] ?? null,
+                'resource_type' => $data['resource_type'] ?? null,
                 'subject' => $data['subject'],
                 'content' => $data['content'],
             ]);

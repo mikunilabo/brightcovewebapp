@@ -29,7 +29,7 @@ final class CreateController extends Controller
 
     /**
      * @param ValidatesWhenResolved $request
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(CreateRequest $request)
     {

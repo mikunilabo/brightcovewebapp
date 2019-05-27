@@ -36,6 +36,8 @@
       (function () {
         'use strict';
 
+        notifications();
+
         // var input = document.getElementById('input');
         // input.addEventListener('click' , function(e){
         //   input.select();
@@ -43,6 +45,37 @@
         //   window.toastr.info(window.lang['Copied it to the clipboard.']);
         // });
       })();
+
+      function notifications() {
+        let list = document.getElementById('notifications-list');
+        window.Common.removeChildren(list);
+        console.log(list);
+
+        window.axios.get("{{ route('webapi.notifications.index') }}")
+            .then(response => {
+              if (Object.keys(response.data).length > 0) {
+                let badge = document.getElementById('notifications-badge');
+                badge.textContent = Object.keys(response.data).length;
+
+                for (let key of Object.keys(response.data)) {
+                  let div = document.createElement("div");
+                  div.classList.add("dropdown-header", "text-center");
+                  div.type = "button";
+
+                    // var state = response.data[key].state;
+                    // var span = document.getElementById('ingestjobs_result');
+                    // span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
+                    // span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
+                    // span.textContent = window.lang[state];
+                }
+
+              } else {
+                //
+              }
+            }).catch(error => {
+                console.error(error);
+            });
+      }
 
       // document.getElementById('toastr').addEventListener('click', function (event) {
       //   window.toastr.info('My name is Inigo Montoya. You killed my father, prepare to die!');
@@ -70,6 +103,6 @@
 
         // Remove current toasts using animation
         // window.toastr.clear()
-      });
+      // });
     </script>
 @endsection

@@ -30,7 +30,7 @@ final class GetS3UrlController extends Controller
     /**
      * @param ValidatesWhenResolved $request
      * @param string $videoId
-     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(GetS3UrlRequest $request, string $videoId)
     {

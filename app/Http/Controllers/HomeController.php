@@ -10,6 +10,13 @@ final class HomeController extends Controller
      */
     public function __invoke()
     {
+//         $user = auth()->user();
+//         return $user->unreadNotifications;
+
+//         foreach ($user->unreadNotifications as $notification) {
+//             dd($notification->notifiable);
+//         }
+
         return view('home');
     }
 }
