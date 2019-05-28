@@ -28,6 +28,7 @@
 
     @component ('components.forms.basic') @endcomponent
     @component ('components.overlay.loading') @endcomponent
+    @component ('components.overlay.progress') @endcomponent
 
     @section ('scripts')
         @stack ('scripts.const')

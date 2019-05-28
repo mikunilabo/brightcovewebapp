@@ -46,8 +46,11 @@ class Uploader {
         fileReader.readAsArrayBuffer(blob2);
       });
 
-      const progress = end / uploadFile.size;
       console.log("%cProgress",  "background: #32F; color: #FFF", `${progress * 100}%`);
+      const progress = end / uploadFile.size * 100;
+      if ($("#progressOverlay").is(":visible")) {
+        window.Common.updateProgressOverlay(Math.round(progress));
+      }
 
       const partUpload = await s3
         .uploadPart({
@@ -78,7 +81,7 @@ class Uploader {
 
   suspend = error => {
     console.error(error, error.stack);
-    window.Common.overlayOut();
+    window.Common.progressOverlayOut();
   };
 }
 

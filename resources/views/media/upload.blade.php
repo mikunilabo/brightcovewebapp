@@ -77,8 +77,8 @@
 
             if (! validate()) return;
 
-            window.Common.overlay();
             const mediaObject = getMediaObject(event.target);
+            window.Common.progressOverlay();
 
             window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
                 window.location.href = "/media/" + media.id + "/detail";

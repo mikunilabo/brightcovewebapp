@@ -73,3 +73,29 @@ table.dataTable thead th {
 .is-hide{
     display:none;
 }
+
+/**
+ * Overlay progress
+ */
+#progressOverlay {
+  @extend #overlay;
+  .overlay {
+    &-message {
+      &-container {
+        padding-top: 1em;
+        width: 50%;
+        text-align: center;
+      }
+      &-text {
+        color: #FFF;
+      }
+    }
+  }
+
+  .cv-spinner {
+    &.is-progress {
+      flex-direction: column;
+    }
+  }
+}
+

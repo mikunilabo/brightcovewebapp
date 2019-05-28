@@ -146,6 +146,36 @@ class Common {
   }
 
   /**
+   * @param number initialProgress
+   * @return void
+   */
+  progressOverlay(initialProgress = 0) {
+    this.updateProgressOverlay(initialProgress);
+    $("#progressOverlay").fadeIn(500);
+  }
+
+  /**
+   * @return void
+   */
+  progressOverlayOut() {
+    $("#progressOverlay").fadeOut(500, () => {
+      this.updateProgressOverlay(0);
+    });
+  }
+
+  /**
+   * @param number progress
+   * @return void
+   */
+  updateProgressOverlay(progress) {
+    $("#progressOverlay").find(".progress-bar").attr({
+      ariaValuenow: progress,
+    }).css({
+      width: `${progress}%`,
+    }).text(`${progress}%`);
+  }
+
+  /**
    * @param string name
    * @return void
    */

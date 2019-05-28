@@ -96,7 +96,7 @@ class VideoCloud {
   };
 
   suspend = error => {
-    window.Common.overlayOut();
+    window.Common.progressOverlayOut();
     alert("Mediaの作成・更新処理に失敗しました。")
     throw new Error(error);
   };
