@@ -87,7 +87,7 @@
 
             if (! validate()) return;
 
-            window.Common.overlay();
+            window.VideoCloud.source ? window.Common.progressOverlay() : window.Common.overlay();
             const mediaObject = getMediaObject(event.target);
 
             window.VideoCloud.mediaId = {{ $row->id }};

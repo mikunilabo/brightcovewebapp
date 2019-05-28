@@ -53,7 +53,9 @@ class Common {
     var button = document.createElement("button");
     button.classList.add("btn", "btn-outline-danger", "input-group-text");
     button.type = "button";
-    button.addEventListener("click", () => {
+    button.addEventListener(
+      "click",
+      () => {
         this.removeElement(listId);
       },
       false,
@@ -146,6 +148,40 @@ class Common {
   }
 
   /**
+   * @param number initialProgress
+   * @return void
+   */
+  progressOverlay(initialProgress = 0) {
+    this.updateProgressOverlay(initialProgress);
+    $("#progressOverlay").fadeIn(500);
+  }
+
+  /**
+   * @return void
+   */
+  progressOverlayOut() {
+    $("#progressOverlay").fadeOut(500, () => {
+      this.updateProgressOverlay(0);
+    });
+  }
+
+  /**
+   * @param number progress
+   * @return void
+   */
+  updateProgressOverlay(progress) {
+    $("#progressOverlay")
+      .find(".progress-bar")
+      .attr({
+        ariaValuenow: progress,
+      })
+      .css({
+        width: `${progress}%`,
+      })
+      .text(`${progress}%`);
+  }
+
+  /**
    * @param string name
    * @return void
    */
@@ -155,7 +191,7 @@ class Common {
 
     window.axios
       .get("/webapi/" + name)
-      .then(response => {
+      .then((response) => {
         this.overlayOut();
         body.innerHtml = "";
 
@@ -166,11 +202,22 @@ class Common {
           let text = document.createTextNode(" " + response.data[key].name);
 
           let button = document.createElement("button");
-          button.classList.add("btn", "btn-sm", "btn-outline-danger", "mr-2", "mb-2");
+          button.classList.add(
+            "btn",
+            "btn-sm",
+            "btn-outline-danger",
+            "mr-2",
+            "mb-2",
+          );
           button.type = "button";
-          button.addEventListener("click", () => {
-              if (! confirm(`${response.data[key].name}を削除しますか？
-同時にアカウントとの関連も解除されます。`)) return;
+          button.addEventListener(
+            "click",
+            () => {
+              if (
+                !confirm(`${response.data[key].name}を削除しますか？
+同時にアカウントとの関連も解除されます。`)
+              )
+                return;
               this.removeMaster(name, response.data[key].id);
             },
             false,
@@ -181,7 +228,7 @@ class Common {
           body.appendChild(button);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.overlayOut();
         console.error(error);
       });
@@ -200,7 +247,7 @@ class Common {
         // console.log(response);
         this.listMasters(name);
       })
-      .catch(error => {
+      .catch((error) => {
         this.overlayOut();
         console.error(error);
       });
@@ -211,7 +258,7 @@ class Common {
    * @return void
    */
   removeChildren(element) {
-    if (! element) return;
+    if (!element) return;
 
     while (element.firstChild) {
       element.removeChild(element.firstChild);

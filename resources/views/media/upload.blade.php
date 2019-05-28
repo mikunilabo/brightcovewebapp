@@ -56,18 +56,18 @@
         });
 
         document.getElementById('video_file').addEventListener('change', function (event) {
-            let span = document.getElementById('invalid-feedback-video_file');
+            var span = document.getElementById('invalid-feedback-video_file');
             window.Common.removeChildren(span);
 
             window.VideoCloud.source = event.target.files[0];
 
-            let label = document.getElementById('custom-file-label');
+            var label = document.getElementById('custom-file-label');
             label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
 
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 
-            let text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
-            let strong = document.createElement("strong");
+            var text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
+            var strong = document.createElement("strong");
             strong.appendChild(text);
             span.appendChild(strong);
         });
@@ -77,8 +77,8 @@
 
             if (! validate()) return;
 
-            window.Common.overlay();
-            const mediaObject = getMediaObject(event.target);
+            window.Common.progressOverlay();
+            var mediaObject = getMediaObject(event.target);
 
             window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
                 window.location.href = "/media/" + media.id + "/detail";
@@ -89,7 +89,7 @@
          * @return bool
          */
         function validate() {
-            let file = document.getElementById("video_file").files[0];
+            var file = document.getElementById("video_file").files[0];
             if (! file || file.size > VALID_VIDEO_FILE_SIZE) {
                 return false;
             }
@@ -130,7 +130,7 @@
          * @return object mediaObject
          */
         function getMediaObject(mediaFormElement) {
-            const mediaObject = {
+            var mediaObject = {
                 leagues: [],
                 sports: [],
                 universities: [],
@@ -141,7 +141,7 @@
                     if (input.type === "file") {
                         return;
                     } else if (input.name.split("[").length > 1) {// If array
-                        let str = input.name.split("[");
+                        var str = input.name.split("[");
                         mediaObject[str[0]][str[1].split("]")[0]] = input.value;
                     } else {
                         mediaObject[input.name] = input.value;

@@ -5,34 +5,28 @@ class VideoCloud {
   constructor() {}
 
   operationMediaWithSource = async (mediaObject, callback) => {
+    let media;
     if (this.mediaId) {
-      var media = await this.updateMedia(mediaObject);
-      console.log("%cMedia Updated.", "background: #F90; color: #FFF"/*, media*/);
+      media = await this.updateMedia(mediaObject);
     } else {
-      var media = await this.createMedia(mediaObject);
+      media = await this.createMedia(mediaObject);
       this.mediaId = media.id;
-      console.log("%cMedia Created.", "background: #F90; color: #FFF"/*, media*/);
     }
 
     if (this.source) {
       const s3Url = await this.getS3Url(this.mediaId, this.source.name);
-      console.log("%cS3 URL Fetched.", "background: #990; color: #FFF"/*, s3Url*/);
-
-      const uploadResponse = await window.Uploader.multiPartUpload(this.source, s3Url);
-      console.log("%cFile Uploaded.", "background: #99F; color: #FFF"/*, uploadResponse*/);
-
-      const ingestResponse = await this.dynamicIngest(this.mediaId, s3Url.api_request_url);
-      console.log("%cIngest Requested.", "background: #F0F; color: #FFF"/*, ingestResponse*/);
+      await window.Uploader.multiPartUpload(this.source, s3Url);
+      await this.dynamicIngest(this.mediaId, s3Url.api_request_url);
     }
 
     callback(media);
   };
 
-  createMedia = async requestData => {
+  createMedia = async (requestData) => {
     return await window.axios
       .post("/webapi/media/create", requestData)
-      .then(response => response.data)
-      .catch(error => {
+      .then((response) => response.data)
+      .catch((error) => {
         if (error.response.status === 422) {
           this.invalidFeedback(error.response);
         }
@@ -40,11 +34,11 @@ class VideoCloud {
       });
   };
 
-  updateMedia = async requestData => {
+  updateMedia = async (requestData) => {
     return await window.axios
       .post("/webapi/media/" + this.mediaId + "/update", requestData)
-      .then(response => response.data)
-      .catch(error => {
+      .then((response) => response.data)
+      .catch((error) => {
         if (error.response.status === 422) {
           this.invalidFeedback(error.response);
         }
@@ -58,7 +52,7 @@ class VideoCloud {
         .post("/webapi/media/" + videoId + "/s3_url", {
           source: name,
         })
-        .then(response => response.data);
+        .then((response) => response.data);
     } catch (error) {
       this.suspend(error);
     }
@@ -70,23 +64,25 @@ class VideoCloud {
         .post("/webapi/media/" + videoId + "/ingest", {
           master_url: s3apiRequestUrl,
         })
-        .then(response => response.data);
+        .then((response) => response.data);
     } catch (error) {
       this.suspend(error);
     }
   };
 
-  invalidFeedback = response => {
+  invalidFeedback = (response) => {
     console.error(response.data.errors);
 
-    [].slice.call(document.getElementsByClassName('invalid-feedback')).forEach(function(span) {
-      window.Common.removeChildren(span);
-    });
+    [].slice
+      .call(document.getElementsByClassName("invalid-feedback"))
+      .forEach(function(span) {
+        window.Common.removeChildren(span);
+      });
 
     for (let key of Object.keys(response.data.errors)) {
-      let span = document.getElementById('invalid-feedback-' + key);
+      let span = document.getElementById("invalid-feedback-" + key);
 
-      if (! span) continue;
+      if (!span) continue;
 
       let text = document.createTextNode(response.data.errors[key][0]);
       let strong = document.createElement("strong");
@@ -95,9 +91,9 @@ class VideoCloud {
     }
   };
 
-  suspend = error => {
-    window.Common.overlayOut();
-    alert("Mediaの作成・更新処理に失敗しました。")
+  suspend = (error) => {
+    window.Common.progressOverlayOut();
+    alert("Mediaの作成・更新処理に失敗しました。");
     throw new Error(error);
   };
 }
