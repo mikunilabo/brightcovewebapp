@@ -81,6 +81,7 @@ class Uploader {
 
   suspend = error => {
     console.error(error, error.stack);
+    alert("アップロード処理に失敗しました。");
     window.Common.progressOverlayOut();
   };
 }
