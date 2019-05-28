@@ -46,7 +46,6 @@ class Uploader {
         fileReader.readAsArrayBuffer(blob2);
       });
 
-      console.log("%cProgress",  "background: #32F; color: #FFF", `${progress * 100}%`);
       const progress = end / uploadFile.size * 100;
       if ($("#progressOverlay").is(":visible")) {
         window.Common.updateProgressOverlay(Math.round(progress));

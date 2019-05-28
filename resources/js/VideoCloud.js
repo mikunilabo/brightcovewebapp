@@ -5,24 +5,18 @@ class VideoCloud {
   constructor() {}
 
   operationMediaWithSource = async (mediaObject, callback) => {
+    let media;
     if (this.mediaId) {
-      var media = await this.updateMedia(mediaObject);
-      console.log("%cMedia Updated.", "background: #F90; color: #FFF"/*, media*/);
+      media = await this.updateMedia(mediaObject);
     } else {
-      var media = await this.createMedia(mediaObject);
+      media = await this.createMedia(mediaObject);
       this.mediaId = media.id;
-      console.log("%cMedia Created.", "background: #F90; color: #FFF"/*, media*/);
     }
 
     if (this.source) {
       const s3Url = await this.getS3Url(this.mediaId, this.source.name);
-      console.log("%cS3 URL Fetched.", "background: #990; color: #FFF"/*, s3Url*/);
-
-      const uploadResponse = await window.Uploader.multiPartUpload(this.source, s3Url);
-      console.log("%cFile Uploaded.", "background: #99F; color: #FFF"/*, uploadResponse*/);
-
-      const ingestResponse = await this.dynamicIngest(this.mediaId, s3Url.api_request_url);
-      console.log("%cIngest Requested.", "background: #F0F; color: #FFF"/*, ingestResponse*/);
+      await window.Uploader.multiPartUpload(this.source, s3Url);
+      await this.dynamicIngest(this.mediaId, s3Url.api_request_url);
     }
 
     callback(media);
