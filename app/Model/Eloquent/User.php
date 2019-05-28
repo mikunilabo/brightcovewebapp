@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Eloquent;
 
 use App\Contracts\Domain\ModelContract;
+use App\Notifications\Auth\Password\ResetPassword;
 use App\Traits\Database\Eloquent\Observers\UserObservable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -117,5 +118,16 @@ final class User extends Authenticatable implements ModelContract
         }
 
         $builder->sync($sync);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Illuminate\Contracts\Auth\CanResetPassword::sendPasswordResetNotification()
+     * @param string $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
