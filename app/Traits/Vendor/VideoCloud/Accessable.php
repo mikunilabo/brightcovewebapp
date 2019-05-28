@@ -301,7 +301,7 @@ trait Accessable
      */
     private function auth(): void
     {
-        if (! is_null($accessToken = session('videocloud.access_token')) && session('videocloud.expires_on', 0) > time()) {
+        if (! is_null($accessToken = session('videocloud.access_token')) && (session('videocloud.expires_on', 0) - 30) > time()) {
             $this->client->accessToken($accessToken);
             return;
         }
