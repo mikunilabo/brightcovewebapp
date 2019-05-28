@@ -22,11 +22,11 @@ class VideoCloud {
     callback(media);
   };
 
-  createMedia = async requestData => {
+  createMedia = async (requestData) => {
     return await window.axios
       .post("/webapi/media/create", requestData)
-      .then(response => response.data)
-      .catch(error => {
+      .then((response) => response.data)
+      .catch((error) => {
         if (error.response.status === 422) {
           this.invalidFeedback(error.response);
         }
@@ -34,11 +34,11 @@ class VideoCloud {
       });
   };
 
-  updateMedia = async requestData => {
+  updateMedia = async (requestData) => {
     return await window.axios
       .post("/webapi/media/" + this.mediaId + "/update", requestData)
-      .then(response => response.data)
-      .catch(error => {
+      .then((response) => response.data)
+      .catch((error) => {
         if (error.response.status === 422) {
           this.invalidFeedback(error.response);
         }
@@ -52,7 +52,7 @@ class VideoCloud {
         .post("/webapi/media/" + videoId + "/s3_url", {
           source: name,
         })
-        .then(response => response.data);
+        .then((response) => response.data);
     } catch (error) {
       this.suspend(error);
     }
@@ -64,23 +64,25 @@ class VideoCloud {
         .post("/webapi/media/" + videoId + "/ingest", {
           master_url: s3apiRequestUrl,
         })
-        .then(response => response.data);
+        .then((response) => response.data);
     } catch (error) {
       this.suspend(error);
     }
   };
 
-  invalidFeedback = response => {
+  invalidFeedback = (response) => {
     console.error(response.data.errors);
 
-    [].slice.call(document.getElementsByClassName('invalid-feedback')).forEach(function(span) {
-      window.Common.removeChildren(span);
-    });
+    [].slice
+      .call(document.getElementsByClassName("invalid-feedback"))
+      .forEach(function(span) {
+        window.Common.removeChildren(span);
+      });
 
     for (let key of Object.keys(response.data.errors)) {
-      let span = document.getElementById('invalid-feedback-' + key);
+      let span = document.getElementById("invalid-feedback-" + key);
 
-      if (! span) continue;
+      if (!span) continue;
 
       let text = document.createTextNode(response.data.errors[key][0]);
       let strong = document.createElement("strong");
@@ -89,9 +91,9 @@ class VideoCloud {
     }
   };
 
-  suspend = error => {
+  suspend = (error) => {
     window.Common.progressOverlayOut();
-    alert("Mediaの作成・更新処理に失敗しました。")
+    alert("Mediaの作成・更新処理に失敗しました。");
     throw new Error(error);
   };
 }

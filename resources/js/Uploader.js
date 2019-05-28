@@ -33,10 +33,10 @@ class Uploader {
       partNum++;
       const end = Math.min(rangeStart + partSize, allSize);
 
-      const sendData = await new Promise(resolve => {
+      const sendData = await new Promise((resolve) => {
         let fileReader = new FileReader();
 
-        fileReader.onload = event => {
+        fileReader.onload = (event) => {
           const data = event.target.result;
           let byte = new Uint8Array(data);
           resolve(byte);
@@ -46,7 +46,7 @@ class Uploader {
         fileReader.readAsArrayBuffer(blob2);
       });
 
-      const progress = end / uploadFile.size * 100;
+      const progress = (end / uploadFile.size) * 100;
       if ($("#progressOverlay").is(":visible")) {
         window.Common.updateProgressOverlay(Math.round(progress));
       }
@@ -75,10 +75,10 @@ class Uploader {
         UploadId: uploadId,
       })
       .promise()
-      .then(res => res);
+      .then((res) => res);
   };
 
-  suspend = error => {
+  suspend = (error) => {
     console.error(error, error.stack);
     alert("アップロード処理に失敗しました。");
     window.Common.progressOverlayOut();
