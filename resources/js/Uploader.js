@@ -13,7 +13,7 @@ class Uploader {
       },
     });
     const allSize = uploadFile.size;
-    const partSize = 1024 * 1024 * 5; // 5MB/chunk
+    const partSize = 1024 * 1024 * 20; // 20MB/chunk
     const multiPartParams = {
       ContentType: uploadFile.type,
       Bucket: s3Url.bucket,
