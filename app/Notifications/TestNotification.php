@@ -26,11 +26,18 @@ class TestNotification extends Notification implements ShouldQueue
     public $resource;
 
     /**
+     * @var array
+     */
+    private $via;
+
+    /**
+     * @param array $via
      * @param mixed $resource
      * @return void
      */
-    public function __construct($resource = null)
+    public function __construct(array $via = [], $resource = null)
     {
+        $this->via = $via;
         $this->resource = $resource;
     }
 
@@ -40,7 +47,7 @@ class TestNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable): array
     {
-        return $notifiable instanceof AnonymousNotifiable ? ['slack'] : [DatabaseChannel::class];
+        return !empty($this->via) ? $this->via : ($notifiable instanceof AnonymousNotifiable ? ['slack'] : [DatabaseChannel::class]);
     }
 
     /**
@@ -50,8 +57,8 @@ class TestNotification extends Notification implements ShouldQueue
     public function toArray($notifiable): array
     {
         return [
-            'resource_id' => $this->resource->id,
-            'resource_type' => 'league',
+            'resource_id' => is_null($this->resource) ? null : $this->resource->id,
+            'resource_type' => nulll,
             'subject' => 'subject',
             'content' => 'content',
         ];
@@ -63,7 +70,11 @@ class TestNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        //
+        return (new MailMessage)
+            ->success()
+            ->subject('Notification Subject')
+            ->line('Testtesttesttesttesttesttesttesttest...')
+            ->action('Home', route('home'));
     }
 
     /**

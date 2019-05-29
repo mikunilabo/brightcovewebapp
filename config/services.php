@@ -45,6 +45,10 @@ return [
         'video_profile' => env('VIDEOCLOUD_VIDEO_PROFILE'),
     ],
 
+    'sendgrid' => [
+        'api_key' => env('SENDGRID_API_KEY'),
+    ],
+
     'slack' => [
         'webhook_url'               => env('SLACK_WEBHOOK_URL'),
         'channel'                   => null,
