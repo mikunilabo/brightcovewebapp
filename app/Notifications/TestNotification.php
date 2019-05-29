@@ -11,7 +11,7 @@ use Illuminate\Notifications\AnonymousNotifiable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\SlackMessage;
 
-class TestNotification extends Notification implements ShouldQueue
+final class TestNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
