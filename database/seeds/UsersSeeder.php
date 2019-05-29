@@ -17,20 +17,11 @@ class UsersSeeder extends Seeder
      */
     public function __construct()
     {
-        foreach (config('accounts.administrators') as $key => $items) {
+        foreach (config('accounts.users') as $key => $items) {
             if (empty($items['email']))  continue;
 
-            foreach (config('accounts.environments') as $env => $names) {
-                if (app()->environment($env) && in_array($key, $names, true)) {
-                    $this->items[] = $items;
-                }
-            }
+            $this->items[] = $items;
         }
-
-        if (! count($this->items)) {
-            $this->items[] = config('accounts.dummy');
-        }
-
     }
 
     /**

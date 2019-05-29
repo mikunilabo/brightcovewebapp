@@ -1,8 +1,8 @@
 # UNIVAS_Contents_Platform
 
-## Project Management
+## Project Managements
 
-## Environment
+## Environments
   - **production**
 
   - **development**
@@ -11,12 +11,13 @@
     + Laravel5.5 LTS
 
   - **Required operating environment**
-    + PHP >= 7.0.0
+    + PHP >= 7.1.0（L5.5自体はPHP7.0以上ですが、一部PHP7.1以上が必要になる構文を含んでいるため）
     + OpenSSL PHP拡張
     + PDO PHP拡張
     + Mbstring PHP拡張
     + Tokenizer PHP拡張
     + XML PHP拡張
+    + BCMATH PHP拡張
 
 ## Installation
 ```SSH
@@ -25,6 +26,7 @@ $ cp .env.example .env（環境ファイル雛形からコピーする）
 $ php artisan key:generate（各種暗号化用アプリケーションキー生成）
 $ php artisan serve（ビルトインサーバ起動）
 ```
+
 ここまででログイン画面は表示されると思います。
 以下環境ファイルにDB情報を設定してください。
 
@@ -37,17 +39,6 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-環境ファイルへ下記の用に追加しておくと、任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。
-初期状態では自動的にデフォルトアカウントが作成されます。
-環境変数の確認は `/config/accounts.php`
-
-```.env
-ADMIN_KWADA_NAME=your_name
-ADMIN_KWADA_EMAIL=your_email
-ADMIN_KWADA_PASSWORD=your_password
-```
-
-
 以下いくつかの便利なマイグレーションコマンドがあります。
 
 ```SSH
@@ -59,24 +50,41 @@ $ php artisan db:seed（シーディングを順に実行します）
 $ php artisan db:seed --class=[class name]（シーディングを個別に実行します）
 ```
 
-以下はフロントエンドビルドに必要です。
+初回`$ php artisan migrate --seed`コマンド実行前に、環境ファイルへ下記の用に追加しておくと、
+任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。  
+環境変数の確認は `/config/accounts.php`  
+個別シード実行は`$ php artisan db:seed --class=UsersSeeder`
+
+```.env
+ADMIN_KWADA_NAME=your_name
+ADMIN_KWADA_EMAIL=your_email
+```
+
+## Frontend assets compilation
 node.jsとパッケージマネージャにnpmを使用しています。
 
 ```SSH
-npm install
+npm i
 npm run dev [or prod]
 npm run watch
 ```
 
-以下は主に開発時/デプロイ時に使用します。
-
+## During development / deployment
 ```SSH
-$ composer dump-autoload -o （オートローディング対象では無いディレクトリ以下でクラスを作成した場合等は手動で更新する必要があります）
-$ php artisan refresh [-c|--cache]（各種便利コマンドをまとめた自作コマンドです。production環境ではオプションでキャッシュ化すると高速化します）
+$ composer dump-autoload -o （オートローディング対象では無いディレクトリ以下でクラスを作成した場合等は手動で更新する必要があります 例：database/）
+$ php artisan refresh [-c|--cache] [-d|--dumpautoload] [-f|--force] [-i|--info]
+（各種便利コマンドをまとめた自作コマンドです。`production`環境ではCオプションでキャッシュ化すると高速化します）
 ```
 
-以下はサーバ/アプリケーションのメンテナンス時に使用可能です。
+以下のような環境変数を設定する事で、各種デバッグツールを有効化出来ます。
 
+```.env
+COLLISION_ENABLE=true
+DEBUGBAR_ENABLE=true
+IDEHELPER_ENABLE=true
+```
+
+## During maintenance
 ```SSH
 $ php artisan down（メンテナンス画面に切り替わります HTTPステータス503）
 $ php artisan up（メンテナンス終了後、復旧時に使用）

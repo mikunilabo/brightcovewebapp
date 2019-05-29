@@ -10,7 +10,7 @@ return [
      |
      */
 
-    'administrators' => [
+    'users' => [
         'tkumagai' => [
             'name'     => env('ADMIN_TKUMAGAI_NAME'),
             'email'    => env('ADMIN_TKUMAGAI_EMAIL'),
@@ -26,7 +26,7 @@ return [
         'ktoda' => [
             'name'     => env('ADMIN_KTODA_NAME'),
             'email'    => env('ADMIN_KTODA_EMAIL'),
-            'password' => env('ADMIN_KTODA_password', 'password'),
+            'password' => env('ADMIN_KTODA_PASSWORD', 'password'),
             'role_id'  => 1,
         ],
         'kwada' => [
@@ -35,30 +35,6 @@ return [
             'password' => env('ADMIN_KWADA_PASSWORD', 'password'),
             'role_id'  => 1,
         ],
-    ],
-
-    'environments' => [
-        'production' => [
-            'tkumagai',
-            'ykumagai',
-        ],
-        'develop' => [
-            'tkumagai',
-            'ykumagai',
-            'ktoda',
-            'kwada',
-        ],
-        'local' => [
-            'ktoda',
-            'kwada',
-        ],
-    ],
-
-    'dummy' => [
-        'name'     => 'Mr.Dummy',
-        'email'    => 'dummy@example.com',
-        'password' => 'password',
-        'role_id'  => 1,
     ],
 
 ];
