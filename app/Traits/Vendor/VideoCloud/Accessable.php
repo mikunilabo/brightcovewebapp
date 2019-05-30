@@ -63,46 +63,46 @@ trait Accessable
         /**
          * General
          */
-        if (! empty($args[$key = 'description'])) {
+        if (array_key_exists($key = 'description', $args)) {
             $params[$key] = $args[$key];// 0 <= 248
         }
 
-        if (! empty($args[$key = 'long_description'])) {
+        if (array_key_exists($key = 'long_description', $args)) {
             $params[$key] = $args[$key];// 0 <= 5000
         }
 
-        if (! empty($args[$key = 'state'])) {
+        if (array_key_exists($key = 'state', $args)) {
             $params[$key] = $args[$key];// ACTIVE or INACTIVE
         }
 
         /**
          * Custom Fields
          */
-        if (! empty($args[$key = 'date'])) {
+        if (array_key_exists($key = 'date', $args)) {
             $params['custom_fields'][$key] = $args[$key];// YYYY/MM/DD
         }
 
-        if (! empty($args[$key = 'rightholder'])) {
+        if (array_key_exists($key = 'rightholder', $args)) {
             $params['custom_fields'][$key] = $args[$key];
         }
 
-        if (! empty($args[$key = 'tournament'])) {
+        if (array_key_exists($key = 'tournament', $args)) {
             $params['custom_fields'][$key] = $args[$key];
         }
 
-        if (! empty($args[$key = 'uuid'])) {
+        if (array_key_exists($key = 'uuid', $args)) {
             $params['custom_fields'][$key] = $args[$key];
         }
 
         /**
          * Schedules
          */
-        if (! empty($args[$key = 'starts_at'])) {
-            $params['schedule'][$key] = Carbon::parse($args[$key])->format('c');// ISO-8601
+        if (array_key_exists($key = 'starts_at', $args)) {
+            $params['schedule'][$key] = is_null($args[$key]) ? null : Carbon::parse($args[$key])->format('c');// ISO-8601
         }
 
-        if (! empty($args[$key = 'ends_at'])) {
-            $params['schedule'][$key] = Carbon::parse($args[$key])->format('c');// ISO-8601
+        if (array_key_exists($key = 'ends_at', $args)) {
+            $params['schedule'][$key] = is_null($args[$key]) ? null : Carbon::parse($args[$key])->format('c');// ISO-8601
         }
 
         /**

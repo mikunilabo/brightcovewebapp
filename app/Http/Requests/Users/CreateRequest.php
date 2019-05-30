@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Users;
 
+use Illuminate\Validation\Rule;
+
 final class CreateRequest extends UsersRequest
 {
     /**
@@ -26,7 +28,7 @@ final class CreateRequest extends UsersRequest
                 'string',
                 'email',
                 'max:255',
-                'unique:users',
+                Rule::unique('users')->whereNotNull('existence'),
             ],
             'password' => [
                 'required',

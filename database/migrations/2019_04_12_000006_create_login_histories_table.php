@@ -20,7 +20,7 @@ final class CreateLoginHistoriesTable extends Migration
         try {
             Schema::create($this->table, function (Blueprint $table) {
                 $table->increments('id');
-                $table->uuid('user_id');
+                $table->uuid('user_id')->index();
                 $table->ipAddress('ip');
                 $table->string('host', 64);
                 $table->string('user_agent');

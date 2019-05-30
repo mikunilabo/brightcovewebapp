@@ -41,9 +41,7 @@ final class UserObserver
      */
     public function deleting(Model $model)
     {
-        $model->update([
-            'email' => null,
-        ]);
+        //
     }
 
     /**
