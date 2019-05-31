@@ -125,136 +125,134 @@
     @parent
 
     <script type="text/javascript">
+      window.Common.overlay();
+
+      var activateBtn = document.getElementById('activate-btn');
+      var deactivateBtn = document.getElementById('deactivate-btn');
+      var selectallBtn = document.getElementById('select-all-btn');
+      var deselectallBtn = document.getElementById('deselect-all-btn');
+      var deleteBtn = document.getElementById('delete-btn');
+
+      var table = $('#media-table').DataTable({
+        columnDefs: [
+          { targets: 1, sortable: false },
+          { targets: 3, sortable: false }
+        ],
+        displayLength: 20,
+        'drawCallback': function () {
+          window.Common.overlayOut();
+          document.getElementById('tbody').classList.remove('d-none');
+        },
+        info: true,
+        lengthChange: true,
+        lengthMenu: [10, 20, 30, 50],
+        order: [
+          [4, 'desc'],
+        ],
+        ordering: true,
+        paging: true,
+        pagingType: 'full_numbers',
+        scrollX: false,
+        searching: true,
+        select: {
+          style: 'multi',
+          selector: 'tr',
+          blurable: false,
+        },
+        stateSave: true,
+        responsive: true
+      })
+      .on('select', function (e, dt, type, indexes) {
+        if (type === 'row' && table.rows('.selected').data().length > 0) {
+          activateBtn.classList.remove('disabled');
+          deactivateBtn.classList.remove('disabled');
+          deleteBtn.classList.remove('disabled');
+          deselectallBtn.classList.remove('disabled');
+
+          if (table.rows('.selected').data().length === table.rows().data().length) {
+            selectallBtn.classList.add('disabled');
+          }
+        }
+      })
+      .on('deselect', function (e, dt, type, indexes) {
+        if (type === 'row' && table.rows('.selected').data().length < table.rows().data().length) {
+          selectallBtn.classList.remove('disabled');
+
+          if (table.rows('.selected').data().length === 0) {
+            activateBtn.classList.add('disabled');
+            deactivateBtn.classList.add('disabled');
+            deleteBtn.classList.add('disabled');
+            deselectallBtn.classList.add('disabled');
+          }
+        }
+      });
+
+      selectallBtn.addEventListener('click', function () {
+        table.rows().select();
+      });
+
+      deselectallBtn.addEventListener('click', function () {
+        table.rows().deselect();
+      });
+
+      activateBtn.addEventListener('click', function () {
+        if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Activate')])')) {
+          return false;
+        }
+
         window.Common.overlay();
+        var ids = table.rows('.selected').ids();
 
-        $(document).ready(function () {
-            var activateBtn = document.getElementById('activate-btn');
-            var deactivateBtn = document.getElementById('deactivate-btn');
-            var selectallBtn = document.getElementById('select-all-btn');
-            var deselectallBtn = document.getElementById('deselect-all-btn');
-            var deleteBtn = document.getElementById('delete-btn');
-
-            var table = $('#media-table').DataTable({
-                columnDefs: [
-                    { targets: 1, sortable: false },
-                    { targets: 3, sortable: false }
-                ],
-                displayLength: 20,
-                'drawCallback': function () {
-                    window.Common.overlayOut();
-                    document.getElementById('tbody').classList.remove('d-none');
-                },
-                info: true,
-                lengthChange: true,
-                lengthMenu: [10, 20, 30, 50],
-                order: [
-                    [4, 'desc'],
-                ],
-                ordering: true,
-                paging: true,
-                pagingType: 'full_numbers',
-                scrollX: false,
-                searching: true,
-                select: {
-                    style: 'multi',
-                    selector: 'tr',
-                    blurable: false,
-                },
-                stateSave: true,
-                responsive: true,
-            })
-            .on('select', function (e, dt, type, indexes) {
-                if (type === 'row' && table.rows('.selected').data().length > 0) {
-                    activateBtn.classList.remove('disabled');
-                    deactivateBtn.classList.remove('disabled');
-                    deleteBtn.classList.remove('disabled');
-                    deselectallBtn.classList.remove('disabled');
-
-                    if (table.rows('.selected').data().length === table.rows().data().length) {
-                        selectallBtn.classList.add('disabled');
-                    	}
-                }
-            })
-            .on('deselect', function (e, dt, type, indexes) {
-                if (type === 'row' && table.rows('.selected').data().length < table.rows().data().length) {
-                    selectallBtn.classList.remove('disabled');
-
-                    if (table.rows('.selected').data().length === 0) {
-                        activateBtn.classList.add('disabled');
-                        deactivateBtn.classList.add('disabled');
-                        deleteBtn.classList.add('disabled');
-                        deselectallBtn.classList.add('disabled');
-                    }
-                }
-            });
-
-            selectallBtn.addEventListener('click', function () {
-                table.rows().select();
-            });
-
-            deselectallBtn.addEventListener('click', function () {
-                table.rows().deselect();
-            });
-
-            activateBtn.addEventListener('click', function () {
-                if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Activate')])')) {
-                    return false;
-                }
-
-                window.Common.overlay();
-                var ids = table.rows('.selected').ids();
-
-                window.axios.post("{{ route('webapi.media.activates') }}", {
-                    ids: ids.toArray()
-                })
-                .then(response => {
-                    // console.log(response.data);
-                    window.location.reload();
-                }).catch(error => {
-                    window.Common.overlayOut();
-                    console.error(error);
-                });
-            });
-
-            deactivateBtn.addEventListener('click', function () {
-                if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Deactivate')])')) {
-                    return false;
-                }
-
-                window.Common.overlay();
-                var ids = table.rows('.selected').ids();
-
-                window.axios.post("{{ route('webapi.media.deactivates') }}", {
-                    ids: ids.toArray()
-                })
-                .then(response => {
-                    // console.log(response.data);
-                    window.location.reload();
-                }).catch(error => {
-                    window.Common.overlayOut();
-                    console.error(error);
-                });
-            });
-
-            deleteBtn.addEventListener('click', function () {
-                if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Delete')])')) {
-                    return false;
-                }
-
-                window.Common.overlay();
-                var ids = table.rows('.selected').ids();
-
-                window.axios.post("{{ route('webapi.media.deletes') }}", {
-                    ids: ids.toArray()
-                })
-                .then(response => {
-                    // console.log(response.data);
-                    window.location.reload();
-                }).catch(error => {
-                    window.Common.overlayOut();
-                    console.error(error);
-                });
-            });
+        window.axios.post("{{ route('webapi.media.activates') }}", {
+          ids: ids.toArray()
+        })
+        .then(response => {
+          // console.log(response.data);
+          window.location.reload();
+        }).catch(error => {
+          window.Common.overlayOut();
+          console.error(error);
         });
+      });
+
+      deactivateBtn.addEventListener('click', function () {
+        if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Deactivate')])')) {
+          return false;
+        }
+
+        window.Common.overlay();
+        var ids = table.rows('.selected').ids();
+
+        window.axios.post("{{ route('webapi.media.deactivates') }}", {
+          ids: ids.toArray()
+        })
+        .then(response => {
+          // console.log(response.data);
+          window.location.reload();
+        }).catch(error => {
+          window.Common.overlayOut();
+          console.error(error);
+        });
+      });
+
+      deleteBtn.addEventListener('click', function () {
+        if (! confirm('@lang ('Are you sure you want to :action the selected :name?', ['name' => __('Media'), 'action' => __('Delete')])')) {
+          return false;
+        }
+
+        window.Common.overlay();
+        var ids = table.rows('.selected').ids();
+
+        window.axios.post("{{ route('webapi.media.deletes') }}", {
+          ids: ids.toArray()
+        })
+        .then(response => {
+          // console.log(response.data);
+          window.location.reload();
+        }).catch(error => {
+          window.Common.overlayOut();
+          console.error(error);
+        });
+      });
     </script>
 @endsection

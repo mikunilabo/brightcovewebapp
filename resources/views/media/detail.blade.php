@@ -47,143 +47,143 @@
     @parent
 
     <script type="text/javascript">
-        ingestjobs();
+      ingestjobs();
 
-        ta('.ta-leagues', 'leagues');
-        ta('.ta-sports', 'sports');
-        ta('.ta-universities', 'universities');
+      ta('.ta-leagues', 'leagues');
+      ta('.ta-sports', 'sports');
+      ta('.ta-universities', 'universities');
 
-        flatpickr('#date', {
-            allowInput: true,
-            dateFormat: "Y/m/d"
+      flatpickr('#date', {
+        allowInput: true,
+        dateFormat: "Y/m/d"
+      });
+
+      flatpickr('#starts_at', {
+        allowInput: true,
+        dateFormat: "Y/m/d H:i",
+        enableTime: true,
+        plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
+      });
+
+      document.getElementById('video_file').addEventListener('change', function (event) {
+        let span = document.getElementById('invalid-feedback-video_file');
+        window.Common.removeChildren(span);
+
+        window.VideoCloud.source = event.target.files[0];
+
+        let label = document.getElementById('custom-file-label');
+        label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.Common.trance('File not selected');
+
+        if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
+
+        let text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
+        let strong = document.createElement("strong");
+        strong.appendChild(text);
+        span.appendChild(strong);
+      });
+
+      document.getElementById('upload-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (! validate()) return;
+
+        window.VideoCloud.source ? window.Common.progressOverlay() : window.Common.overlay();
+        const mediaObject = getMediaObject(event.target);
+
+        window.VideoCloud.mediaId = {{ $row->id }};
+        window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
+          window.location.reload();
         });
+      });
 
-        flatpickr('#starts_at', {
-            allowInput: true,
-            dateFormat: "Y/m/d H:i",
-            enableTime: true,
-            plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
+      /**
+       * @return bool
+       */
+      function validate() {
+        let file = document.getElementById("video_file").files[0];
+        if (file && file.size > VALID_VIDEO_FILE_SIZE) {
+          return false;
+        }
+        if (document.getElementById("name").value.length === 0) {
+          return false;
+        }
+        return true;
+      }
+
+      /**
+       * @param string tag
+       * @param string name
+       * @return void
+       */
+       function ta(tag, name) {
+        if (name === 'leagues') {
+          var json = @json ($vc_leagues->pluck('name'));
+        } else if (name === 'sports') {
+          var json = @json ($vc_sports->pluck('name'));
+        } else if (name === 'universities') {
+          var json = @json ($vc_universities->pluck('name'));
+        }
+
+        $(tag).typeahead({
+          highlight: true,
+          hint: false,
+          minLength: 0
+        },
+        {
+          name: 'states',
+          limit: 100,
+          source: window.Common.substringMatcher(json)
         });
+      }
 
-        document.getElementById('video_file').addEventListener('change', function (event) {
-            let span = document.getElementById('invalid-feedback-video_file');
-            window.Common.removeChildren(span);
-
-            window.VideoCloud.source = event.target.files[0];
-
-            let label = document.getElementById('custom-file-label');
-            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.Common.trance('File not selected');
-
-            if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
-
-            let text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
-            let strong = document.createElement("strong");
-            strong.appendChild(text);
-            span.appendChild(strong);
-        });
-
-        document.getElementById('upload-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            if (! validate()) return;
-
-            window.VideoCloud.source ? window.Common.progressOverlay() : window.Common.overlay();
-            const mediaObject = getMediaObject(event.target);
-
-            window.VideoCloud.mediaId = {{ $row->id }};
-            window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
-                window.location.reload();
-            });
-        });
-
-        /**
-         * @return bool
-         */
-        function validate() {
-            let file = document.getElementById("video_file").files[0];
-            if (file && file.size > VALID_VIDEO_FILE_SIZE) {
-                return false;
+      /**
+       * @return void
+       */
+      function ingestjobs() {
+        window.Common.overlay();
+        window.axios.get("{{ route('webapi.media.ingestjobs', $row->id) }}")
+          .then(response => {
+            window.Common.overlayOut();
+            for (let key of Object.keys(response.data)) {
+              var state = response.data[key].state;
+              var span = document.getElementById('ingestjobs_result');
+              span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
+              span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
+              span.textContent = window.Common.trance(state);
+              break;
             }
-            if (document.getElementById("name").value.length === 0) {
-                return false;
+          }).catch(error => {
+            window.Common.overlayOut();
+            console.error(error);
+          });
+      }
+
+      /**
+       * @param HTMLFormElement mediaFormElement
+       * @return object mediaObject
+       */
+      function getMediaObject(mediaFormElement) {
+        const mediaObject = {
+          leagues: [],
+          sports: [],
+          universities: [],
+        };
+
+        [].slice.call(mediaFormElement.elements).forEach(function(input) {
+          if (input.name) {
+            if (input.type === "file") {
+              return;
+            } else if (input.name.split("[").length > 1) {// If array
+              let str = input.name.split("[");
+              mediaObject[str[0]][str[1].split("]")[0]] = input.value;
+            } else if (input.name === 'state' && input.checked === false) {
+              return;
+            } else {
+              mediaObject[input.name] = input.value;
             }
-            return true;
-        }
-
-        /**
-         * @param string tag
-         * @param string name
-         * @return void
-         */
-         function ta(tag, name) {
-            if (name === 'leagues') {
-                var json = @json ($vc_leagues->pluck('name'));
-            } else if (name === 'sports') {
-                var json = @json ($vc_sports->pluck('name'));
-            } else if (name === 'universities') {
-                var json = @json ($vc_universities->pluck('name'));
-            }
-
-            $(tag).typeahead({
-                highlight: true,
-                hint: false,
-                minLength: 0
-            },
-            {
-                name: 'states',
-                limit: 100,
-                source: window.Common.substringMatcher(json)
-            });
-        }
-
-        /**
-         * @return void
-         */
-        function ingestjobs() {
-            window.Common.overlay();
-            window.axios.get("{{ route('webapi.media.ingestjobs', $row->id) }}")
-                .then(response => {
-                    window.Common.overlayOut();
-                    for (let key of Object.keys(response.data)) {
-                        var state = response.data[key].state;
-                        var span = document.getElementById('ingestjobs_result');
-                        span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
-                        span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
-                        span.textContent = window.Common.trance(state);
-                        break;
-                    }
-                }).catch(error => {
-                    window.Common.overlayOut();
-                    console.error(error);
-                });
-        }
-
-        /**
-         * @param HTMLFormElement mediaFormElement
-         * @return object mediaObject
-         */
-        function getMediaObject(mediaFormElement) {
-            const mediaObject = {
-                leagues: [],
-                sports: [],
-                universities: [],
-            };
-
-            [].slice.call(mediaFormElement.elements).forEach(function(input) {
-                if (input.name) {
-                    if (input.type === "file") {
-                        return;
-                    } else if (input.name.split("[").length > 1) {// If array
-                        let str = input.name.split("[");
-                        mediaObject[str[0]][str[1].split("]")[0]] = input.value;
-                    } else if (input.name === 'state' && input.checked === false) {
-                        return;
-                    } else {
-                        mediaObject[input.name] = input.value;
-                    }
-                }
-            });
-            return mediaObject;
-        }
+          }
+        });
+        return mediaObject;
+      }
     </script>
 @endsection

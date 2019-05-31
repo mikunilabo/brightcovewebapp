@@ -39,7 +39,7 @@
                 <!-- Accounts -->
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
-                        <i class="nav-icon icon-people"></i>@lang ('Accounts Management')
+                        <i class="nav-icon icon-people"></i>@lang ('Accounts management')
                     </a>
                     <ul class="nav-dropdown-items">
                         @can ('authorize', ['user-select'])

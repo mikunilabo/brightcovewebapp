@@ -38,11 +38,11 @@ return [
     'dimensions'           => ':attributeの図形サイズが正しくありません。',
     'distinct'             => ':attributeの値が重複しています。',
     'email'                => ':attributeは有効なメールアドレス形式で入力してください。',
-    'exists'               => '入力された :attributeは存在しないか、不正なデータです。',
+    'exists'               => '入力された:attributeは存在しないか、不正なデータです。',
     'filled'               => ':attributeは必須です。',
     'image'                => ':attributeは、画像を指定してください。',
-    'in'                   => '選択された :attributeは、有効ではありません。',
-    'in_array'             => 'The :attributefield does not exist in :other.',
+    'in'                   => '選択された:attributeは、有効ではありません。',
+    'in_array'             => 'The:attributefield does not exist in :other.',
     'integer'              => ':attributeは、整数を指定してください。',
     'ip'                   => ':attributeは、有効なIPアドレスを指定してください。',
     'json'                 => ':attributeは、有効なJSON文字列を指定してください。',
@@ -63,12 +63,12 @@ return [
     'numeric'              => ':attributeは数値で入力してください。',
     'regex'                => ':attributeの形式が不正です。',
     'required'             => ':attributeは必須項目です。',
-    'required_if'          => ':other が :value の場合、 :attributeを指定してください。',
-    'required_unless'      => ':otherが :value 以外の場合、 :attributeを指定してください。',
-    'required_with'        => ':values が指定されている場合、 :attributeも指定してください。',
-    'required_with_all'    => ':values が全て指定されている場合、 :attributeも指定してください。',
-    'required_without'     => ':values が指定されていない場合、 :attributeを指定してください。',
-    'required_without_all' => ':values が全て指定されていない場合、 :attributeを指定してください。',
+    'required_if'          => ':other が :value の場合、:attributeを指定してください。',
+    'required_unless'      => ':otherが :value 以外の場合、:attributeを指定してください。',
+    'required_with'        => ':values が指定されている場合、:attributeも指定してください。',
+    'required_with_all'    => ':values が全て指定されている場合、:attributeも指定してください。',
+    'required_without'     => ':values が指定されていない場合、:attributeを指定してください。',
+    'required_without_all' => ':values が全て指定されていない場合、:attributeを指定してください。',
     'same'                 => ':attributeと :other が一致しません。',
     'size'                 => [
         'numeric' => ':attributeは、 :size を指定してください。',
@@ -78,7 +78,7 @@ return [
     ],
     'string'               => ':attributeは、文字を指定してください。',
     'timezone'             => ':attributeは、有効なタイムゾーンを指定してください。',
-    'unique'               => '指定の :attributeは既に使用されています。',
+    'unique'               => '指定の:attributeは既に使用されています。',
     'url'                  => ':attributeは、有効なURL形式で指定してください。',
 
     /*
@@ -90,7 +90,7 @@ return [
 
     'custom_alpha_dash'  => ':attributeは、半角英数字と半角ハイフンが使用できます。',
     'format' => ":attributeの形式が正しくありません。",
-    'invalid' => '送信された :attributeの値が無効か、又は不正です。',
+    'invalid' => '送信された:attributeの値が無効か、又は不正です。',
     'zenkaku_katakana' => ':attributeは、全角カタカナで入力してください。',
 
     /*
