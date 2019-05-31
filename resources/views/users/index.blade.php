@@ -124,7 +124,9 @@
             var deleteBtn = document.getElementById('delete-btn');
 
             var table = $('#users-table').DataTable({
-                columnDefs: [],
+                columnDefs: [
+                    { targets: 5, sortable: false }
+                ],
                 displayLength: 20,
                 'drawCallback': function () {
                     window.Common.overlayOut();

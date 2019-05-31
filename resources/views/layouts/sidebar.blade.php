@@ -13,7 +13,7 @@
                 <!-- Media -->
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
-                        <i class="nav-icon icon-playlist"></i>@lang ('Media')@lang ('management')
+                        <i class="nav-icon icon-playlist"></i>@lang ('Media management')
                     </a>
                     <ul class="nav-dropdown-items">
                         @can ('authorize', ['media-select'])
@@ -39,7 +39,7 @@
                 <!-- Accounts -->
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link nav-dropdown-toggle" href="#">
-                        <i class="nav-icon icon-people"></i>@lang ('Accounts')@lang ('management')
+                        <i class="nav-icon icon-people"></i>@lang ('Accounts Management')
                     </a>
                     <ul class="nav-dropdown-items">
                         @can ('authorize', ['user-select'])

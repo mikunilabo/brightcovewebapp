@@ -13,7 +13,7 @@
     <!-- Breadcrumb Menu-->
     <li class="breadcrumb-menu d-md-down-none">
         <div class="btn-group" role="group" aria-label="Button group">
-            <a class="btn" href="#">
+            <a class="btn disabled" href="#">
                 <i class="icon-settings"></i> @lang ('Settings')
             </a>
         </div>

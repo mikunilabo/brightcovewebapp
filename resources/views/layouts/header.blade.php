@@ -20,7 +20,8 @@
                 <a class="dropdown-item" href="{{ route('accounts.profile') }}">
                     <i class="nav-icon icon-user"></i>@lang ('Profile')
                 </a>
-                <a class="dropdown-item" href="#">
+
+                <a class="dropdown-item disabled" href="#">
                     <i class="nav-icon icon-settings"></i>@lang ('Settings')
                 </a>
 
