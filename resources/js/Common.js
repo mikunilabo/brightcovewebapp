@@ -264,6 +264,14 @@ class Common {
       element.removeChild(element.firstChild);
     }
   }
+
+  /**
+   * @param string key
+   * @return string
+   */
+  trance(key) {
+    return window.locale === 'en' || ! key in window.lang ? key : window.lang[key];
+  }
 }
 
 window.Common = new Common();

@@ -149,37 +149,33 @@
     @parent
 
     <script type="text/javascript">
-        (function() {
-            'use strict';
+      ta('.ta-leagues', 'leagues');
+      ta('.ta-sports', 'sports');
+      ta('.ta-universities', 'universities');
 
-            ta('.ta-leagues', 'leagues');
-            ta('.ta-sports', 'sports');
-            ta('.ta-universities', 'universities');
-        })();
-
-        /**
-         * @param string id
-         * @return void
-         */
-        function ta(tag, name) {
-            if (name === 'leagues') {
-                var json = @json ($vc_leagues->pluck('name'));
-            } else if (name === 'sports') {
-                var json = @json ($vc_sports->pluck('name'));
-            } else if (name === 'universities') {
-                var json = @json ($vc_universities->pluck('name'));
-            }
-
-            $(tag).typeahead({
-                highlight: true,
-                hint: false,
-                minLength: 0
-            },
-            {
-                name: 'states',
-                limit: 100,
-                source: window.Common.substringMatcher(json)
-            });
+      /**
+       * @param string id
+       * @return void
+       */
+      function ta(tag, name) {
+        if (name === 'leagues') {
+          var json = @json ($vc_leagues->pluck('name'));
+        } else if (name === 'sports') {
+          var json = @json ($vc_sports->pluck('name'));
+        } else if (name === 'universities') {
+          var json = @json ($vc_universities->pluck('name'));
         }
+
+        $(tag).typeahead({
+          highlight: true,
+          hint: false,
+          minLength: 0
+        },
+        {
+          name: 'states',
+          limit: 100,
+          source: window.Common.substringMatcher(json)
+        });
+      }
     </script>
 @endsection

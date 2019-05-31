@@ -39,116 +39,116 @@
     @parent
 
     <script type="text/javascript">
-        ta('.ta-leagues', 'leagues');
-        ta('.ta-sports', 'sports');
-        ta('.ta-universities', 'universities');
+      ta('.ta-leagues', 'leagues');
+      ta('.ta-sports', 'sports');
+      ta('.ta-universities', 'universities');
 
-        flatpickr('#date', {
-            allowInput: true,
-            dateFormat: "Y/m/d",
+      flatpickr('#date', {
+        allowInput: true,
+        dateFormat: "Y/m/d",
+      });
+
+      flatpickr('#starts_at', {
+        allowInput: true,
+        dateFormat: "Y/m/d H:i",
+        enableTime: true,
+        plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
+      });
+
+      document.getElementById('video_file').addEventListener('change', function (event) {
+        var span = document.getElementById('invalid-feedback-video_file');
+        window.Common.removeChildren(span);
+
+        window.VideoCloud.source = event.target.files[0];
+
+        var label = document.getElementById('custom-file-label');
+        label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.Common.trance('File not selected');
+
+        if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
+
+        var text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
+        var strong = document.createElement("strong");
+        strong.appendChild(text);
+        span.appendChild(strong);
+      });
+
+      document.getElementById('upload-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (! validate()) return;
+
+        window.Common.progressOverlay();
+        var mediaObject = getMediaObject(event.target);
+
+        window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
+          window.location.href = "/media/" + media.id + "/detail";
         });
+      });
 
-        flatpickr('#starts_at', {
-            allowInput: true,
-            dateFormat: "Y/m/d H:i",
-            enableTime: true,
-            plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
-        });
+      /**
+       * @return bool
+       */
+      function validate() {
+        var file = document.getElementById("video_file").files[0];
+        if (! file || file.size > VALID_VIDEO_FILE_SIZE) {
+          return false;
+        }
+        if (document.getElementById("name").value.length === 0) {
+          return false;
+        }
+        return true;
+      }
 
-        document.getElementById('video_file').addEventListener('change', function (event) {
-            var span = document.getElementById('invalid-feedback-video_file');
-            window.Common.removeChildren(span);
-
-            window.VideoCloud.source = event.target.files[0];
-
-            var label = document.getElementById('custom-file-label');
-            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
-
-            if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
-
-            var text = document.createTextNode(`${VALID_VIDEO_FILE_SIZE / 1024 / 1024 / 1024}GB未満のファイルを選択してください。`);
-            var strong = document.createElement("strong");
-            strong.appendChild(text);
-            span.appendChild(strong);
-        });
-
-        document.getElementById('upload-form').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            if (! validate()) return;
-
-            window.Common.progressOverlay();
-            var mediaObject = getMediaObject(event.target);
-
-            window.VideoCloud.operationMediaWithSource(mediaObject, function(media) {
-                window.location.href = "/media/" + media.id + "/detail";
-            });
-        });
-
-        /**
-         * @return bool
-         */
-        function validate() {
-            var file = document.getElementById("video_file").files[0];
-            if (! file || file.size > VALID_VIDEO_FILE_SIZE) {
-                return false;
-            }
-            if (document.getElementById("name").value.length === 0) {
-                return false;
-            }
-            return true;
+      /**
+       * @param string tag
+       * @param string name
+       * @return void
+       */
+      function ta(tag, name) {
+        if (name === 'leagues') {
+          var json = @json ($vc_leagues->pluck('name'));
+        } else if (name === 'sports') {
+          var json = @json ($vc_sports->pluck('name'));
+        } else if (name === 'universities') {
+          var json = @json ($vc_universities->pluck('name'));
         }
 
-        /**
-         * @param string tag
-         * @param string name
-         * @return void
-         */
-        function ta(tag, name) {
-            if (name === 'leagues') {
-                var json = @json ($vc_leagues->pluck('name'));
-            } else if (name === 'sports') {
-                var json = @json ($vc_sports->pluck('name'));
-            } else if (name === 'universities') {
-                var json = @json ($vc_universities->pluck('name'));
+        $(tag).typeahead({
+          highlight: true,
+          hint: false,
+          minLength: 0
+        },
+        {
+          name: 'states',
+          limit: 100,
+          source: window.Common.substringMatcher(json)
+        });
+      }
+
+      /**
+       * @param HTMLFormElement mediaFormElement
+       * @return object mediaObject
+       */
+      function getMediaObject(mediaFormElement) {
+        var mediaObject = {
+          leagues: [],
+          sports: [],
+          universities: [],
+        };
+
+        [].slice.call(mediaFormElement.elements).forEach(function(input) {
+          if (input.name) {
+            if (input.type === "file") {
+              return;
+            } else if (input.name.split("[").length > 1) {// If array
+              var str = input.name.split("[");
+              mediaObject[str[0]][str[1].split("]")[0]] = input.value;
+            } else {
+              mediaObject[input.name] = input.value;
             }
-
-            $(tag).typeahead({
-                highlight: true,
-                hint: false,
-                minLength: 0
-            },
-            {
-                name: 'states',
-                limit: 100,
-                source: window.Common.substringMatcher(json)
-            });
-        }
-
-        /**
-         * @param HTMLFormElement mediaFormElement
-         * @return object mediaObject
-         */
-        function getMediaObject(mediaFormElement) {
-            var mediaObject = {
-                leagues: [],
-                sports: [],
-                universities: [],
-            };
-
-            [].slice.call(mediaFormElement.elements).forEach(function(input) {
-                if (input.name) {
-                    if (input.type === "file") {
-                        return;
-                    } else if (input.name.split("[").length > 1) {// If array
-                        var str = input.name.split("[");
-                        mediaObject[str[0]][str[1].split("]")[0]] = input.value;
-                    } else {
-                        mediaObject[input.name] = input.value;
-                    }
-                }
-            });
-            return mediaObject;
-        }
+          }
+        });
+        return mediaObject;
+      }
     </script>
 @endsection
