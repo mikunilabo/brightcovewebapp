@@ -62,7 +62,7 @@
             window.VideoCloud.source = event.target.files[0];
 
             var label = document.getElementById('custom-file-label');
-            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
+            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.Common.trance('File not selected');
 
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 

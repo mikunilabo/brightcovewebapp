@@ -264,6 +264,14 @@ class Common {
       element.removeChild(element.firstChild);
     }
   }
+
+  /**
+   * @param string key
+   * @return string
+   */
+  trance(key) {
+    return key in window.lang ? window.lang[key] : key;
+  }
 }
 
 window.Common = new Common();

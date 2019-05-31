@@ -26,6 +26,6 @@
 
 @push ('scripts.resources')
     <script type="text/javascript">
-        window.lang = @json (json_decode(file_get_contents(resource_path('lang/ja.json')), true));
+        window.lang = @json (config('app.locale') === 'en' ? [] : json_decode(file_get_contents(resource_path(sprintf('lang/%s.json', config('app.locale')))), true));
     </script>
 @endpush

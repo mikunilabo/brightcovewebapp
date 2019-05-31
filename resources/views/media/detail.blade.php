@@ -72,7 +72,7 @@
             window.VideoCloud.source = event.target.files[0];
 
             let label = document.getElementById('custom-file-label');
-            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.lang['File not selected'];
+            label.textContent = window.VideoCloud.source ? window.VideoCloud.source.name : window.Common.trance('File not selected');
 
             if (! window.VideoCloud.source || window.VideoCloud.source.size <= VALID_VIDEO_FILE_SIZE) return;
 
@@ -149,7 +149,7 @@
                         var span = document.getElementById('ingestjobs_result');
                         span.classList.remove('badge-light', 'badge-dark', 'badge-primary', 'badge-secondary', 'badge-danger', 'badge-warning', 'badge-success', 'badge-info');
                         span.classList.add('badge-' + window.Common.labelNameForIngestJob(state));
-                        span.textContent = window.lang[state];
+                        span.textContent = window.Common.trance(state);
                         break;
                     }
                 }).catch(error => {
