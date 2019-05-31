@@ -128,12 +128,6 @@
         window.Common.overlay();
 
         $(document).ready(function () {
-            $.extend($.fn.dataTable.defaults, {
-                language: {
-                    url: "{{ asset('vendor/DataTables/ja.json') }}"
-                }
-            });
-
             var activateBtn = document.getElementById('activate-btn');
             var deactivateBtn = document.getElementById('deactivate-btn');
             var selectallBtn = document.getElementById('select-all-btn');

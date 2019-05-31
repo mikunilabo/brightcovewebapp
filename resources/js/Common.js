@@ -270,7 +270,7 @@ class Common {
    * @return string
    */
   trance(key) {
-    return key in window.lang ? window.lang[key] : key;
+    return window.locale === 'en' || ! key in window.lang ? key : window.lang[key];
   }
 }
 

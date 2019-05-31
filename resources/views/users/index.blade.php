@@ -113,12 +113,6 @@
         window.Common.overlay();
 
         $(document).ready(function () {
-            $.extend($.fn.dataTable.defaults, {
-                language: {
-                    url: "{{ asset('vendor/DataTables/ja.json') }}"
-                }
-            });
-
             var selectallBtn = document.getElementById('select-all-btn');
             var deselectallBtn = document.getElementById('deselect-all-btn');
             var deleteBtn = document.getElementById('delete-btn');
