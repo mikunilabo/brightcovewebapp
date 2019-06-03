@@ -115,27 +115,27 @@
                                 @component ('components.buttons.back') @endcomponent
 
                                 @can ('authorize', 'user-create')
-                                    <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#leagues-modal">
+                                    <button class="btn btn-sm btn-outline-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#leagues-modal">
                                         <i class="icons icon-tag">@lang ('Leagues')</i>
                                     </button>
 
-                                    <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#universities-modal">
+                                    <button class="btn btn-sm btn-outline-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#universities-modal">
                                         <i class="icons icon-tag">@lang ('Universities')</i>
                                     </button>
 
-                                    <button class="btn btn-sm btn-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#sports-modal">
+                                    <button class="btn btn-sm btn-outline-warning ml-2 float-left" type="button" data-toggle="modal" data-target="#sports-modal">
                                         <i class="icons icon-tag">@lang ('Sports')</i>
                                     </button>
                                 @endcan
 
                                 @can ('update', $row)
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-outline-primary">
                                         <i class="icons icon-check"></i> @lang ('Update')
                                     </button>
                                 @endcan
 
                                 @can ('delete', $row)
-                                    <a class="btn btn-danger btn-sm float-right" href="{{ route('accounts.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
+                                    <a class="btn btn-outline-danger btn-sm float-right" href="#" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Account')])')) { window.Common.submitForm('{{ route('accounts.delete', $row->id) }}'); } return false;">
                                         <i class="icons icon-trash"></i> @lang ('Delete account')
                                     </a>
                                 @endcan

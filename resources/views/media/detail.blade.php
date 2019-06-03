@@ -24,13 +24,13 @@
                                 @component ('components.buttons.back') @endcomponent
 
                                 @can ('update', $row)
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-outline-primary">
                                         <i class="icons icon-check"></i> @lang ('Update')
                                     </button>
                                 @endcan
 
                                 @can ('delete', $row)
-                                    <a class="btn btn-danger btn-sm float-right" href="{{ route('media.delete', $row->id) }}" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Media')])')) { window.Common.submitForm('{{ route('media.delete', $row->id) }}'); } return false;">
+                                    <a class="btn btn-outline-danger btn-sm float-right" href="#" onclick="event.preventDefault(); if (confirm('@lang ('Are you sure you want to delete this :name?', ['name' => __('Media')])')) { window.Common.submitForm('{{ route('media.delete', $row->id) }}'); } return false;">
                                         <i class="icons icon-trash"></i> @lang ('Delete media')
                                     </a>
                                 @endcan
