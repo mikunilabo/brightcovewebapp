@@ -14,7 +14,7 @@
                             <i class="icons icon-list"></i>@lang ('Media list')
 
                             @can ('authorize', 'media-create')
-                                <a class="btn btn-primary btn-sm float-right" href="{{ route('media.upload') }}">
+                                <a class="btn btn-outline-primary btn-sm float-right" href="{{ route('media.upload') }}">
                                     <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
                                 </a>
                             @endcan
@@ -73,7 +73,7 @@
                         </div>
                         <div class="card-footer">
                             @can ('authorize', ['media-delete', 'media-update'])
-                                <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a href="#" class="btn btn-outline-dark btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     @lang ('Batch operation')
                                 </a>
                             @endcan
@@ -109,7 +109,7 @@
                             </div>
 
                             @can ('authorize', 'media-create')
-                                <a href="{{ route('media.upload') }}" class="btn btn-primary btn-sm float-right">
+                                <a href="{{ route('media.upload') }}" class="btn btn-outline-primary btn-sm float-right">
                                     <i class="nav-icon icon-cloud-upload"></i> @lang ('Media Upload')
                                 </a>
                             @endcan

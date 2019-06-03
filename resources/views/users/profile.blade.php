@@ -133,7 +133,7 @@
                             <div class="card-footer text-center">
                                 @component ('components.buttons.back') @endcomponent
 
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-outline-primary">
                                     <i class="icons icon-check"></i> @lang ('Update')
                                 </button>
                             </div>

@@ -23,7 +23,7 @@
                             <div class="card-footer text-center">
                                 @component ('components.buttons.back') @endcomponent
 
-                                <button type="submit" class="btn btn-primary" id="submit-btn">
+                                <button type="submit" class="btn btn-outline-primary" id="submit-btn">
                                     <i class="icons icon-check"></i> @lang ('Upload')
                                 </button>
                             </div>

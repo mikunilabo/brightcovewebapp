@@ -11,6 +11,7 @@
     "An internal server error has occurred. Please contact the administrator.": "サーバー内部エラーが発生しました。管理者へお問い合わせください。",
     "Are you sure you want to delete this :name?": "本当に:nameを削除しますか？",
     "Are you sure you want to :action the selected :name?": "選択された:nameを:actionしますか？",
+    "Back": "戻る",
     "Back to sign in page.": "ログインページへ戻る",
     "Batch operation": "一括操作",
     "Click button below and reset password.": "ボタンをクリックしてパスワードを再設定してください。",

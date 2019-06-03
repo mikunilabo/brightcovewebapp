@@ -14,7 +14,7 @@
                             <i class="icons icon-list"></i>@lang ('Accounts list')
 
                             @can ('authorize', 'user-create')
-                                <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
+                                <a class="btn btn-outline-primary btn-sm float-right" href="{{ route('accounts.create') }}">
                                     <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
                                 </a>
                             @endcan
@@ -70,7 +70,7 @@
                         </div>
                         <div class="card-footer">
                             @can ('authorize', 'user-delete')
-                                <a href="#" class="btn btn-secondary btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <a href="#" class="btn btn-outline-dark btn-sm float-left dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                     @lang ('Batch operation')
                                 </a>
                             @endcan
@@ -94,7 +94,7 @@
                             </div>
 
                             @can ('authorize', 'user-create')
-                                <a class="btn btn-primary btn-sm float-right" href="{{ route('accounts.create') }}">
+                                <a class="btn btn-outline-primary btn-sm float-right" href="{{ route('accounts.create') }}">
                                     <i class="nav-icon icon-user-follow"></i> @lang ('Create account')
                                 </a>
                             @endcan
