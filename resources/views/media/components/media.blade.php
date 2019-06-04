@@ -154,13 +154,17 @@
 @if (empty($row))
     @foreach (['leagues' => Auth::user()->leagues, 'universities' => Auth::user()->universities, 'sports' => Auth::user()->sports] as $attribute => $items)
         @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : $items->pluck('name')->all()])
-        <hr>
+
+        @if (! $loop->last) <hr> @endif
     @endforeach
 @else
     @foreach (['leagues' => $vc_leagues, 'universities' => $vc_universities, 'sports' => $vc_sports] as $attribute => $items)
         @include ('components.typeahead.lists', ['attribute' => $attribute, 'items' => $errors->{$errorBag ?? 'default'}->any() ? old($attribute, []) : collect($row->tags)->filter(function ($value) use ($items) { return $items->containsStrict('name', $value); })])
-        <hr>
+
+        @if (! $loop->last) <hr> @endif
     @endforeach
+
+    <hr>
 
     <div class="row">
         <div class="form-group col-md-6">
