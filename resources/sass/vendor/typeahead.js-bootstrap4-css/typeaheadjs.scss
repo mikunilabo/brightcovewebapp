@@ -3,7 +3,7 @@ span.twitter-typeahead {
     .tt-menu {
         @extend .dropdown-menu;
 
-        max-height: 300px;
+        max-height: 220px;
         overflow-y: auto;
         overflow-x: hidden;
     }
