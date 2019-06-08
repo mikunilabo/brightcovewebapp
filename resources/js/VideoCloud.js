@@ -47,30 +47,30 @@ class VideoCloud {
   };
 
   getS3Url = async (videoId, name) => {
-    try {
-      return await window.axios
-        .post("/webapi/media/" + videoId + "/s3_url", {
-          source: name,
-        })
-        .then((response) => response.data);
-    } catch (error) {
-      this.suspend(error);
-    }
+    return await window.axios
+      .post("/webapi/media/" + videoId + "/s3_url", {
+        source: name,
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        this.suspend(error);
+      });
   };
 
   dynamicIngest = (videoId, s3apiRequestUrl) => {
-    try {
-      return window.axios
-        .post("/webapi/media/" + videoId + "/ingest", {
-          master_url: s3apiRequestUrl,
-        })
-        .then((response) => response.data);
-    } catch (error) {
-      this.suspend(error);
-    }
+    return window.axios
+      .post("/webapi/media/" + videoId + "/ingest", {
+        master_url: s3apiRequestUrl,
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        this.suspend(error);
+      });
   };
 
   invalidFeedback = (response) => {
+    if (response.data.errors === undefined) return;
+
     console.error(response.data.errors);
 
     [].slice
@@ -93,6 +93,7 @@ class VideoCloud {
 
   suspend = (error) => {
     window.Common.progressOverlayOut();
+    console.error(error);
     alert("Mediaの作成・更新処理に失敗しました。");
     throw new Error(error);
   };

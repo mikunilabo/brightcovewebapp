@@ -41,15 +41,8 @@ final class DeletesController extends Controller
             return $request->user()->can('delete', $item);
         });
 
-        try {
-            return $this->useCase->excute([
-                'items' => $filtered->values(),
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'items' => $filtered->values(),
+        ]);
     }
 }

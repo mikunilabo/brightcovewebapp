@@ -35,15 +35,8 @@ final class IngestJobsController extends Controller
 
         $this->authorize('select', $media);
 
-        try {
-            return $this->useCase->excute([
-                'id' => $videoId,
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'id' => $videoId,
+        ]);
     }
 }

@@ -5,9 +5,12 @@ namespace App\UseCases\Users;
 
 use App\Contracts\Domain\UseCaseContract;
 use App\Contracts\Domain\RepositoryContract;
+use App\Traits\Database\Transactionable;
 
 final class DeletesUsers implements UseCaseContract
 {
+    use Transactionable;
+
     /** @var RepositoryContract */
     private $repo;
 
@@ -35,6 +38,8 @@ final class DeletesUsers implements UseCaseContract
      */
     public function excute($args)
     {
-        return $this->repo->deletes($args['items']);
+        return $this->transaction(function () use ($args) {
+            return $this->repo->deletes($args['items']);
+        });
     }
 }

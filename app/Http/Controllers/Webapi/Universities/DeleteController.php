@@ -35,15 +35,8 @@ final class DeleteController extends Controller
 
         $this->authorize('delete', $league);
 
-        try {
-            return $this->useCase->excute([
-                'id' => $universityId,
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'id' => $universityId,
+        ]);
     }
 }

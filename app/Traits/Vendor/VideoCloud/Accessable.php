@@ -330,9 +330,12 @@ trait Accessable
     private function httpStatusCode(ResponseInterface $response, array $allows = []): void
     {
         if (! in_array($response->getStatusCode(), $allows, true)) {
-            $message = sprintf('API response status code is unexpected. [allowd: %s] [returned: %s]', implode(',', $allows), $response->getStatusCode());
-            logger()->error($message, json_decode($response->getBody()->getContents(), true));
-            throw new UnexpectedResponseException($message);
+            $id = Util::orderedUuid();
+            $message = sprintf('The response status code from VideoCloud API is unexpected. [allowd: %s] [returned: %s] [log_id: %s]', implode(',', $allows), $response->getStatusCode(), $id);
+            $content = $response->getBody()->getContents();
+            logger()->error($message, (array)$response);
+
+            throw new UnexpectedResponseException(sprintf('%s [response: %s]', $message, $content), $response->getStatusCode());
         }
     }
 
