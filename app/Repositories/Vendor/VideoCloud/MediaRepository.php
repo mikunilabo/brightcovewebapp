@@ -7,10 +7,10 @@ use App\Contracts\Domain\ModelContract;
 use App\Contracts\Domain\RepositoryContract;
 use App\Model\Media;
 use App\Services\Vendor\VideoCloud\VideoCloudClient;
+use App\Traits\Vendor\VideoCloud\Accessable as VideoCloudAdaptor;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use App\Traits\Vendor\VideoCloud\Accessable as VideoCloudAdaptor;
 
 final class MediaRepository implements RepositoryContract
 {

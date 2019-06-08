@@ -13,7 +13,7 @@
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                {{ str_limit(Auth::user()->name, 25, '...') }} <i class="fa fa-caret-down"></i>
+                {{ str_limit(Auth::user()->name, 25) }} <i class="fa fa-caret-down"></i>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">

@@ -40,4 +40,16 @@ final class UtilitiesService
 
         return $factory->uuid4()->toString();
     }
+
+    /**
+     * @param string $string
+     * @param int $limit
+     * @return string
+     */
+    public function strimWithExtension(string $string = '', int $limit = 0): string
+    {
+        $pieces = explode('.', $string);
+        $pieces[0] = str_limit($pieces[0], $limit, '');
+        return implode('.', $pieces);
+    }
 }

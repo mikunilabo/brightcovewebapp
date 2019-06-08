@@ -9,6 +9,7 @@ use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use Illuminate\Support\Carbon;
 use Psr\Http\Message\ResponseInterface;
+use Util;
 
 trait Accessable
 {
@@ -150,7 +151,7 @@ trait Accessable
         $this->auth();
 
         /** @var ResponseInterface $response */
-        $response = $this->client->getTemporaryS3UrlsToUploadVideo($videoId, $sourceName);
+        $response = $this->client->getTemporaryS3UrlsToUploadVideo($videoId, \Util::strimWithExtension($sourceName, 50));
 
         $this->httpStatusCode($response, [200]);
 

@@ -16,7 +16,7 @@ final class DynamicIngestRequest extends MediaRequest
             'master_url' => [
                 'required',
                 'string',
-                'max:255',
+                'max:65535',
             ],
         ];
     }
