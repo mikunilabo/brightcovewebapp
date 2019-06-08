@@ -47,16 +47,16 @@
                                     @foreach ($rows as $row)
                                         <tr id="{{ $row->id }}">
                                             <td class="align-middle">
-                                                <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25, '...') }}</a>
+                                                <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25) }}</a>
                                             </td>
                                             <td class="align-middle"><code>{{ $row->id }}</code></td>
-                                            <td class="align-middle">{{ str_limit($row->company, 25, '...') }}</td>
+                                            <td class="align-middle">{{ str_limit($row->company, 25) }}</td>
                                             <td class="align-middle">
                                                 <span class="badge badge-{{ $row->role->slug === 'admin' ? 'dark' : 'light' }}">{{ $row->role->name }}</span>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="{{ route('accounts.detail', $row->id) }}">
-                                                    <code>{{ str_limit($row->email, 30, '...') }}</code>
+                                                    <code>{{ str_limit($row->email, 30) }}</code>
                                                 </a>
                                             </td>
                                             <td class="align-middle">

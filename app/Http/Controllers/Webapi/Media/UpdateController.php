@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Webapi\Media\UpdateRequest;
 use App\UseCases\Media\UpdateMedia;
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
+use function Illuminate\Foundation\Testing\Concerns\report;
 
 final class UpdateController extends Controller
 {
@@ -40,16 +41,9 @@ final class UpdateController extends Controller
 
         $args = $request->validated();
 
-        try {
-            return $this->useCase->excute([
-                'id' => $videoId,
-                'param' => $args,
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'id' => $videoId,
+            'param' => $args,
+        ]);
     }
 }

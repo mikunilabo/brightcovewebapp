@@ -7,10 +7,10 @@ use App\Contracts\Domain\ModelContract;
 use App\Contracts\Domain\RepositoryContract;
 use App\Model\Media;
 use App\Services\Vendor\VideoCloud\VideoCloudClient;
+use App\Traits\Vendor\VideoCloud\Accessable as VideoCloudAdaptor;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
-use App\Traits\Vendor\VideoCloud\Accessable as VideoCloudAdaptor;
 
 final class MediaRepository implements RepositoryContract
 {
@@ -147,7 +147,9 @@ final class MediaRepository implements RepositoryContract
      */
     public function deletes($ids = []): void
     {
-        $this->deleteVideos($ids);
+        foreach ($ids as $id) {
+            $this->deleteVideo($id);
+        }
     }
 
     /**
@@ -173,13 +175,13 @@ final class MediaRepository implements RepositoryContract
      */
     public function findAll(array $args = [], $paginate = false)
     {
-        $contents = collect();
+        $contents = [];
 
         foreach ($this->getVideos($args) as $content) {
-            $contents->push(new Media($content));
+            $contents[] = new Media($content);
         }
 
-        return $contents;
+        return collect($contents);
     }
 
     /**

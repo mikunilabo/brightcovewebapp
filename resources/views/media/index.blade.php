@@ -53,7 +53,7 @@
                                                 @endif
                                             </td>
                                             <td class="align-middle">
-                                                <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120, '...') }}</a>
+                                                <a href="{{ route('media.detail', $row->id) }}">{{ str_limit($row->name, 120) }}</a>
                                             </td>
                                             <td class="align-middle">
                                                 @component ('components.labels.videos.state', ['state' => $row->state]) @endcomponent

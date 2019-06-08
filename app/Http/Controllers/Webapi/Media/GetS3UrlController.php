@@ -36,16 +36,9 @@ final class GetS3UrlController extends Controller
     {
         $args = $request->validated();
 
-        try {
-            return $this->useCase->excute([
-                'id' => $videoId,
-                'param' => $args,
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'id' => $videoId,
+            'param' => $args,
+        ]);
     }
 }

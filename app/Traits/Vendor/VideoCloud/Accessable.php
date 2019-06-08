@@ -9,6 +9,7 @@ use Aws\S3\MultipartUploader;
 use Aws\S3\S3Client;
 use Illuminate\Support\Carbon;
 use Psr\Http\Message\ResponseInterface;
+use Util;
 
 trait Accessable
 {
@@ -150,7 +151,7 @@ trait Accessable
         $this->auth();
 
         /** @var ResponseInterface $response */
-        $response = $this->client->getTemporaryS3UrlsToUploadVideo($videoId, $sourceName);
+        $response = $this->client->getTemporaryS3UrlsToUploadVideo($videoId, \Util::strimWithExtension($sourceName, 50));
 
         $this->httpStatusCode($response, [200]);
 
@@ -244,6 +245,22 @@ trait Accessable
     }
 
     /**
+     * @param string $videoId
+     * @return mixed
+     */
+    private function deleteVideo(string $videoId)
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->deleteVideos($videoId);
+
+        $this->httpStatusCode($response, [204]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * @param string|array $videoIds
      * @return mixed
      */
@@ -329,9 +346,12 @@ trait Accessable
     private function httpStatusCode(ResponseInterface $response, array $allows = []): void
     {
         if (! in_array($response->getStatusCode(), $allows, true)) {
-            $message = sprintf('API response status code is unexpected. [allowd: %s] [returned: %s]', implode(',', $allows), $response->getStatusCode());
-            logger()->error($message, json_decode($response->getBody()->getContents(), true));
-            throw new UnexpectedResponseException($message);
+            $id = Util::orderedUuid();
+            $message = sprintf('The response status code from VideoCloud API is unexpected. [allowd: %s] [returned: %s] [log_id: %s]', implode(',', $allows), $response->getStatusCode(), $id);
+            $content = $response->getBody()->getContents();
+            logger()->error($message, (array)$response);
+
+            throw new UnexpectedResponseException(sprintf('%s [response: %s]', $message, $content), $response->getStatusCode());
         }
     }
 

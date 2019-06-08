@@ -41,15 +41,8 @@ final class ActivatesController extends Controller
             return $request->user()->can('update', $item);
         });
 
-        try {
-            return $this->useCase->excute([
-                'ids' => $filtered->pluck('id')->all(),
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'ids' => $filtered->pluck('id')->all(),
+        ]);
     }
 }

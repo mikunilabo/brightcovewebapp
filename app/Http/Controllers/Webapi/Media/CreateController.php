@@ -37,15 +37,8 @@ final class CreateController extends Controller
         $args['uuid'] = $request->user()->id;
         $args['state'] = 'INACTIVE';
 
-        try {
-            return $this->useCase->excute([
-                'param' => $args,
-            ]);
-        } catch (\Exception $e) {
-            return [
-                'code' => $e->getCode(),
-                'message' => $e->getMessage(),
-            ];
-        }
+        return $this->useCase->excute([
+            'param' => $args,
+        ]);
     }
 }

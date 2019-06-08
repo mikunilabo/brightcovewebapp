@@ -16,7 +16,7 @@ final class GetS3UrlRequest extends MediaRequest
             'source' => [
                 'required',
                 'string',
-                'max:255',
+                'max:5000',
             ],
         ];
     }
