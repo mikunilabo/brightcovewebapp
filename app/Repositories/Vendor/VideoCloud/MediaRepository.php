@@ -147,7 +147,9 @@ final class MediaRepository implements RepositoryContract
      */
     public function deletes($ids = []): void
     {
-        $this->deleteVideos($ids);
+        foreach ($ids as $id) {
+            $this->deleteVideo($id);
+        }
     }
 
     /**
@@ -173,13 +175,13 @@ final class MediaRepository implements RepositoryContract
      */
     public function findAll(array $args = [], $paginate = false)
     {
-        $contents = collect();
+        $contents = [];
 
         foreach ($this->getVideos($args) as $content) {
-            $contents->push(new Media($content));
+            $contents[] = new Media($content);
         }
 
-        return $contents;
+        return collect($contents);
     }
 
     /**

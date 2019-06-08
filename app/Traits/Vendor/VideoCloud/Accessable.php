@@ -245,6 +245,22 @@ trait Accessable
     }
 
     /**
+     * @param string $videoId
+     * @return mixed
+     */
+    private function deleteVideo(string $videoId)
+    {
+        $this->auth();
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->deleteVideos($videoId);
+
+        $this->httpStatusCode($response, [204]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * @param string|array $videoIds
      * @return mixed
      */
