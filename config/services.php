@@ -57,7 +57,7 @@ return [
         'icon_emoji'                => null,
         'use_short_attachment'      => true,
         'include_context_and_extra' => true,
-        'level'                     => env('SLACK_LOG_LEVEL', env('APP_LOG_LEVEL', Logger::EMERGENCY)),
+        'level'                     => env('SLACK_LOG_LEVEL', Logger::EMERGENCY),
         'bubble'                    => true,
         'exclude_fields'            => [],
     ],
