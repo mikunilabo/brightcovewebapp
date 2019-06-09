@@ -11,29 +11,17 @@ return [
      */
 
     'users' => [
-        'tkumagai' => [
-            'name'     => env('ADMIN_TKUMAGAI_NAME'),
-            'email'    => env('ADMIN_TKUMAGAI_EMAIL'),
-            'password' => env('ADMIN_TKUMAGAI_PASSWORD', 'password'),
+        'admin' => [
+            'name'     => env('TEST_ADMIN_NAME'),
+            'email'    => env('TEST_ADMIN_EMAIL'),
+            'password' => env('TEST_ADMIN_PASSWORD', 'password'),
             'role_id'  => 1,
         ],
-        'ykumagai' => [
-            'name'     => env('ADMIN_YKUMAGAI_NAME'),
-            'email'    => env('ADMIN_YKUMAGAI_EMAIL'),
-            'password' => env('ADMIN_YKUMAGAI_PASSWORD', 'password'),
-            'role_id'  => 1,
-        ],
-        'ktoda' => [
-            'name'     => env('ADMIN_KTODA_NAME'),
-            'email'    => env('ADMIN_KTODA_EMAIL'),
-            'password' => env('ADMIN_KTODA_PASSWORD', 'password'),
-            'role_id'  => 1,
-        ],
-        'kwada' => [
-            'name'     => env('ADMIN_KWADA_NAME'),
-            'email'    => env('ADMIN_KWADA_EMAIL'),
-            'password' => env('ADMIN_KWADA_PASSWORD', 'password'),
-            'role_id'  => 1,
+        'user' => [
+            'name'     => env('TEST_USER_NAME'),
+            'email'    => env('TEST_USER_EMAIL'),
+            'password' => env('TEST_USER_PASSWORD', 'password'),
+            'role_id'  => 2,
         ],
     ],
 

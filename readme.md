@@ -56,8 +56,9 @@ $ php artisan db:seed --class=[class name]（シーディングを個別に実�
 個別シード実行は`$ php artisan db:seed --class=UsersSeeder`
 
 ```.env
-ADMIN_KWADA_NAME=your_name
-ADMIN_KWADA_EMAIL=your_email
+TEST_ADMIN_NAME=your_name
+TEST_ADMIN_EMAIL=your_email
+TEST_ADMIN_PASSWORD=your_password
 ```
 
 ## Frontend assets compilation
