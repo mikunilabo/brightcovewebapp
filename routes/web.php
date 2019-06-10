@@ -15,6 +15,7 @@ declare(strict_types=1);
 Route::prefix('/')->middleware('authenticate')->group(function () {
     Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
 //     Route::get($name = 'settings', )->name($name);
+    Route::get($name = 'phpinfo', \App\Http\Controllers\PhpinfoController::class)->name($name);
 
     /**
      * Accounts
@@ -25,6 +26,7 @@ Route::prefix('/')->middleware('authenticate')->group(function () {
         Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\CreateController::class, $name));
         Route::get($name = 'profile', sprintf('%s@%s', \App\Http\Controllers\Users\ProfileController::class, 'view'))->name($name);
         Route::post($name, sprintf('%s@%s', \App\Http\Controllers\Users\ProfileController::class, 'update'));
+//         Route::get($name = 'settings', )->name($name);
 
         Route::prefix('{userId}')->group(function () {
             Route::get($name = 'detail', sprintf('%s@%s', \App\Http\Controllers\Users\UpdateController::class, 'view'))->name($name);
