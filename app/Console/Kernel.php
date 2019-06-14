@@ -25,8 +25,13 @@ final class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->call(function () {
+            \Notification::route('slack', config('services.slack.webhook_url'))->notify(new \App\Notifications\TestNotification);
+//         })->everyThirtyMinutes();
+        })->everyFifteenMinutes();
+//         })->everyMinute();
+
+//         $schedule->command('test')->everyMinute();
     }
 
     /**
