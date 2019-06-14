@@ -21,7 +21,7 @@
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            &copy; {{ date('Y') }} UNIVAS. All rights reserved.
+            &copy; {{ date('Y') }} {{ config('app.copyright') }} All rights reserved.
         @endcomponent
     @endslot
 @endcomponent
