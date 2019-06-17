@@ -3,8 +3,8 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="{{ route('home') }}">
-        <img src="{{ config('resources.images.logo_full') }}" class="navbar-brand-full" width="145" height="auto" alt="{{ config('app.name') }}">
-        <img src="{{ config('resources.images.logo') }}" class="navbar-brand-minimized" width="25" height="25" alt="{{ config('app.name') }}">
+        <img src="{{ config('resources.images.logo_full') }}" class="navbar-brand-full" width="150" height="auto" alt="{{ config('app.name') }}">
+        <img src="{{ config('resources.images.logo') }}" class="navbar-brand-minimized" width="35" height="auto" alt="{{ config('app.name') }}">
     </a>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
         <span class="navbar-toggler-icon"></span>
@@ -13,7 +13,7 @@
     <ul class="nav navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                {{ str_limit(Auth::user()->name, 25) }} <i class="fa fa-caret-down"></i>
+                <img class="img-avatar" src="{{ sprintf('https://www.gravatar.com/avatar/%s?d=mp&s=35', Util::md5ForGravatar(Auth::user()->email)) }}" width="35" height="auto" alt="{{ Auth::user()->email }}">
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">
