@@ -1,7 +1,11 @@
 @push ('scripts.app')
-    <script type="text/javascript" src="{{ asset(mix('js/manifest.js')) }}"></script>
-    <script type="text/javascript" src="{{ asset(mix('js/vendor.js')) }}"></script>
-    <script type="text/javascript" src="{{ asset(mix('js/app.js')) }}"></script>
+    @if (file_exists(public_path('mix-manifest.json')))
+        <script type="text/javascript" src="{{ asset(mix('js/manifest.js')) }}"></script>
+        <script type="text/javascript" src="{{ asset(mix('js/vendor.js')) }}"></script>
+        <script type="text/javascript" src="{{ asset(mix('js/app.js')) }}"></script>
+    @else
+        <script type="text/javascript" src="{{ asset('js/default.js') }}"></script>
+    @endif
 @endpush
 
 @push ('scripts.const')
