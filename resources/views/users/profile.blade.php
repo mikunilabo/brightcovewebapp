@@ -90,7 +90,7 @@
                                         ]) @endcomponent
 
                                         <div class="input-group">
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
+                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please select')" oninput="window.Common.checkInvalidMaster('{{ $attribute }}', 'invalid-feedback-{{ $attribute }}', this.value);" />
                                         </div>
                                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                     </div>
@@ -104,7 +104,7 @@
                                         ]) @endcomponent
 
                                         <div class="input-group">
-                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="" />
+                                            <input name="{{ $attribute }}" type="text" id="{{ $attribute }}" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : $row->{$attribute}->pluck('name')->first() }}" class="form-control {{ sprintf('ta-%s', $attribute) }} {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" placeholder="@lang ('Please select')" oninput="window.Common.checkInvalidMaster('{{ $attribute }}', 'invalid-feedback-{{ $attribute }}', this.value);" />
                                         </div>
                                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                                     </div>
@@ -154,17 +154,12 @@
       ta('.ta-universities', 'universities');
 
       /**
-       * @param string id
+       * @param string tag
+       * @param string name
        * @return void
        */
       function ta(tag, name) {
-        if (name === 'leagues') {
-          var json = @json ($vc_leagues->pluck('name'));
-        } else if (name === 'sports') {
-          var json = @json ($vc_sports->pluck('name'));
-        } else if (name === 'universities') {
-          var json = @json ($vc_universities->pluck('name'));
-        }
+        var data = getMasters(name);
 
         $(tag).typeahead({
           highlight: true,
@@ -174,8 +169,30 @@
         {
           name: 'states',
           limit: 100,
-          source: window.Common.substringMatcher(json)
+          source: window.Common.substringMatcher(data)
+        })
+        .on('typeahead:selected', function (event, datum) {
+          // Fire the same input event as normal input.
+          event.target.dispatchEvent(new Event('input'));
         });
+      }
+
+      /**
+       * @param string name
+       * @return json
+       * @throw Error
+       */
+      function getMasters(name) {
+        switch (true) {
+          case name === 'leagues':
+            return @json ($vc_leagues->pluck('name'));
+          case name === 'sports':
+            return @json ($vc_sports->pluck('name'));
+          case name === 'universities':
+            return @json ($vc_universities->pluck('name'));
+          default:
+            throw new Error(`The master name [${name}] is invalid.`);
+        }
       }
     </script>
 @endsection

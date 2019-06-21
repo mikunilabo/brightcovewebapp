@@ -15,8 +15,8 @@
 @endpush
 
 @push ('scripts.csrf')
-    <script>
-      window.Laravel = @json(['csrfToken' => csrf_token()]);
+    <script type="text/javascript">
+      window.Laravel = @json (['csrfToken' => csrf_token()]);
     </script>
 @endpush
 
@@ -40,5 +40,11 @@
           }
         });
       }
+    </script>
+@endpush
+
+@push ('scripts.user')
+    <script type="text/javascript">
+      window.user = @json (is_null(Auth::user()) ? [] : Auth::user()->loadMissing('role.permissions'));
     </script>
 @endpush

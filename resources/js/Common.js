@@ -46,6 +46,7 @@ class Common {
   createTypeAheadList(name) {
     var cnt = document.getElementById(name + "-list-cnt");
     var listId = name + "-list-" + cnt.value;
+    var invalidFeedbackId = "invalid-feedback-" + name + "." + cnt.value;;
 
     var i = document.createElement("i");
     i.classList.add("icons", "icon-close");
@@ -74,7 +75,15 @@ class Common {
     input.type = "text";
     input.value = "";
     input.maxLength = 255;
+    input.placeholder = this.trance('Please select');
     input.autocomplete = "off";
+    input.addEventListener(
+      "input",
+      (e) => {
+        this.checkInvalidMaster(name, invalidFeedbackId, e.target.value);
+      },
+      false,
+    );
 
     var inputGroup = document.createElement("div");
     inputGroup.classList.add("input-group");
@@ -83,7 +92,7 @@ class Common {
 
     var span = document.createElement("span");
     span.classList.add("invalid-feedback", "d-block");
-    span.id = "invalid-feedback-" + name + "." + cnt.value;
+    span.id = invalidFeedbackId;
     span.role = "alert";
     var strong = document.createElement("strong");
     span.appendChild(strong);
@@ -100,6 +109,33 @@ class Common {
 
     ta("#" + inputId, name);
     cnt.value++;
+  }
+
+  /**
+   * @param string name
+   * @param string id
+   * @param string value
+   * @return void
+   */
+  checkInvalidMaster(name, id, value = "") {
+    let span = document.getElementById(id);
+
+    if (!span) return;
+
+    this.removeChildren(span);
+
+    if (this.authorize('user-create')) {
+      return;
+    }
+
+    if (getMasters(name).indexOf(value) >= 0) {
+      return;
+    }
+
+    let text = document.createTextNode(window.Common.trance("The entered value does not exist in the list."));
+    let strong = document.createElement("strong");
+    strong.appendChild(text);
+    span.appendChild(strong);
   }
 
   /**
@@ -271,6 +307,18 @@ class Common {
    */
   trance(key) {
     return window.locale === 'en' || ! key in window.lang ? key : window.lang[key];
+  }
+
+  /**
+   * @param string permissions
+   * @return bool
+   */
+  authorize(permission) {
+    let permissions = _.map(window.user.role.permissions, (item) => {
+        return item.slug;
+    });
+
+    return permissions.indexOf(permission) >= 0;
   }
 }
 
