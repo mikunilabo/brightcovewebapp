@@ -201,6 +201,7 @@ return [
         // App\Providers\RelationServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\SchemaServiceProvider::class,
         App\Providers\UrlServiceProvider::class,
         App\Providers\ValidationServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
