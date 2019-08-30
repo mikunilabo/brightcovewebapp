@@ -19,10 +19,12 @@ class RolesSeeder extends Seeder
     {
         $this->items = [
             [
+                'id'   => 1,
                 'name' => 'Admin',
                 'slug' => 'admin',
             ],
             [
+                'id'   => 2,
                 'name' => 'User',
                 'slug' => 'user',
             ],
