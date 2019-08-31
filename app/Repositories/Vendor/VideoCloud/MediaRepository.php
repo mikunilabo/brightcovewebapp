@@ -192,4 +192,12 @@ final class MediaRepository implements RepositoryContract
     {
         return collect($this->getStatusOfIngestJobs($id));
     }
+
+    /**
+     * @return Collection
+     */
+    public function client(): VideoCloudClient
+    {
+        return $this->client;
+    }
 }

@@ -19,6 +19,7 @@ final class DeleteController extends Controller
     public function __construct(DeleteMedia $useCase)
     {
         $this->middleware([
+            'assert_video_cloud',
             'authorize:media-delete',
         ]);
 
