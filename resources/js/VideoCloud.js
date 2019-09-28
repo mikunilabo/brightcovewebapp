@@ -71,8 +71,6 @@ class VideoCloud {
   invalidFeedback = (response) => {
     if (response.data.errors === undefined) return;
 
-    console.error(response.data.errors);
-
     [].slice
       .call(document.getElementsByClassName("invalid-feedback"))
       .forEach(function(span) {
@@ -92,9 +90,9 @@ class VideoCloud {
   };
 
   suspend = (error) => {
-    window.Common.progressOverlayOut();
+    this.source ? window.Common.progressOverlayOut() : window.Common.overlayOut();
     console.error(error);
-    alert("Mediaの作成・更新処理に失敗しました。");
+    alert(window.Common.trance("Failed to create / update media."));
     throw new Error(error);
   };
 }

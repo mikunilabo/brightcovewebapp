@@ -24,9 +24,9 @@ final class CreateUsersTable extends Migration
                 $table->string('company')->nullable();
                 $table->string('email');
                 $table->unsignedInteger('role_id');
-                $table->boolean('existence')
-                    ->nullable()
-                    ->storedAs('CASE WHEN deleted_at IS NULL THEN 1 ELSE NULL END');
+//                 $table->boolean('existence')
+//                     ->nullable()
+//                     ->storedAs('CASE WHEN deleted_at IS NULL THEN 1 ELSE NULL END');
                 $table->string('password');
                 $table->rememberToken();
                 $table->timestamps();
@@ -34,7 +34,7 @@ final class CreateUsersTable extends Migration
 
                 $table->unique([
                     'email',
-                    'existence',
+//                     'existence',
                 ]);
 
                 $table->foreign('role_id')

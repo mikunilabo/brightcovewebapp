@@ -1,7 +1,11 @@
 @push ('scripts.app')
-    <script type="text/javascript" src="{{ asset(mix('js/manifest.js')) }}"></script>
-    <script type="text/javascript" src="{{ asset(mix('js/vendor.js')) }}"></script>
-    <script type="text/javascript" src="{{ asset(mix('js/app.js')) }}"></script>
+    @if (file_exists(public_path('mix-manifest.json')))
+        <script type="text/javascript" src="{{ asset(mix('js/manifest.js')) }}"></script>
+        <script type="text/javascript" src="{{ asset(mix('js/vendor.js')) }}"></script>
+        <script type="text/javascript" src="{{ asset(mix('js/app.js')) }}"></script>
+    @else
+        <script type="text/javascript" src="{{ asset('js/default.js') }}"></script>
+    @endif
 @endpush
 
 @push ('scripts.const')
@@ -11,8 +15,8 @@
 @endpush
 
 @push ('scripts.csrf')
-    <script>
-      window.Laravel = @json(['csrfToken' => csrf_token()]);
+    <script type="text/javascript">
+      window.Laravel = @json (['csrfToken' => csrf_token()]);
     </script>
 @endpush
 
@@ -36,5 +40,11 @@
           }
         });
       }
+    </script>
+@endpush
+
+@push ('scripts.user')
+    <script type="text/javascript">
+      window.user = @json (is_null(Auth::user()) ? [] : Auth::user()->loadMissing('role.permissions'));
     </script>
 @endpush

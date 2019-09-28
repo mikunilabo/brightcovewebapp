@@ -16,6 +16,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'copyright' => env('APP_COPYRIGHT', 'Laravel'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -199,6 +201,7 @@ return [
         // App\Providers\RelationServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\SchemaServiceProvider::class,
         App\Providers\UrlServiceProvider::class,
         App\Providers\ValidationServiceProvider::class,
         App\Providers\ViewServiceProvider::class,

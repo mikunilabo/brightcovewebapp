@@ -32,6 +32,7 @@
 
     @section ('scripts')
         @stack ('scripts.const')
+        @stack ('scripts.user')
         @stack ('scripts.app')
         @stack ('scripts.resources')
     @show

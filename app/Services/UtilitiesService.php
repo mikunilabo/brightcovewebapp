@@ -42,6 +42,15 @@ final class UtilitiesService
     }
 
     /**
+     * @param string $email
+     * @return string
+     */
+    public function md5ForGravatar(string $email): string
+    {
+        return md5(strtolower(trim($email)));
+    }
+
+    /**
      * @param string $string
      * @param int $limit
      * @return string

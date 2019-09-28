@@ -21,6 +21,7 @@ final class IndexController extends Controller
     public function __construct(GetMedia $useCase)
     {
         $this->middleware([
+            'assert_video_cloud',
             'authorize:media-select',
         ]);
 

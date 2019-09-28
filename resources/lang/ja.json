@@ -41,6 +41,7 @@
     "Ends At": "公開終了日時",
     "E-Mail": "メールアドレス",
     "failed": "失敗",
+    "Failed to create / update media.": "メディアの登録/更新処理に失敗しました。",
     "File not selected": "ファイルが選択されていません",
     "File selection": "ファイル選択",
     "finished": "完了",
@@ -84,8 +85,9 @@
     "Please enter the email address of the account you want to reset and the new password.": "リセットするアカウントのメールアドレスと新しいパスワードを入力してください。",
     "Please enter your name, e-mail address, and password.": "あなたの名前、メールアドレス、パスワードを入力してください。",
     "Please enter your registered e-mail address.": "登録済みのメールアドレスを入力してください。",
-    "Please enter your registered e-mail address and password.": "登録済みのメールアドレスとパスワードを入力してください。",
+    "Please enter your registered e-mail address and password.": "登録済みのメールアドレスとパスワードを入力してください",
     "Please re-enter to confirm.": "確認のため再入力してください。",
+    "Please select": "選択してください",
     "Previous login": "前回ログイン",
     "processing": "処理中",
     "Profile": "プロフィール",
@@ -94,7 +96,7 @@
     "publishing": "公開中",
     "Reference": "参照",
     "Register Now!": "今すぐ登録",
-    "Remember Me": "ログイン情報を記憶する",
+    "Remember Me": "ログイン状態を保持する",
     "Repeat Password": "パスワード確認",
     "Reset": "リセット",
     "Reset Password": "パスワード再設定",
@@ -114,6 +116,7 @@
     "Status": "ステータス",
     "Submit": "送信",
     "There is no jobs": "ジョブがありません",
+    "The entered value does not exist in the list.": "入力された値はリストに存在しません。",
     "The page has expired.": "ページの有効期限が切れています。",
     "The page you are looking for was not found.": "ページが見つかりませんでした。",
     "The :name information was :action.": ":name情報を:actionしました。",
@@ -131,5 +134,6 @@
     "Version": "バージョン",
     "Video File": "動画ファイル",
     "You can not change the :name.": ":nameは変更出来ません。",
-    "You do not have access.": "アクセス権限がありません。"
+    "You do not have access.": "アクセス権限がありません。",
+    "You do not have VideoCloud credentials.": "VideoCloud資格情報がありません。"
 }

@@ -28,7 +28,7 @@ final class CreateRequest extends UsersRequest
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->whereNotNull('existence'),
+                Rule::unique('users')/*->whereNotNull('existence')*/,
             ],
             'password' => [
                 'required',

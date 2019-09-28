@@ -19,6 +19,7 @@ final class UpdateController extends Controller
     public function __construct(UpdateMedia $useCase)
     {
         $this->middleware([
+            'assert_video_cloud',
             'authorize:media-select',
         ]);
 

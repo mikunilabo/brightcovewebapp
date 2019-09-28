@@ -1,4 +1,4 @@
-# UNIVAS_Contents_Platform
+# Brightcove Web Demo App
 
 ## Project Managements
 
@@ -51,8 +51,8 @@ $ php artisan db:seed --class=[class name]（シーディングを個別に実�
 ```
 
 初回`$ php artisan migrate --seed`コマンド実行前に、環境ファイルへ下記の用に追加しておくと、
-任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。  
-環境変数の確認は `/config/accounts.php`  
+任意のアドレス/パスワードで初期ログイン用アカウントを作成出来ます。
+環境変数の確認は `/config/accounts.php`
 個別シード実行は`$ php artisan db:seed --class=UsersSeeder`
 
 ```.env

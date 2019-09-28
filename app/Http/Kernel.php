@@ -60,5 +60,7 @@ final class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        'assert_video_cloud' => \App\Http\Middleware\AssertVideoCloud::class,
     ];
 }

@@ -24,9 +24,10 @@
 
                             <table class="table table-responsive-sm table-striped table-hover" id="users-table">
                                 <colgroup>
-                                    <col style="width: 15%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: 15%;">
+                                    <col style="width: 3%;">
+                                    <col style="width: 14%;">
+                                    <col style="width: 19%;">
+                                    <col style="width: 14%;">
                                     <col style="width: 10%;">
                                     <col style="width: 20%;">
                                     <col style="width: 8%;">
@@ -34,6 +35,7 @@
                                 </colgroup>
                                 <thead>
                                     <tr>
+                                        <th class="align-middle text-nowrap"></th>
                                         <th class="align-middle text-nowrap">@lang ('Name')</th>
                                         <th class="align-middle text-nowrap">@lang ('ID')</th>
                                         <th class="align-middle text-nowrap">@lang ('Company')</th>
@@ -46,6 +48,9 @@
                                 <tbody id="tbody" class="d-none">
                                     @foreach ($rows as $row)
                                         <tr id="{{ $row->id }}">
+                                            <td class="align-middle">
+                                                <img src="{{ sprintf('https://www.gravatar.com/avatar/%s?d=mp&s=35', Util::md5ForGravatar($row->email)) }}" class="rounded-circle mx-auto d-block" width="auto" height="auto" alt="{{ $row->email }}">
+                                            </td>
                                             <td class="align-middle">
                                                 <a href="{{ route('accounts.detail', $row->id) }}">{{ str_limit($row->name, 25) }}</a>
                                             </td>
@@ -118,7 +123,8 @@
 
       var table = $('#users-table').DataTable({
         columnDefs: [
-          { targets: 5, sortable: false }
+          { targets: 0, sortable: false },
+          { targets: 6, sortable: false }
         ],
         displayLength: 20,
         'drawCallback': function () {
@@ -129,7 +135,7 @@
         lengthChange: true,
         lengthMenu: [10, 20, 30, 50],
         order: [
-          [6, 'desc'],
+          [7, 'desc'],
         ],
         ordering: true,
         paging: true,

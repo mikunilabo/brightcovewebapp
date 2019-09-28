@@ -45,7 +45,18 @@
                         @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
                     </div>
 
-                    <div class="input-prepend input-group mt-2">
+                    <div class="input-group mt-1">
+                        @set ($attribute, 'remember')
+                        <label class="switch switch-outline-success">
+                            <input name="{{ $attribute }}" type="checkbox" value="1" id="{{ $attribute }}" class="switch-input" {{ $errors->{$errorBag ?? 'default'}->any() && old($attribute) ? 'checked' : '' }} />
+                            <span class="switch-slider"></span>
+                        </label>
+                        <label class="align-middle mb-0" for="{{ $attribute }}">
+                            <p class="text-muted cursor-pointer pl-1">@lang ('Remember Me')</p>
+                        </label>
+                    </div>
+
+                    <div class="input-prepend input-group">
                         <button class="btn btn-block btn-outline-primary px-4" type="submit">
                             @lang ('Login')
                         </button>
