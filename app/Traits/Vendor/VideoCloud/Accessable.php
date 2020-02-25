@@ -79,18 +79,18 @@ trait Accessable
         /**
          * Custom Fields
          */
-        if (array_key_exists($key = 'date', $args)) {
-            $params['custom_fields'][$key] = $args[$key];// YYYY/MM/DD
-        }
-
-        if (array_key_exists($key = 'rightholder', $args)) {
-            $params['custom_fields'][$key] = $args[$key];
-        }
-
-        if (array_key_exists($key = 'tournament', $args)) {
-            $params['custom_fields'][$key] = $args[$key];
-        }
-
+        // if (array_key_exists($key = 'date', $args)) {
+        //     $params['custom_fields'][$key] = $args[$key];// YYYY/MM/DD
+        // }
+        //
+        // if (array_key_exists($key = 'rightholder', $args)) {
+        //     $params['custom_fields'][$key] = $args[$key];
+        // }
+        //
+        // if (array_key_exists($key = 'tournament', $args)) {
+        //     $params['custom_fields'][$key] = $args[$key];
+        // }
+        //
         if (array_key_exists($key = 'uuid', $args)) {
             $params['custom_fields'][$key] = $args[$key];
         }
