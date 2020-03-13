@@ -91,6 +91,7 @@
 </div>
 <div class="row">
     <div class="form-group col-md-3">
+        @set ($attribute, 'starts_at')
         <label for="{{ $attribute }}">@lang ('Starts At')</label>
 
         <div class="input-group">
@@ -100,12 +101,12 @@
                 </span>
             </div>
 
-            @set ($attribute, 'starts_at')
             <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone'))->format('Y/m/d H:i') : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY/MM/DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
     <div class="form-group col-md-3">
+        @set ($attribute, 'ends_at')
         <label for="{{ $attribute }}">@lang ('Ends At')</label>
 
         <div class="input-group">
@@ -115,12 +116,12 @@
                 </span>
             </div>
 
-            @set ($attribute, 'ends_at')
             <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->schedule) && is_array($row->schedule) && array_key_exists($attribute, $row->schedule) ? now()->parse($row->schedule[$attribute])->setTimezone(config('app.timezone'))->format('Y/m/d H:i') : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="16" placeholder="YYYY/MM/DD HH:MM" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
     </div>
     <div class="form-group col-md-3">
+        @set ($attribute, 'date')
         <label for="{{ $attribute }}">@lang ('Implementation Date')</label>
 
         <div class="input-group">
@@ -130,7 +131,6 @@
                 </span>
             </div>
 
-            @set ($attribute, 'date')
             <input name="{{ $attribute }}" type="text" value="{{ $errors->{$errorBag ?? 'default'}->any() ? old($attribute) : ( ! empty($row->custom_fields) && is_array($row->custom_fields) && array_key_exists($attribute, $row->custom_fields) ? $row->custom_fields[$attribute] : null ) }}" id="{{ $attribute }}" class="form-control {{ $errors->{$errorBag ?? 'default'}->has($attribute) ? 'is-invalid' : '' }}" maxlength="10" placeholder="YYYY/MM/DD" />
             @component ('components.messages.invalid', ['name' => $attribute]) @endcomponent
         </div>
