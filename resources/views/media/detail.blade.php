@@ -55,14 +55,23 @@
 
       flatpickr('#date', {
         allowInput: true,
-        dateFormat: "Y/m/d"
+        dateFormat: "Y/m/d",
+        disableMobile: true,
       });
 
       flatpickr('#starts_at', {
         allowInput: true,
         dateFormat: "Y/m/d H:i",
+        disableMobile: true,
         enableTime: true,
-        plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
+        // plugins: [new window.flatpickr.rangePlugin({ input: '#ends_at'})]
+      });
+
+      flatpickr('#ends_at', {
+        allowInput: true,
+        dateFormat: "Y/m/d H:i",
+        disableMobile: true,
+        enableTime: true,
       });
 
       document.getElementById('video_file').addEventListener('change', function (event) {

@@ -37,7 +37,7 @@ try {
  * Global window objects.
  */
 
-window.flatpickr.rangePlugin = require('flatpickr/dist/plugins/rangePlugin.js');
+// window.flatpickr.rangePlugin = require('flatpickr/dist/plugins/rangePlugin.js');
 window.toastr = require('toastr');
 
 /**
